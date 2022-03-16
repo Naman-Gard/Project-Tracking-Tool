@@ -51,12 +51,10 @@
       });
       add.forEach((item)=>{
         // $('.'+item+'_add').attr("disabled",true);
-        $('.'+item+'_add').attr('style', 'display: inline-block !important');
-        $('.'+item+'_action').attr('style', 'display: table-cell !important');
+        $('.'+item+'_add').attr('style', 'display: flex !important');
       })
       edit.forEach((item)=>{
         // $('.'+item+'_add').attr("disabled",true);
-        console.log('.'+item+'_edit')
         $('.'+item+'_edit').attr('style', 'display: inline-block !important');
         $('.'+item+'_action').attr('style', 'display: table-cell !important');
       })

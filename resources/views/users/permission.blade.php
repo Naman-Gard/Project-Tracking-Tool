@@ -177,10 +177,10 @@
         
         mydata={
             id:data[0].id,
-            permit_view:JSON.stringify(permit_view),
-            permit_add:JSON.stringify(permit_add),
-            permit_edit:JSON.stringify(permit_edit),
-            permit_delet:JSON.stringify(permit_delet)
+            view:JSON.stringify(permit_view),
+            add:JSON.stringify(permit_add),
+            edit:JSON.stringify(permit_edit),
+            delet:JSON.stringify(permit_delet)
         }
 
         $.ajax({

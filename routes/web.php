@@ -19,6 +19,7 @@ Route::group(["middleware" => ["islogin"]], function(){
     Route::get('/add/user', [App\Http\Controllers\UserController::class, 'addUser'])->name('add-user');
     Route::get('/logout','App\Http\Controllers\Controller@logout')->name('logout');
     Route::get('/permission/{id}', [App\Http\Controllers\UserController::class, 'permission'])->name('permission');
+    Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 });
 // Route::get('/', function () {
 //     return view('welcome');
