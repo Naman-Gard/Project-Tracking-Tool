@@ -23,4 +23,54 @@
 
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{asset('assets/js/material-dashboard.min.js?v=3.0.1')}}"></script>
+  
+  <script>
+
+    function getPermissions(){
+      let user_id="{{Session::get('user')['id']}}"
+    const filters={
+        "user_id":{
+            '_eq': user_id
+        }
+    }
+    $.ajax({
+      type: "GET",
+      url: api_url+'items/permissions?filter='+JSON.stringify(filters),
+    }).done((response)=>{
+      const user_permits=response.data.pop()
+      
+      const view=JSON.parse(user_permits.view)
+      const edit=JSON.parse(user_permits.edit)
+      const add=JSON.parse(user_permits.add)
+      const delet=JSON.parse(user_permits.delete)
+      // add=modules.filter(e=>!add.includes(e));
+      // edit=modules.filter(e=>!edit.includes(e));
+      // delet=modules.filter(e=>!delet.includes(e));
+      view.forEach((item)=>{
+        $('#'+item).attr('style', 'display: list-item !important');
+      });
+      add.forEach((item)=>{
+        // $('.'+item+'_add').attr("disabled",true);
+        $('.'+item+'_add').attr('style', 'display: inline-block !important');
+        $('.'+item+'_action').attr('style', 'display: table-cell !important');
+      })
+      edit.forEach((item)=>{
+        // $('.'+item+'_add').attr("disabled",true);
+        console.log('.'+item+'_edit')
+        $('.'+item+'_edit').attr('style', 'display: inline-block !important');
+        $('.'+item+'_action').attr('style', 'display: table-cell !important');
+      })
+      delet.forEach((item)=>{
+        // $('.'+item+'_add').attr("disabled",true);
+        $('.'+item+'_delete').attr('style', 'display: inline-block !important');
+        $('.'+item+'_action').attr('style', 'display: table-cell !important');
+      })
+
+    })
+    }
+    
+    getPermissions()
+    
+  </script>
+
 @stack('scripts')

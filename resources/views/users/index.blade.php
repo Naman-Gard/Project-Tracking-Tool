@@ -77,10 +77,7 @@
         const email='{{Session::get("user")["email"]}}'
         const filters={
             "email":{
-                '_neq': email
-            },
-            "email":{
-                '_neq': "admin@gmail.com"
+                '_nin': [email,'admin@gmail.com']
             }
         }
         var i=1
@@ -93,13 +90,15 @@
             users.forEach((user)=>{
               var permission = '{{ route("permission", ":id") }}'
               permission = permission.replace(':id', btoa(user.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+user.name+'</td><td>'+user.email+'</td><td class="action User_action"><a href="'+permission+'" class="btn btn-primary btn-sm User_edit m-2">Permissions</a><button class="btn btn-danger m-3 btn-sm delete-mem-btn User_delete" data-delete-link="" data-bs-toggle="modal" data-bs-target="#Deleteuser">Delete</button></td></tr>')
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+user.name+'</td><td>'+user.email+'</td><td class="action User_action"><a href="'+permission+'" class="btn btn-primary btn-sm hide-item User_edit m-2">Permissions</a><button class="btn btn-danger m-3 btn-sm delete-mem-btn hide-item User_delete" data-delete-link="" data-bs-toggle="modal" data-bs-target="#Deleteuser">Delete</button></td></tr>')
             i=i+1
             })
         }
         else{
             $('.t-content').append('<tr><th></th><td></td><td><p>No Data Found!</p></td><td></td></tr>')
         }
+
+        getPermissions()
         })
 
     })

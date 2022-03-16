@@ -9,7 +9,7 @@
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
-        <li class="nav-item">
+        <li class="nav-item hide-item" id="Dashboard">
           <a class="nav-link text-white active bg-gradient-primary" href="{{route('home')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
@@ -17,20 +17,42 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link text-white " href="{{route('table')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
             <span class="nav-link-text ms-1">Tables</span>
           </a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link text-white" data-bs-toggle="collapse" href="#master" role="button" aria-expanded="false" aria-controls="master">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">table_view</i>
+            </div>
+            <span class="nav-link-text ms-1">Masters</span>
+          </a>
+          <div class="collapse" id="master">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href=""> Project Stage </a></li>
+                <li class="nav-item"> <a class="nav-link" href=""> Business Group </a></li>
+                <li class="nav-item"> <a class="nav-link" href=""> Ministry</a></li>
+                <li class="nav-item"> <a class="nav-link" href=""> Department </a></li>
+                <li class="nav-item"> <a class="nav-link" href=""> Project Type</a></li>
+                <li class="nav-item"> <a class="nav-link" href=""> Intrument Type </a></li>
+                <li class="nav-item"> <a class="nav-link" href=""> Instrument Purpose </a></li>
+                <li class="nav-item"> <a class="nav-link" href=""> Work Order Type </a></li>
+                <li class="nav-item"> <a class="nav-link" href=""> Billing Type </a></li>
+                <li class="nav-item"> <a class="nav-link" href=""> Employees List </a></li>
+            </ul>
+          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white " href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
-            <span class="nav-link-text ms-1">Billing</span>
+            <span class="nav-link-text ms-1">Project Creation</span>
           </a>
         </li>
         <li class="nav-item">
@@ -38,15 +60,7 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">view_in_ar</i>
             </div>
-            <span class="nav-link-text ms-1">Virtual Reality</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white " hrf="#">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
-            </div>
-            <span class="nav-link-text ms-1">RTL</span>
+            <span class="nav-link-text ms-1">Instrument Details</span>
           </a>
         </li>
         <li class="nav-item">
@@ -54,11 +68,27 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">notifications</i>
             </div>
-            <span class="nav-link-text ms-1">Notifications</span>
+            <span class="nav-link-text ms-1">Work Order Details</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white hide-item" href="{{url('/users')}}">
+          <a class="nav-link text-white " href="#">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">notifications</i>
+            </div>
+            <span class="nav-link-text ms-1">Invoice Details</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="#">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">notifications</i>
+            </div>
+            <span class="nav-link-text ms-1">Project Team Management</span>
+          </a>
+        </li>
+        <li class="nav-item hide-item" id="User">
+          <a class="nav-link text-white" href="{{url('/users')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">notifications</i>
             </div>

@@ -84,10 +84,10 @@
 
     let url=window.location.href
     let id=atob(url.split('permission/')[1])
-    let view=[]
-    let add=[]
-    let edit=[]
-    let delet=[]
+    let permit_view=[]
+    let permit_add=[]
+    let permit_edit=[]
+    let permit_delet=[]
     let data
     $(document).ready(()=>{
 
@@ -101,21 +101,21 @@
             url: api_url + 'items/permissions?limit=-1&&filter='+JSON.stringify(filters),
             }).done((response)=>{
                 data=response.data
-                view=JSON.parse(data[0].view)
-                add=JSON.parse(data[0].add)
-                edit=JSON.parse(data[0].edit)
-                delet=JSON.parse(data[0].delete)
+                permit_view=JSON.parse(data[0].view)
+                permit_add=JSON.parse(data[0].add)
+                permit_edit=JSON.parse(data[0].edit)
+                permit_delet=JSON.parse(data[0].delete)
                 
-                view.forEach((item)=>{
+                permit_view.forEach((item)=>{
                     $("input[name="+item+"_view]").prop('checked',true)
                 })
-                add.forEach((item)=>{
+                permit_add.forEach((item)=>{
                     $("input[name="+item+"_add]").prop('checked',true)
                 })
-                edit.forEach((item)=>{
+                permit_edit.forEach((item)=>{
                     $("input[name="+item+"_edit]").prop('checked',true)
                 })
-                delet.forEach((item)=>{
+                permit_delet.forEach((item)=>{
                     $("input[name="+item+"_delete]").prop('checked',true)
                 })
             })
@@ -126,49 +126,49 @@
         modules=['User']
         modules.forEach((item)=>{
             if($("input[name="+item+"_view]:checked").val()==1){
-                if(!view.includes(item)){
-                    view.push(item)
+                if(!permit_view.includes(item)){
+                    permit_view.push(item)
                 }
             }
             else{
-                if(view.includes(item)){
-                    view=view.filter((value)=>{
+                if(permit_view.includes(item)){
+                    permit_view=permit_view.filter((value)=>{
                         return value!=item
                     })
                 }
             }
             if($("input[name="+item+"_add]:checked").val()==1){
-                if(!add.includes(item)){
-                   add.push(item)
+                if(!permit_add.includes(item)){
+                   permit_add.push(item)
                 }
             }
             else{
-                if(add.includes(item)){
-                    add=add.filter((value)=>{
+                if(permit_add.includes(item)){
+                    permit_add=permit_add.filter((value)=>{
                         return value!=item
                     })
                 }
             }
             if($("input[name="+item+"_edit]:checked").val()==1){
-                if(!edit.includes(item)){
-                   edit.push(item)
+                if(!permit_edit.includes(item)){
+                   permit_edit.push(item)
                 }
             }
             else{
-                if(edit.includes(item)){
-                    edit=edit.filter((value)=>{
+                if(permit_edit.includes(item)){
+                    permit_edit=permit_edit.filter((value)=>{
                         return value!=item
                     })
                 }
             }
             if($("input[name="+item+"_delete]:checked").val()==1){
-                if(!delet.includes(item)){
-                   delet.push(item)
+                if(!permit_delet.includes(item)){
+                   permit_delet.push(item)
                 }
             }
             else{
-                if(delet.includes(item)){
-                    delet=delet.filter((value)=>{
+                if(permit_delet.includes(item)){
+                    permit_delet=permit_delet.filter((value)=>{
                         return value!=item
                     })
                 }
@@ -177,10 +177,10 @@
         
         mydata={
             id:data[0].id,
-            view:JSON.stringify(view),
-            add:JSON.stringify(add),
-            edit:JSON.stringify(edit),
-            delet:JSON.stringify(delet)
+            permit_view:JSON.stringify(permit_view),
+            permit_add:JSON.stringify(permit_add),
+            permit_edit:JSON.stringify(permit_edit),
+            permit_delet:JSON.stringify(permit_delet)
         }
 
         $.ajax({
