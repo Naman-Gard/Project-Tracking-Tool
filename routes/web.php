@@ -19,15 +19,31 @@ Route::group(["middleware" => ["islogin"]], function(){
     Route::get('/add/user', [App\Http\Controllers\UserController::class, 'addUser'])->name('add-user');
     Route::get('/logout','App\Http\Controllers\Controller@logout')->name('logout');
     Route::get('/permission/{id}', [App\Http\Controllers\UserController::class, 'permission'])->name('permission');
+
+    Route::get('/project-stages', function () {
+        return view('masters.project_stage');
+    })->name('projectStages');
+
+    Route::get('/business-group', function () {
+        return view('masters.business_group');
+    })->name('businessGroup');
+
+    Route::get('/project-type', function () {
+        return view('masters.project_type');
+    })->name('projectType');
+
+    Route::get('/department', function () {
+        return view('masters.department');
+    })->name('department');
+
 });
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
 
 // Auth::routes();
 Route::group(["middleware" => ["islogout"]], function(){
 Route::get('/login','App\Http\Controllers\Controller@index')->name('login');
 Route::get('/register','App\Http\Controllers\Controller@register')->name('register');
 Route::get('/set-session','App\Http\Controllers\Controller@setSession')->name('setSession');
+
 });
 

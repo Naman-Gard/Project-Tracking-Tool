@@ -34,11 +34,11 @@
           </a>
           <div class="collapse" id="master">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href=""> Project Stage </a></li>
-                <li class="nav-item"> <a class="nav-link" href=""> Business Group </a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{url('/project-stages')}}"> Project Stage </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/business-group')}}"> Business Group </a></li>
                 <li class="nav-item"> <a class="nav-link" href=""> Ministry</a></li>
-                <li class="nav-item"> <a class="nav-link" href=""> Department </a></li>
-                <li class="nav-item"> <a class="nav-link" href=""> Project Type</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/department')}}"> Department </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/project-type')}}"> Project Type</a></li>
                 <li class="nav-item"> <a class="nav-link" href=""> Intrument Type </a></li>
                 <li class="nav-item"> <a class="nav-link" href=""> Instrument Purpose </a></li>
                 <li class="nav-item"> <a class="nav-link" href=""> Work Order Type </a></li>
