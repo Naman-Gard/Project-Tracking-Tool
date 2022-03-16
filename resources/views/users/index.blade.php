@@ -9,7 +9,6 @@
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-primary d-flex justify-content-between shadow-primary border-radius-lg pt-4 pb-3">
                 <h6 class="text-white text-capitalize ps-3">All Users</h6>
-                <a href="{{route('add-user')}}" class="btn btn-danger mx-5 float-right btn-sm User_add">Add</a>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
