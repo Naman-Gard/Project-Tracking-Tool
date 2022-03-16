@@ -197,3 +197,8 @@
       </div>
     </div>
   </div>
+
+  <input type="hidden" name="view[]" value="" id="view">
+  <input type="hidden" name="edit[]" value="" id="edit">
+  <input type="hidden" name="add[]" value="" id="add">
+  <input type="hidden" name="delete[]" value="" id="delete">
