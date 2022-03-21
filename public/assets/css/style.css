@@ -2,7 +2,8 @@
   display: none !important;
 }
 
-.form-control {
+.form-control,
+.form-control:focus {
   border: 1px solid #d2d6da;
   padding: 10px;
 }
