@@ -36,6 +36,7 @@ Route::group(["middleware" => ["islogin"]], function(){
         return view('masters.department');
     })->name('department');
 
+    Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 });
 
 

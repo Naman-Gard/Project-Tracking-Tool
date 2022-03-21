@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item hide-item" id="Dashboard">
-          <a class="nav-link text-white active bg-gradient-primary" href="{{route('home')}}">
+          <a class="nav-link text-white active {{ Request::is('dashboard') ? 'bg-gradient-primary' : '' }}" href="{{route('home')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -74,7 +74,7 @@
         <li class="nav-item">
           <a class="nav-link text-white " href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">notifications</i>
+              <i class="material-icons opacity-10">receipt</i>
             </div>
             <span class="nav-link-text ms-1">Invoice Details</span>
           </a>
@@ -82,24 +82,31 @@
         <li class="nav-item">
           <a class="nav-link text-white " href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">notifications</i>
+              <i class="material-icons opacity-10">people_outline</i>
             </div>
             <span class="nav-link-text ms-1">Project Team Management</span>
           </a>
         </li>
         <li class="nav-item hide-item" id="User">
-          <a class="nav-link text-white" href="{{url('/users')}}">
+          <a class="nav-link text-white {{ Request::is('users') || Request::is('*/user') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#user" role="button" aria-expanded="false" aria-controls="master">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">notifications</i>
+              <i class="material-icons opacity-10">people</i>
             </div>
-            <span class="nav-link-text ms-1">Users</span>
+            <span class="nav-link-text ms-1">User Management</span>
           </a>
+          <div class="collapse" id="user">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link hide-item User_add" href="{{route('add-user')}}"> Add User</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{route('users')}}"> Manage User </a></li>
+              
+            </ul>
+          </div>
         </li>
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white " href="#">
+        <li class="nav-item hide-item {{ Request::is('profile') ? 'bg-gradient-primary' : '' }}" id="Profile">
+          <a class="nav-link text-white" href="{{route('profile')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">person</i>
             </div>
