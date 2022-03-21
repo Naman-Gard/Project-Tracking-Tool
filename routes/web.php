@@ -15,9 +15,10 @@ use Illuminate\Support\Facades\Route;
 Route::group(["middleware" => ["islogin"]], function(){
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/table', [App\Http\Controllers\HomeController::class, 'table'])->name('table');
-    Route::get('/users', [App\Http\Controllers\HomeController::class, 'users'])->name('users');
+
+    //User Routes
+    Route::get('/user', [App\Http\Controllers\HomeController::class, 'users'])->name('users');
     Route::get('/add/user', [App\Http\Controllers\UserController::class, 'addUser'])->name('add-user');
-    Route::get('/logout','App\Http\Controllers\Controller@logout')->name('logout');
     Route::get('/permission/{id}', [App\Http\Controllers\UserController::class, 'permission'])->name('permission');
 
     Route::get('/project-stages', function () {
@@ -36,6 +37,12 @@ Route::group(["middleware" => ["islogin"]], function(){
         return view('masters.department');
     })->name('department');
 
+    //Project Routes
+    Route::get('/project', [App\Http\Controllers\HomeController::class, 'project'])->name('projects');
+    Route::get('/add/project', [App\Http\Controllers\ProjectController::class, 'addProject'])->name('add-project');
+
+    
+    Route::get('/logout','App\Http\Controllers\Controller@logout')->name('logout');
     Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 });
 

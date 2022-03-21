@@ -1,4 +1,13 @@
 .hide-item {
   display: none !important;
 }
+
+.form-control {
+  border: 1px solid #d2d6da;
+  padding: 10px;
+}
+
+.row {
+  margin-bottom: 10px;
+}
 /*# sourceMappingURL=style.css.map */

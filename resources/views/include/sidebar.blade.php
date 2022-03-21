@@ -47,13 +47,20 @@
             </ul>
           </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white " href="#">
+        <li class="nav-item" id="Project">
+          <a class="nav-link text-white {{ Request::is('project') || Request::is('*/project') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#user" role="button" aria-expanded="false" aria-controls="master">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
-            <span class="nav-link-text ms-1">Project Creation</span>
+            <span class="nav-link-text ms-1">Project Management</span>
           </a>
+          <div class="collapse" id="user">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link Project_add" href="{{route('add-project')}}"> Add Project</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{route('projects')}}"> Manage Project </a></li>
+              
+            </ul>
+          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white " href="#">
@@ -88,7 +95,7 @@
           </a>
         </li>
         <li class="nav-item hide-item" id="User">
-          <a class="nav-link text-white {{ Request::is('users') || Request::is('*/user') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#user" role="button" aria-expanded="false" aria-controls="master">
+          <a class="nav-link text-white {{ Request::is('user') || Request::is('*/user') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#user" role="button" aria-expanded="false" aria-controls="master">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">people</i>
             </div>
