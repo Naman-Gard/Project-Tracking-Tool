@@ -24,7 +24,7 @@
 
                     <div class="col-md-6">
                         <label for="exampleInputEmail1" class="form-label">Bussiness Group</label>
-                        <select name="b_group" class="form-control" id="busines_group">
+                        <select name="b_group" class="form-control" id="business_group">
                             <option value="">Select</option>
                         </select>
                     <span class="text-danger valid_b_group"></span>
@@ -231,6 +231,7 @@
         }
 
         if($('#bid').hasClass('hide-item')){
+            $("input[name=bid_amount]").val('')
             flag=true
         }
         else{

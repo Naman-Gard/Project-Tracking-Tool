@@ -8,7 +8,7 @@
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <div class="bg-gradient-primary d-flex justify-content-between shadow-primary border-radius-lg pt-4 pb-3">
             <h6 class="text-white text-capitalize ps-3">All Projects</h6>
-            <a class="btn btn-secondary mx-5 float-right btn-sm Project_add" href="{{route('add-project')}}">Add</a>
+            <a class="btn btn-secondary mx-5 float-right btn-sm hide-item Project_add" href="{{route('add-project')}}">Add</a>
             </div>
         </div>
         <div class="card-body px-0 pb-2">
@@ -20,7 +20,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
                     <!-- <th scope="col">Mobile No.</th> -->
-                    <th scope="col" class="action User_action">Actions</th>
+                    <th scope="col" class="action hide-item Project_action">Actions</th>
                 </tr>
                 </thead>
                 <tbody class="t-content text-center">
@@ -66,7 +66,7 @@
 @push('scripts')
 <script>
   let project_id
-    function deleteUser(id){
+    function deleteProject(id){
       project_id=id
     }
 
@@ -98,7 +98,7 @@
             projects.forEach((project)=>{
               var edit = '{{ route("edit-project", ":id") }}'
               edit = edit.replace(':id', btoa(project.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_description+'</td><td class="action Project_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Project_delete" onclick="deleteUser('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteProject">Delete</button></td></tr>')
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_description+'</td><td class="action Project_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Project_delete" onclick="deleteProject('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteProject">Delete</button></td></tr>')
             i=i+1
             })
         }

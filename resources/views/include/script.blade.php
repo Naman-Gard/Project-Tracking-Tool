@@ -47,21 +47,21 @@
       // edit=modules.filter(e=>!edit.includes(e));
       // delet=modules.filter(e=>!delet.includes(e));
       view.forEach((item)=>{
-        $('#'+item).attr('style', 'display: list-item !important');
+        $('#'+item).removeClass('hide-item');
       });
       add.forEach((item)=>{
         // $('.'+item+'_add').attr("disabled",true);
-        $('.'+item+'_add').attr('style', 'display: flex !important');
+        $('.'+item+'_add').removeClass('hide-item');
       })
       edit.forEach((item)=>{
         // $('.'+item+'_add').attr("disabled",true);
-        $('.'+item+'_edit').attr('style', 'display: inline-block !important');
-        $('.'+item+'_action').attr('style', 'display: table-cell !important');
+        $('.'+item+'_edit').removeClass('hide-item');
+        $('.'+item+'_action').removeClass('hide-item');
       })
       delet.forEach((item)=>{
         // $('.'+item+'_add').attr("disabled",true);
-        $('.'+item+'_delete').attr('style', 'display: inline-block !important');
-        $('.'+item+'_action').attr('style', 'display: table-cell !important');
+        $('.'+item+'_delete').removeClass('hide-item');
+        $('.'+item+'_action').removeClass('hide-item');
       })
 
     })
