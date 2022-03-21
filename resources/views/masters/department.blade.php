@@ -46,8 +46,9 @@
                   <div class="card-body">
                   <form>
                       <p>Are you sure you want to delete?</p> 
+                      <input type="hidden" id="delete_department_id">
                       <button type="button" class="btn btn-secondary btn-sm Department_delete" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-danger btn-sm Department_delete">Delete</button>
+                      <button onclick="type_delete()" class="btn btn-danger btn-sm">Delete</button>
                   </form>
                   </div>
                 </div>
@@ -73,6 +74,7 @@
           <div class="card-body">
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Department Name</label>
+              <input type="hidden" id="department_id">
               <input type="text" id="name" name="name" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('name') }}">
               <span class="text-danger"></span>
             </div>
@@ -99,37 +101,90 @@
 
     function open_add_model(){
             $('#staticBackdrop').modal('show');
+            $('#department_id').val('');
+            $('#delete_department_id').val('');
+
     }
 
     function open_edit_model(e){
-            $('#staticBackdrop').modal('show');            
+            $('#staticBackdrop').modal('show'); 
+            $.ajax({
+            type: "GET",
+            url: api_url+'master/department',
+            }).done((response)=>{
+              const department=response.data
+              const department_data = department.department
+
+              const department_data_by_id = department_data.filter((item) => {
+                return item.id == e;
+                });
+              
+              const department_type = department_data_by_id[0]
+              $('#department_id').val(department_type.id);
+              $('#name').val(department_type.name);
+                
+            })                
     }
 
     function delete_model(e){
             $('#Deletedepartment').modal('show');
-            
+            $('#delete_department_id').val(e);
+    }
+
+    function type_delete(){
+
+    let data={
+          'department_id': $('#delete_department_id').val() }
+
+    $.ajax({
+    type: "DELETE",
+    contentType: "application/json",
+    dataType: "json",
+    data:JSON.stringify(data),
+    url: api_url+'master/department',
+    }).done((response)=>{
+        window.location='{{route("department")}}'
+    })
     }
 
     function Submit(){
 
-        let data={
-            'name': $("#name").val()
-        }
+      let data={
+            'name': $("#name").val() }
 
         if(data.name == ''){
           $('.text-danger').html('Name field is required.');
         }
+
         else{
     
-        $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        dataType: "json",
-        data:JSON.stringify(data),
-        url: api_url+'master/department',
-        }).done((response)=>{
-            window.location='{{route("department")}}'
-        })
+          if($("#department_id").val() == ''){
+            $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data:JSON.stringify(data),
+            url: api_url+'master/department',
+            }).done((response)=>{
+                window.location='{{route("department")}}'
+            })
+          }
+
+          else{
+            let data={
+            'department_id': $("#department_id").val(),
+            'name': $("#name").val() }
+
+            $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data:JSON.stringify(data),
+            url: api_url+'master/department_update',
+            }).done((response)=>{
+                window.location='{{route("department")}}'
+            })
+          }
       }
 
     }

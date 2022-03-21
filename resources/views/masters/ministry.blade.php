@@ -8,7 +8,7 @@
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-warning d-flex justify-content-between align-items-center shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">All Project Types</h6>
+                <h6 class="text-white text-capitalize ps-3">All Ministry</h6>
                 <a class="btn btn-dark mx-5 btn-sm" onclick="open_add_model()">Add</a>
               </div>
             </div>
@@ -19,7 +19,7 @@
                     <tr class="text-center">
                       <th scope="col">SL no.</th>
                       <th scope="col">Name</th>
-                      <th scope="col" class="action Type_action">Actions</th>
+                      <th scope="col" class="action Ministry_action">Actions</th>
                     </tr>
                   </thead>
                   <tbody class="t-content text-center" id="all_row">
@@ -32,7 +32,7 @@
         </div>
       </div>
 
-    <div class="modal fade" id="Deletetype" >
+    <div class="modal fade" id="Deleteministry" >
       <div class="modal-dialog">
           <div class="modal-content">
           
@@ -40,15 +40,15 @@
                 
             
                 <div class="card">
-                  <div class="card-header">Delete Project Type
+                  <div class="card-header">Delete Ministry
                   <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="card-body">
                   <form>
                       <p>Are you sure you want to delete?</p> 
-                      <input type="hidden" id="delete_type_id">
-                      <button type="button" class="btn btn-secondary btn-sm Type_delete" data-bs-dismiss="modal">Close</button>
-                      <button onclick="type_delete()" class="btn btn-danger">Delete</button>
+                      <input type="hidden" id="delete_ministry_id">
+                      <button type="button" class="btn btn-secondary btn-sm Ministry_delete" data-bs-dismiss="modal">Close</button>
+                      <button onclick="type_delete()" class="btn btn-danger btn-sm">Delete</button>
                   </form>
                   </div>
                 </div>
@@ -64,21 +64,22 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Add Project Type</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Add Project Ministry</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-0">
       <div class="">
         <div class="card">
+          
           <div class="card-body">
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Project Type Name</label>
-              <input type="hidden" id="project_type_id">
+              <label for="exampleInputEmail1" class="form-label">Ministry Name</label>
+              <input type="hidden" id="ministry_id">
               <input type="text" id="name" name="name" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('name') }}">
-            <span class="text-danger"></span>
+              <span class="text-danger"></span>
             </div>
             
-            <button onclick="Submit()" class="btn btn-primary btn-sm">Submit</button>
+            <button type="submit" onclick="Submit()" class="btn btn-primary btn-sm">Submit</button>
           </div>
         </div>
     </div>
@@ -100,50 +101,50 @@
 
     function open_add_model(){
             $('#staticBackdrop').modal('show');
-            $('#project_type_id').val('');
-            $('#delete_type_id').val('');
+            $('#ministry_id').val('');
+            $('#delete_ministry_id').val('');
+
     }
 
     function open_edit_model(e){
-            
-            $('#staticBackdrop').modal('show');
+            $('#staticBackdrop').modal('show'); 
             $.ajax({
             type: "GET",
-            url: api_url+'master/project_type',
+            url: api_url+'master/ministry',
             }).done((response)=>{
-              const types=response.data
-              const type_data = types.project_type
+              const ministry=response.data
+              const ministry_data = ministry.ministry
 
-              const type_data_by_id = type_data.filter((item) => {
+              const ministry_data_by_id = ministry_data.filter((item) => {
                 return item.id == e;
                 });
               
-              const project_type = type_data_by_id[0]
-              $('#project_type_id').val(project_type.id);
-              $('#name').val(project_type.name);
+              const ministry_type = ministry_data_by_id[0]
+              $('#ministry_id').val(ministry_type.id);
+              $('#name').val(ministry_type.name);
                 
-            })          
+            })                
     }
 
     function delete_model(e){
-            $('#Deletetype').modal('show');
-            $('#delete_type_id').val(e);     
+            $('#Deleteministry').modal('show');
+            $('#delete_ministry_id').val(e);
     }
 
     function type_delete(){
 
-      let data={
-            'project_type_id': $('#delete_type_id').val() }
+    let data={
+          'ministry_id': $('#delete_ministry_id').val() }
 
-      $.ajax({
-      type: "DELETE",
-      contentType: "application/json",
-      dataType: "json",
-      data:JSON.stringify(data),
-      url: api_url+'master/project_type',
-      }).done((response)=>{
-          window.location='{{route("projectType")}}'
-      })
+    $.ajax({
+    type: "DELETE",
+    contentType: "application/json",
+    dataType: "json",
+    data:JSON.stringify(data),
+    url: api_url+'master/ministry',
+    }).done((response)=>{
+        window.location='{{route("ministry")}}'
+    })
     }
 
     function Submit(){
@@ -156,22 +157,22 @@
         }
 
         else{
-
-          if($("#project_type_id").val() == ''){
+    
+          if($("#ministry_id").val() == ''){
             $.ajax({
             type: "POST",
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/project_type',
+            url: api_url+'master/ministry',
             }).done((response)=>{
-                window.location='{{route("projectType")}}'
+                window.location='{{route("ministry")}}'
             })
           }
 
           else{
             let data={
-            'project_type_id': $("#project_type_id").val(),
+            'ministry_id': $("#ministry_id").val(),
             'name': $("#name").val() }
 
             $.ajax({
@@ -179,27 +180,27 @@
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/project_type_update',
+            url: api_url+'master/ministry_update',
             }).done((response)=>{
-                window.location='{{route("projectType")}}'
+                window.location='{{route("ministry")}}'
             })
           }
-          
-          
-        }
+      }
 
     }
 
-  $(document).ready(()=>{
+$(document).ready(()=>{
+
         var innerHtml = '';
+        
         $.ajax({
         type: "GET",
-        url: api_url+'master/project_type',
+        url: api_url+'master/ministry',
         }).done((response)=>{
-        const types=response.data
-        if(types.project_type.length!=0){
+        const ministry=response.data
+        if(ministry.ministry.length!=0){
           var i = 1;
-          types.project_type.forEach(element =>{
+          ministry.ministry.forEach(element =>{
               innerHtml += `<tr>
                                 <td>${i++}</td>
                                 <td>${element.name}</td>
@@ -216,8 +217,8 @@
 
         $('#all_row').html(innerHtml);
 
-      })
     })
+  })
 
 </script>
 @endpush

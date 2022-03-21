@@ -36,14 +36,14 @@
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="{{url('/project-stages')}}"> Project Stage </a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{url('/business-group')}}"> Business Group </a></li>
-                <li class="nav-item"> <a class="nav-link" href=""> Ministry</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/ministry')}}"> Ministry</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{url('/department')}}"> Department </a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{url('/project-type')}}"> Project Type</a></li>
-                <li class="nav-item"> <a class="nav-link" href=""> Intrument Type </a></li>
-                <li class="nav-item"> <a class="nav-link" href=""> Instrument Purpose </a></li>
-                <li class="nav-item"> <a class="nav-link" href=""> Work Order Type </a></li>
-                <li class="nav-item"> <a class="nav-link" href=""> Billing Type </a></li>
-                <li class="nav-item"> <a class="nav-link" href=""> Employees List </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/instrument-type')}}"> Intrument Type </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/instrument-purpose')}}"> Instrument Purpose </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/work-order-type')}}"> Work Order Type </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/billing-type')}}"> Billing Type </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/employee-list')}}"> Employees List </a></li>
             </ul>
           </div>
         </li>

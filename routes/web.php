@@ -37,6 +37,30 @@ Route::group(["middleware" => ["islogin"]], function(){
         return view('masters.department');
     })->name('department');
 
+    Route::get('/ministry', function () {
+        return view('masters.ministry');
+    })->name('ministry');
+
+    Route::get('/instrument-type', function () {
+        return view('masters.instrument_type');
+    })->name('instrumentType');
+
+    Route::get('/instrument-purpose', function () {
+        return view('masters.instrument_purpose');
+    })->name('instrumentPurpose');
+
+    Route::get('//work-order-type', function () {
+        return view('masters./work_order_type');
+    })->name('work_orderType');
+
+    Route::get('/billing-type', function () {
+        return view('masters.billing_type');
+    })->name('billingType');
+
+    Route::get('/employee-list', function () {
+        return view('masters.employee_list');
+    })->name('employeeList');
+
     //Project Routes
     Route::get('/project', [App\Http\Controllers\HomeController::class, 'project'])->name('projects');
     Route::get('/add/project', [App\Http\Controllers\ProjectController::class, 'addProject'])->name('add-project');

@@ -19,7 +19,7 @@
                     <tr class="text-center">
                       <th scope="col">SL no.</th>
                       <th scope="col">Name</th>
-                      <th scope="col" class="action Business_action">Actions</th>
+                      <th scope="col" class="action Type_action">Actions</th>
                     </tr>
                   </thead>
                   <tbody class="t-content text-center" id="all_row">
@@ -32,23 +32,22 @@
         </div>
       </div>
 
-    <div class="modal fade" id="DeleteGroup" >
+    <div class="modal fade" id="Deletegroup" >
       <div class="modal-dialog">
           <div class="modal-content">
           
             <div class="modal-body p-0">
-                
             
                 <div class="card">
-                  <div class="card-header">Delete Group
+                  <div class="card-header">Delete Business Group
                   <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="card-body">
-                  <form action="" id="delete-court-form" method="GET" enctype="multipart/form-data">
-                      @csrf
+                  <form>
                       <p>Are you sure you want to delete?</p> 
+                      <input type="hidden" id="delete_group_id">
                       <button type="button" class="btn btn-secondary btn-sm Group_delete" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-danger btn-sm Group_delete">Delete</button>
+                      <button onclick="group_delete()" class="btn btn-danger">Delete</button>
                   </form>
                   </div>
                 </div>
@@ -64,20 +63,20 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Add Project Group</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Add Business Group</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-0">
       <div class="">
         <div class="card">
-          
           <div class="card-body">
-             
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Business Group Name</label>
+              <input type="hidden" id="business_group_id">
               <input type="text" id="name" name="name" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('name') }}">
             <span class="text-danger"></span>
             </div>
+            
             <button onclick="Submit()" class="btn btn-primary btn-sm">Submit</button>
           </div>
         </div>
@@ -100,53 +99,106 @@
 
     function open_add_model(){
             $('#staticBackdrop').modal('show');
+            $('#business_group_id').val('');
+            $('#delete_group_id').val('');
     }
 
     function open_edit_model(e){
-            $('#staticBackdrop').modal('show');            
+            
+            $('#staticBackdrop').modal('show');
+            $.ajax({
+            type: "GET",
+            url: api_url+'master/business_group',
+            }).done((response)=>{
+              const business=response.data
+              const business_data = business.business_group
+
+              const business_data_by_id = business_data.filter((item) => {
+                return item.id == e;
+                });
+              
+              const business_group = business_data_by_id[0]
+              $('#business_group_id').val(business_group.id);
+              $('#name').val(business_group.name);
+                
+            })          
     }
 
     function delete_model(e){
             $('#Deletegroup').modal('show');
-            
+            $('#delete_group_id').val(e);     
+    }
+
+    function group_delete(){
+
+      let data={
+            'business_group_id': $('#delete_group_id').val() }
+
+      $.ajax({
+      type: "DELETE",
+      contentType: "application/json",
+      dataType: "json",
+      data:JSON.stringify(data),
+      url: api_url+'master/business_group',
+      }).done((response)=>{
+          window.location='{{route("businessGroup")}}'
+      })
     }
 
     function Submit(){
 
-        let data={
-            'name': $("#name").val()
-        }
+      let data={
+            'name': $("#name").val() }
 
         if(data.name == ''){
           $('.text-danger').html('Name field is required.');
         }
+
         else{
-    
-        $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        dataType: "json",
-        data:JSON.stringify(data),
-        url: api_url+'master/business_group',
-        }).done((response)=>{
-            window.location='{{route("businessGroup")}}'
-        })
-      }
+
+          if($("#business_group_id").val() == ''){
+            $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data:JSON.stringify(data),
+            url: api_url+'master/business_group',
+            }).done((response)=>{
+                window.location='{{route("businessGroup")}}'
+            })
+          }
+
+          else{
+            let data={
+            'business_group_id': $("#business_group_id").val(),
+            'name': $("#name").val() }
+
+            $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data:JSON.stringify(data),
+            url: api_url+'master/business_group_update',
+            }).done((response)=>{
+                window.location='{{route("businessGroup")}}'
+            })
+          }
+          
+          
+        }
 
     }
 
-$(document).ready(()=>{
-
+  $(document).ready(()=>{
         var innerHtml = '';
-        
         $.ajax({
         type: "GET",
         url: api_url+'master/business_group',
         }).done((response)=>{
-        const groups=response.data
-        if(groups.business_group.length!=0){
+        const business=response.data
+        if(business.business_group.length!=0){
           var i = 1;
-          groups.business_group.forEach(element =>{
+          business.business_group.forEach(element =>{
               innerHtml += `<tr>
                                 <td>${i++}</td>
                                 <td>${element.name}</td>
@@ -163,8 +215,8 @@ $(document).ready(()=>{
 
         $('#all_row').html(innerHtml);
 
+      })
     })
-  })
 
 </script>
 @endpush

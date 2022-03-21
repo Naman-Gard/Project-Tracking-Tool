@@ -8,7 +8,7 @@
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-warning d-flex justify-content-between align-items-center shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">All Project Types</h6>
+                <h6 class="text-white text-capitalize ps-3">All Employee List</h6>
                 <a class="btn btn-dark mx-5 btn-sm" onclick="open_add_model()">Add</a>
               </div>
             </div>
@@ -40,7 +40,7 @@
                 
             
                 <div class="card">
-                  <div class="card-header">Delete Project Type
+                  <div class="card-header">Delete Employee List
                   <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="card-body">
@@ -64,7 +64,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Add Project Type</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Add Employee List</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-0">
@@ -72,8 +72,8 @@
         <div class="card">
           <div class="card-body">
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Project Type Name</label>
-              <input type="hidden" id="project_type_id">
+              <label for="exampleInputEmail1" class="form-label">Employee List Name</label>
+              <input type="hidden" id="employee_list_id">
               <input type="text" id="name" name="name" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('name') }}">
             <span class="text-danger"></span>
             </div>
@@ -100,7 +100,7 @@
 
     function open_add_model(){
             $('#staticBackdrop').modal('show');
-            $('#project_type_id').val('');
+            $('#employee_list_id').val('');
             $('#delete_type_id').val('');
     }
 
@@ -109,18 +109,18 @@
             $('#staticBackdrop').modal('show');
             $.ajax({
             type: "GET",
-            url: api_url+'master/project_type',
+            url: api_url+'master/employee_list',
             }).done((response)=>{
               const types=response.data
-              const type_data = types.project_type
+              const type_data = types.employee_list
 
               const type_data_by_id = type_data.filter((item) => {
                 return item.id == e;
                 });
               
-              const project_type = type_data_by_id[0]
-              $('#project_type_id').val(project_type.id);
-              $('#name').val(project_type.name);
+              const employee_list = type_data_by_id[0]
+              $('#employee_list_id').val(employee_list.id);
+              $('#name').val(employee_list.name);
                 
             })          
     }
@@ -133,16 +133,16 @@
     function type_delete(){
 
       let data={
-            'project_type_id': $('#delete_type_id').val() }
+            'employee_list_id': $('#delete_type_id').val() }
 
       $.ajax({
       type: "DELETE",
       contentType: "application/json",
       dataType: "json",
       data:JSON.stringify(data),
-      url: api_url+'master/project_type',
+      url: api_url+'master/employee_list',
       }).done((response)=>{
-          window.location='{{route("projectType")}}'
+          window.location='{{route("employeeList")}}'
       })
     }
 
@@ -157,21 +157,21 @@
 
         else{
 
-          if($("#project_type_id").val() == ''){
+          if($("#employee_list_id").val() == ''){
             $.ajax({
             type: "POST",
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/project_type',
+            url: api_url+'master/employee_list',
             }).done((response)=>{
-                window.location='{{route("projectType")}}'
+                window.location='{{route("employeeList")}}'
             })
           }
 
           else{
             let data={
-            'project_type_id': $("#project_type_id").val(),
+            'employee_list_id': $("#employee_list_id").val(),
             'name': $("#name").val() }
 
             $.ajax({
@@ -179,9 +179,9 @@
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/project_type_update',
+            url: api_url+'master/employee_list_update',
             }).done((response)=>{
-                window.location='{{route("projectType")}}'
+                window.location='{{route("employeeList")}}'
             })
           }
           
@@ -194,12 +194,12 @@
         var innerHtml = '';
         $.ajax({
         type: "GET",
-        url: api_url+'master/project_type',
+        url: api_url+'master/employee_list',
         }).done((response)=>{
         const types=response.data
-        if(types.project_type.length!=0){
+        if(types.employee_list.length!=0){
           var i = 1;
-          types.project_type.forEach(element =>{
+          types.employee_list.forEach(element =>{
               innerHtml += `<tr>
                                 <td>${i++}</td>
                                 <td>${element.name}</td>
