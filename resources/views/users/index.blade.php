@@ -44,16 +44,13 @@
                 
             
                 <div class="card">
-                  <div class="card-header">Delete user
+                  <!-- <div class="card-header">Delete user
                   <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
+                  </div> -->
                   <div class="card-body">
-                  <form action="" id="delete-court-form" method="GET" enctype="multipart/form-data">
-                      @csrf
                       <p>Are you sure you want to delete?</p> 
-                      <button type="button" class="btn btn-secondary btn-sm User_delete" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-danger btn-sm User_delete">Delete</button>
-                  </form>
+                      <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-danger delete-mem-btn btn-sm">Delete</button>
                   </div>
                 </div>
 
@@ -68,9 +65,27 @@
 @endsection
 @push('scripts')
 <script>
-    $('.delete-mem-btn').on('click',function(){
-        $('#delete-court-form').attr('action',$(this).data('delete-link'))
+  let user_id
+    function deleteUser(id){
+      user_id=id
+    }
+
+    $(".delete-mem-btn").click(()=>{
+      let data={
+        user_id:user_id
+      }
+
+      $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data:JSON.stringify(data),
+            url: api_url+'master/user/delete',
+        }).done((response)=>{
+          window.location='{{route("users")}}'
+        })
     })
+    
 
     $(document).ready(()=>{
         const email='{{Session::get("user")["email"]}}'
@@ -89,12 +104,12 @@
             users.forEach((user)=>{
               var permission = '{{ route("permission", ":id") }}'
               permission = permission.replace(':id', btoa(user.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+user.name+'</td><td>'+user.email+'</td><td class="action User_action"><a href="'+permission+'" class="btn btn-primary btn-sm hide-item User_edit m-2">Permissions</a><button class="btn btn-danger m-3 btn-sm delete-mem-btn hide-item User_delete" data-delete-link="" data-bs-toggle="modal" data-bs-target="#Deleteuser">Delete</button></td></tr>')
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+user.name+'</td><td>'+user.email+'</td><td class="action User_action"><a href="'+permission+'" class="btn btn-primary btn-sm hide-item User_edit m-2">Permissions</a><button class="btn btn-danger m-3 btn-sm hide-item User_delete" onclick="deleteUser('+user.id+')" data-bs-toggle="modal" data-bs-target="#Deleteuser">Delete</button></td></tr>')
             i=i+1
             })
         }
         else{
-            $('.t-content').append('<tr><th></th><td></td><td><p>No Data Found!</p></td><td></td></tr>')
+            $('.t-content').append('<tr><td>No Data Found!</td></tr>')
         }
 
         getPermissions()
