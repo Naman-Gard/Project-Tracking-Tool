@@ -34,7 +34,7 @@
                         
                         <form>
 
-                        <?php $modules=['User'];?>
+                        <?php $modules=['User','Project'];?>
                         @foreach($modules as $module)
                         <div class="row text-center">
                     
@@ -123,7 +123,7 @@
 
     function Permit(){
         
-        modules=['User']
+        modules=['User','Project']
         modules.forEach((item)=>{
             if($("input[name="+item+"_view]:checked").val()==1){
                 if(!permit_view.includes(item)){

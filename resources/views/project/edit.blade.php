@@ -24,7 +24,7 @@
 
                     <div class="col-md-6">
                         <label for="exampleInputEmail1" class="form-label">Bussiness Group</label>
-                        <select name="b_group" class="form-control" id="busines_group">
+                        <select name="b_group" class="form-control" id="business_group">
                             <option value="">Select</option>
                         </select>
                     <span class="text-danger valid_b_group"></span>
@@ -120,6 +120,7 @@
         if(flag){
 
             let data={
+                'project_id':id,
                 'project_stage':  $("select[name=p_stage]").val(),
                 'business_group':  $("select[name=b_group]").val(),
                 'project_name': $("input[name=p_name]").val(),
@@ -231,6 +232,7 @@
         }
 
         if($('#bid').hasClass('hide-item')){
+            $("input[name=bid_amount]").val('')
             flag=true
         }
         else{
@@ -257,16 +259,47 @@
     })
 
     $('document').ready(()=>{
+        let url=window.location.href
+        let id=atob(url.split('project/')[1])
+
+        const filters={
+            "id":{
+                '_eq': id
+            },
+        }
+
         $.ajax({
         type: "GET",
-        url: api_url+'master/projectdetails',
+        url: api_url+'items/projects?filter='+JSON.stringify(filters),
         }).done((response)=>{
-            data=response.data
-            $.each( data, function( key, value ) {
-                value.forEach((item)=>{
-                    $('#'+key).append(`<option value="${item.name}">${item.name}</option>`)
-                })
-            });
+            temp_data=response.data.pop()
+            $.ajax({
+            type: "GET",
+            url: api_url+'master/projectdetails',
+            }).done((response)=>{
+                data=response.data
+                $("input[name=p_name]").val(temp_data.project_name)
+                $("textarea[name=desc]").val(temp_data.project_description)
+                $("input[name=t_acc_manager]").val(temp_data.technical_account_manager)
+                $("input[name=client_name]").val(temp_data.client_name)
+                $("input[name=b_acc_manager]").val(temp_data.business_account_manager)
+
+                if(temp_data.bid_amount){
+                    $("input[name=bid_amount]").val(temp_data.bid_amount)
+                    $('#bid').removeClass('hide-item')
+                }
+
+
+                $.each( data, function( key, value ) {
+                    value.forEach((item)=>{
+                        if(item.name==temp_data[key]){
+                        $('#'+key).append(`<option value="${item.name}" selected>${item.name}</option>`)
+                        }else{
+                        $('#'+key).append(`<option value="${item.name}">${item.name}</option>`)
+                        }
+                    })
+                });
+            })
         })
     })
 
