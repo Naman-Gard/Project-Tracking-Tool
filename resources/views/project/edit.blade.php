@@ -8,7 +8,7 @@
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                    <h6 class="text-white text-capitalize ps-3">Add Project</h6>
+                    <h6 class="text-white text-capitalize ps-3">Edit Project</h6>
                 </div>
                 </div>
             <div class="card-body">
@@ -18,7 +18,7 @@
 
                     <div class="col-md-6">
                     <label for="exampleFormControlInput1" class="form-label">Project Name</label>
-                    <input class="form-control" name="p_name" type="text" placeholder="Project Name" value="{{old('p_name')}}" autocomplete="off">
+                    <input class="form-control" name="p_name" type="text" placeholder="Project Name" autocomplete="off">
                     <span class="text-danger valid_p_name"></span>
                     </div>
 
@@ -36,14 +36,14 @@
                     <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Project Description</label>
                     <!-- <input class="form-control" name="desc" type="text" placeholder="Description" value="{{old('desc')}}" autocomplete="off"> -->
-                    <textarea class="form-control" name="desc" placeholder="Project Description" value="{{old('desc')}}"></textarea>
+                    <textarea class="form-control" name="desc" placeholder="Project Description"></textarea>
                     <span class="text-danger valid_desc"></span>
                     </div>
                     
                     <div class="row">
                     <div class="col-md-6">
                     <label for="exampleFormControlInput1" class="form-label">Client Name</label>
-                    <input class="form-control" name="client_name" type="text" placeholder="Client Name" value="{{old('client_name')}}" autocomplete="off">
+                    <input class="form-control" name="client_name" type="text" placeholder="Client Name" autocomplete="off">
                     <span class="text-danger valid_client_name"></span>
                     </div>
 
@@ -59,13 +59,13 @@
                     <div class="row">
                     <div class="col-md-6">
                     <label for="exampleFormControlInput1" class="form-label">Business Account Manager</label>
-                    <input class="form-control" name="b_acc_manager" type="text" placeholder="Business Account Manager" value="{{old('b_acc_manager')}}" autocomplete="off">
+                    <input class="form-control" name="b_acc_manager" type="text" placeholder="Business Account Manager"  autocomplete="off">
                     <span class="text-danger valid_b_acc_manager"></span>
                     </div>
 
                     <div class="col-md-6">
                     <label for="exampleFormControlInput1" class="form-label">Technical Account Manager</label>
-                    <input class="form-control" name="t_acc_manager" type="text" placeholder="Technical Account Manager" value="{{old('t_acc_manager')}}" autocomplete="off">
+                    <input class="form-control" name="t_acc_manager" type="text" placeholder="Technical Account Manager" autocomplete="off">
                     <span class="text-danger valid_t_acc_manager"></span>
                     </div>
                     </div>
@@ -94,7 +94,7 @@
                     
                     <div class="col-md-6 hide-item" id="bid">
                     <label for="exampleFormControlInput1" class="form-label">Bid Amount</label>
-                    <input class="form-control" name="bid_amount" type="text" placeholder="Bid Amount" value="{{old('bid_amount')}}" autocomplete="off">
+                    <input class="form-control" name="bid_amount" type="text" placeholder="Bid Amount" autocomplete="off">
                     <span class="text-danger valid_bid_amount"></span>
                     </div>
                     </div>
@@ -115,11 +115,12 @@
 
     function Submit(){
 
-        const flag=projectValidations() 
+        const flag=doValidations() 
         
         if(flag){
 
             let data={
+                'project_id':id,
                 'project_stage':  $("select[name=p_stage]").val(),
                 'business_group':  $("select[name=b_group]").val(),
                 'project_name': $("input[name=p_name]").val(),
@@ -137,7 +138,7 @@
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/add/project',
+            url: api_url+'master/update/project',
             }).done((response)=>{
                 window.location='{{route("projects")}}'
             })
@@ -146,7 +147,7 @@
 
     }
 
-    function projectValidations(){
+    function doValidations(){
 
         let flag1=false
         let flag2=false
@@ -258,16 +259,47 @@
     })
 
     $('document').ready(()=>{
+        let url=window.location.href
+        let id=atob(url.split('project/')[1])
+
+        const filters={
+            "id":{
+                '_eq': id
+            },
+        }
+
         $.ajax({
         type: "GET",
-        url: api_url+'master/projectdetails',
+        url: api_url+'items/projects?filter='+JSON.stringify(filters),
         }).done((response)=>{
-            data=response.data
-            $.each( data, function( key, value ) {
-                value.forEach((item)=>{
-                    $('#'+key).append(`<option value="${item.name}">${item.name}</option>`)
-                })
-            });
+            temp_data=response.data.pop()
+            $.ajax({
+            type: "GET",
+            url: api_url+'master/projectdetails',
+            }).done((response)=>{
+                data=response.data
+                $("input[name=p_name]").val(temp_data.project_name)
+                $("textarea[name=desc]").val(temp_data.project_description)
+                $("input[name=t_acc_manager]").val(temp_data.technical_account_manager)
+                $("input[name=client_name]").val(temp_data.client_name)
+                $("input[name=b_acc_manager]").val(temp_data.business_account_manager)
+
+                if(temp_data.bid_amount){
+                    $("input[name=bid_amount]").val(temp_data.bid_amount)
+                    $('#bid').removeClass('hide-item')
+                }
+
+
+                $.each( data, function( key, value ) {
+                    value.forEach((item)=>{
+                        if(item.name==temp_data[key]){
+                        $('#'+key).append(`<option value="${item.name}" selected>${item.name}</option>`)
+                        }else{
+                        $('#'+key).append(`<option value="${item.name}">${item.name}</option>`)
+                        }
+                    })
+                });
+            })
         })
     })
 

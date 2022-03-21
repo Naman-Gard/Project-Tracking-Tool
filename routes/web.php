@@ -64,6 +64,7 @@ Route::group(["middleware" => ["islogin"]], function(){
     //Project Routes
     Route::get('/project', [App\Http\Controllers\HomeController::class, 'project'])->name('projects');
     Route::get('/add/project', [App\Http\Controllers\ProjectController::class, 'addProject'])->name('add-project');
+    Route::get('/edit/project/{id}', [App\Http\Controllers\ProjectController::class, 'editProject'])->name('edit-project');
 
     
     Route::get('/logout','App\Http\Controllers\Controller@logout')->name('logout');
