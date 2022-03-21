@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('client_name');
             $table->string('client_department');
             $table->string('business_account_manager');
-            $table->string('technical_account_manage');
+            $table->string('technical_account_manager');
             $table->string('project_type');
             $table->string('project_stage');
             $table->string('bid_amount')->nullable();         
