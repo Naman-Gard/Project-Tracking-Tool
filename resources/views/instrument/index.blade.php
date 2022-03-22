@@ -8,7 +8,7 @@
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <div class="bg-gradient-primary d-flex justify-content-between shadow-primary border-radius-lg pt-4 pb-3">
             <h6 class="text-white text-capitalize ps-3">All Instruments</h6>
-            <a class="btn btn-secondary mx-5 float-right btn-sm hide-item Project_add" href="{{route('add-instrument')}}">Add</a>
+            <a class="btn btn-secondary mx-5 float-right btn-sm hide-item Instrument_add" href="{{route('add-instrument')}}">Add</a>
             </div>
         </div>
         <div class="card-body px-0 pb-2">
@@ -17,10 +17,12 @@
                 <thead>
                 <tr class="text-center">
                     <th scope="col">SL no.</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
+                    <th scope="col">Serial Number</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Expiry Date</th>
                     <!-- <th scope="col">Mobile No.</th> -->
-                    <th scope="col" class="action hide-item Project_action">Actions</th>
+                    <th scope="col" class="action hide-item Instrument_action">Actions</th>
                 </tr>
                 </thead>
                 <tbody class="t-content text-center">
@@ -65,14 +67,14 @@
 @endsection
 @push('scripts')
 <script>
-  let project_id
+  let instrument_id
     function deleteInstrument(id){
-      project_id=id
+      instrument_id=id
     }
 
     $(".delete-mem-btn").click(()=>{
       let data={
-        project_id:project_id
+        instrument_id:instrument_id
       }
 
       $.ajax({
@@ -80,9 +82,9 @@
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/project/delete',
+            url: api_url+'master/instrument/delete',
         }).done((response)=>{
-          window.location='{{route("projects")}}'
+          window.location='{{route("instruments")}}'
         })
     })
     
@@ -91,14 +93,14 @@
         var i=1
         $.ajax({
         type: "GET",
-        url: api_url+'items/projects?limit=-1',
+        url: api_url+'items/instruments?limit=-1',
         }).done((response)=>{
-        const projects=response.data
-        if(projects.length!=0){
-            projects.forEach((project)=>{
-              var edit = '{{ route("edit-project", ":id") }}'
-              edit = edit.replace(':id', btoa(project.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_description+'</td><td class="action hide-item Project_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Project_delete" onclick="deleteInstrument('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteInstrument">Delete</button></td></tr>')
+        const instruments=response.data
+        if(instruments.length!=0){
+            instruments.forEach((instrument)=>{
+              var edit = '{{ route("edit-instrument", ":id") }}'
+              edit = edit.replace(':id', btoa(instrument.id))
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+instrument.serial_no+'</td><td>'+instrument.amount+'</td><td>'+instrument.date+'</td><td>'+instrument.expiry_date+'</td><td class="action hide-item Instrument_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Instrument_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Instrument_delete" onclick="deleteInstrument('+instrument.id+')" data-bs-toggle="modal" data-bs-target="#DeleteInstrument">Delete</button></td></tr>')
             i=i+1
             })
         }

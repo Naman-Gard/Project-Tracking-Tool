@@ -25,7 +25,7 @@
             <span class="nav-link-text ms-1">Tables</span>
           </a>
         </li> -->
-        <li class="nav-item">
+        <li class="nav-item hide-item" id="Master">
           <a class="nav-link text-white {{ Request::is('master/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#master" role="button" aria-expanded="false" aria-controls="master">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
@@ -72,7 +72,7 @@
           </a>
           <div class="collapse" id="instrument">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link hide-item Project_add" href="{{route('add-instrument')}}"> Add Instrument</a></li>
+              <li class="nav-item"> <a class="nav-link hide-item Instrument_add" href="{{route('add-instrument')}}"> Add Instrument</a></li>
               <li class="nav-item"> <a class="nav-link" href="{{route('instruments')}}"> Manage Instrument </a></li>
               
             </ul>
@@ -111,7 +111,7 @@
           </a>
         </li>
         <li class="nav-item hide-item" id="User">
-          <a class="nav-link text-white {{ Request::is('user') || Request::is('*/user') || Request::is('permission/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#user" role="button" aria-expanded="false" aria-controls="master">
+          <a class="nav-link text-white {{ Request::is('user') || Request::is('*/user') || Request::is('*/permission/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#user" role="button" aria-expanded="false" aria-controls="master">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">people</i>
             </div>
