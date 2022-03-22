@@ -8,7 +8,7 @@
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-warning d-flex justify-content-between align-items-center shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">All Stages</h6>
+                <h6 class="text-white text-capitalize ps-3">All Instrument Purpose</h6>
                 <a class="btn btn-dark mx-5 btn-sm" onclick="open_add_model()">Add</a>
               </div>
             </div>
@@ -18,8 +18,9 @@
                   <thead>
                     <tr class="text-center">
                       <th scope="col">SL no.</th>
-                      <th scope="col">Name</th>
-                      <th scope="col" class="action Stage_action">Actions</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Purpose</th>
+                      <th scope="col" class="action Type_action">Actions</th>
                     </tr>
                   </thead>
                   <tbody class="t-content text-center" id="all_row">
@@ -32,7 +33,7 @@
         </div>
       </div>
 
-    <div class="modal fade" id="Deletestage" >
+    <div class="modal fade" id="Deletetype" >
       <div class="modal-dialog">
           <div class="modal-content">
           
@@ -40,15 +41,15 @@
                 
             
                 <div class="card">
-                  <div class="card-header">Delete Stage
+                  <div class="card-header">Delete Instrument Purpose
                   <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="card-body">
                   <form>
                       <p>Are you sure you want to delete?</p> 
-                      <input type="hidden" id="delete_stage_id">
-                      <button type="button" class="btn btn-secondary btn-sm Stage_delete" data-bs-dismiss="modal">Close</button>
-                      <button onclick="stage_delete()" class="btn btn-danger">Delete</button>
+                      <input type="hidden" id="delete_type_id">
+                      <button type="button" class="btn btn-secondary btn-sm Type_delete" data-bs-dismiss="modal">Close</button>
+                      <button onclick="type_delete()" class="btn btn-danger">Delete</button>
                   </form>
                   </div>
                 </div>
@@ -64,7 +65,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Add Project Stage</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Add Instrument Purpose</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-0">
@@ -72,9 +73,14 @@
         <div class="card">
           <div class="card-body">
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Stage Name</label>
-              <input type="hidden" id="project_stage_id">
-              <input type="text" id="name" name="name" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('name') }}">
+              <input type="hidden" id="instrument_purpose_id">
+              <label for="instrument_type" class="form-label">Instrument Purpose Type</label>
+              <select name="instrument_type" class="form-control" id="instrument_type">
+                  <option value="">Select</option>
+              </select>
+
+              <label for="purpose" class="form-label">Instrument Purpose</label>
+              <input type="text" id="purpose" name="purpose" class="form-control border" value="{{ old('purpose') }}">
             <span class="text-danger"></span>
             </div>
             
@@ -100,8 +106,22 @@
 
     function open_add_model(){
             $('#staticBackdrop').modal('show');
-            $('#project_stage_id').val('');
-            $('#delete_stage_id').val('');
+            $('#instrument_purpose_id').val('');
+            $('#delete_type_id').val('');
+            
+            var innerHtml = '';
+            $.ajax({
+            type: "GET",
+            url: api_url+'master/instrument_type',
+            }).done((response)=>{
+              const types=response.data
+
+              types.instrument_type.forEach(element => {
+                  innerHtml += `<option value="${element.id}">${element.name}</option>`;
+              });
+              $('#instrument_type').html(innerHtml);
+                
+            })     
     }
 
     function open_edit_model(e){
@@ -109,80 +129,104 @@
             $('#staticBackdrop').modal('show');
             $.ajax({
             type: "GET",
-            url: api_url+'master/project_stage',
+            url: api_url+'master/instrument_purpose',
             }).done((response)=>{
-              const stages=response.data
-              const stage_data = stages.project_stages
+              const types=response.data
+              const type_data = types.instrument_purpose
 
-              const stage_data_by_id = stage_data.filter((item) => {
+              const type_data_by_id = type_data.filter((item) => {
                 return item.id == e;
                 });
               
-              const project_stage = stage_data_by_id[0]
-              $('#project_stage_id').val(project_stage.id);
-              $('#name').val(project_stage.name);
+              const instrument_purpose = type_data_by_id[0]
+              $('#instrument_purpose_id').val(instrument_purpose.id);
+              $('#purpose').val(instrument_purpose.name);
+
+              $.ajax({
+                type: "GET",
+                url: api_url+'master/instrument_type',
+                }).done((response)=>{
+                const types=response.data
+                if(types.instrument_type.length!=0){
+                  var i = 1;
+                  var innerHtml1 = '';
+                  types.instrument_type.forEach(element =>{
+                      innerHtml1 += `<option value="${element.id}" (${instrument_purpose.instrument_id = element.id}) ? selected : ''>${element.name}</option>`;
+                    })
+                }
+                $('#instrument_type').html(innerHtml1);
+
+              })
+
+
                 
             })          
     }
 
     function delete_model(e){
-            $('#Deletestage').modal('show');
-            $('#delete_stage_id').val(e);
-            
+            $('#Deletetype').modal('show');
+            $('#delete_type_id').val(e);     
     }
 
-    function stage_delete(){
+    function type_delete(){
 
       let data={
-            'project_stage_id': $('#delete_stage_id').val() }
+            'instrument_purpose_id': $('#delete_type_id').val() }
 
       $.ajax({
       type: "DELETE",
       contentType: "application/json",
       dataType: "json",
       data:JSON.stringify(data),
-      url: api_url+'master/project_stage',
+      url: api_url+'master/instrument_purpose',
       }).done((response)=>{
-          window.location='{{route("projectStages")}}'
+          window.location='{{route("instrumentPurpose")}}'
       })
     }
 
     function Submit(){
 
       let data={
-            'name': $("#name").val() }
+            'instrument_id': $("#instrument_type").val(),
+            'purpose': $("#purpose").val() }
+            console.log(data.instrument_id)
 
-        if(data.name == ''){
-          $('.text-danger').html('Name field is required.');
+        // if(data.instrument_id == ''){
+        //   $('.text-danger').html('The Instrument Type field is required.');
+        // }
+
+        if(data.purpose == ''){
+          $('.text-danger').html('The Purpose field is required.');
         }
 
         else{
 
-          if($("#project_stage_id").val() == ''){
+          if($("#instrument_purpose_id").val() == ''){
             $.ajax({
             type: "POST",
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/project_stage',
+            url: api_url+'master/instrument_purpose',
             }).done((response)=>{
-                window.location='{{route("projectStages")}}'
+                window.location='{{route("instrumentPurpose")}}'
             })
           }
 
           else{
             let data={
-            'project_stage_id': $("#project_stage_id").val(),
-            'name': $("#name").val() }
+            'instrument_purpose_id': $("#instrument_purpose_id").val(),
+            'instrument_id': $("#instrument_type").val(),
+            'name': $("#purpose").val() }
 
             $.ajax({
             type: "POST",
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/project_stage_update',
+            url: api_url+'master/instrument_purpose_update',
             }).done((response)=>{
-                window.location='{{route("projectStages")}}'
+                window.location='{{route("instrumentPurpose")}}'
             })
           }
           
@@ -193,16 +237,22 @@
 
   $(document).ready(()=>{
         var innerHtml = '';
+        
         $.ajax({
         type: "GET",
-        url: api_url+'master/project_stage',
+        url: api_url+'master/instrument_purpose',
         }).done((response)=>{
-        const stages=response.data
-        if(stages.project_stages.length!=0){
+        const purpose=response.data
+        const types=response.data
+        const instrument_type = types.instrument_type
+        
+        if(purpose.instrument_purpose.length!=0){
           var i = 1;
-          stages.project_stages.forEach(element =>{
+          purpose.instrument_purpose.forEach(element =>{
+
               innerHtml += `<tr>
                                 <td>${i++}</td>
+                                <td>${element.instrument_id}</td>
                                 <td>${element.name}</td>
                                 <td>
                                   <button class="btn btn-info btn-sm" onclick="open_edit_model(${element.id})">Edit</button>
