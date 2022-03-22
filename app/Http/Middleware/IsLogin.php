@@ -20,26 +20,27 @@ class IsLogin
     {
 
         if(Session::has('user')){
-            // return $next($request);
-            $id=Session::get("user")["id"];
-            $url=$request->url();
-            $url=explode('/',$url);
-            // foreach($url as $u){
-            //     $url=array_merge(explode('-',$u),$url);
-            // }
+            // $id=Session::get("user")["id"];
+            // $url=$request->url();
+            // $url=explode('/',$url);
+            // // foreach($url as $u){
+            // //     $url=array_merge(explode('-',$u),$url);
+            // // }
 
-            // $permission=permissions(Auth::user()->id);
-            $permission=DB::table('permissions')->where('user_id',$id)->first();
-            $view=json_decode($permission->view);
-            $view=array_map('strtolower',$view);
-            // dd($view);
-            foreach($url as $item){
-                if(in_array($item,$view))
-                {
-                    return $next($request);
-                }
-            }
-            return redirect()->back();
+            // // $permission=permissions(Auth::user()->id);
+            // $permission=DB::table('permissions')->where('user_id',$id)->first();
+            // $view=json_decode($permission->view);
+            // $view=array_map('strtolower',$view);
+            // // dd($view);
+            // foreach($url as $item){
+            //     if(in_array($item,$view))
+            //     {
+            //         return $next($request);
+            //     }
+            // }
+            // return redirect()->back();
+             return $next($request);
+
         }else{
             return redirect()->route('login');
         }
