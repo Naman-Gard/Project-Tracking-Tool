@@ -17,8 +17,8 @@
                     <div class="row">
 
                     <div class="col-md-6">
-                    <label for="exampleFormControlInput1" class="form-label">Serial No.</label>
-                    <input class="form-control" name="instrument_serial_no" type="text" placeholder="Instrument Serial No." value="{{old('instrument_serial_no')}}" autocomplete="off">
+                    <label for="exampleFormControlInput1" class="form-label">Serial Number</label>
+                    <input class="form-control" name="instrument_serial_no" type="text" placeholder="Instrument Serial Number" value="{{old('instrument_serial_no')}}" autocomplete="off">
                     <span class="text-danger valid_instrument_serial_no"></span>
                     </div>
 
@@ -62,7 +62,7 @@
 
                     <div class="col-md-6">
                     <label for="exampleFormControlInput1" class="form-label">Amount</label>
-                    <input class="form-control" name="instrument_amount" type="text" placeholder="Instrument Amount" value="{{old('instrument_amount')}}" autocomplete="off">
+                    <input class="form-control" name="instrument_amount" type="number" placeholder="Instrument Amount" value="{{old('instrument_amount')}}" autocomplete="off">
                     <span class="text-danger valid_instrument_amount"></span>
                     </div>
                     </div>
@@ -124,34 +124,39 @@
 @endsection
 @push('scripts')
 <script>
-
+    let instr_data
+    let url=window.location.href
+    let id=url.split('add/')[1]
+ 
     function Submit(){
 
         const flag=projectValidations() 
         
         if(flag){
-
-            let data={
-                'project_stage':  $("select[name=p_stage]").val(),
-                'business_group':  $("select[name=b_group]").val(),
-                'project_name': $("input[name=p_name]").val(),
-                'project_description':$("textarea[name=desc]").val(),
-                'business_account_manager': $("input[name=b_acc_manager]").val(),
-                'technical_account_manager': $("input[name=t_acc_manager]").val(),
-                'client_name': $("input[name=client_name]").val(),
-                'client_department': $("select[name=client_dep]").val(),
-                'project_type':  $("select[name=p_type]").val(),
-                'bid_amount': $("input[name=bid_amount]").val(),
-            }
             
+            let data={
+                'serial_no':$("input[name=instrument_serial_no]").val(),
+                'project_id':$("select[name=project]").val(),
+                'type':$("select[name=instrument_type]").val(),
+                'purpose':$("select[name=instrument_purpose]").val(),
+                'reference_number':$("input[name=instrument_reference_number]").val(),
+                'amount':$("input[name=instrument_amount]").val(),
+                'date':$("input[name=instrument_date]").val(),
+                'expiry_date':$("input[name=instrument_expiry_date]").val(),
+                'submission_date':$("input[name=instrument_submission_date]").val(),
+                'maturity_date':$("input[name=instrument_maturity_date]").val(),
+                'acknowledgement_date':$("input[name=instrument_acknowledgement_date]").val(),
+                'acknowledge_by':$("input[name=instrument_acknowledge_by]").val()
+            }
+            console.log(data)
             $.ajax({
             type: "POST",
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/add/project',
+            url: api_url+'master/add/instrument',
             }).done((response)=>{
-                window.location='{{route("projects")}}'
+                window.location='{{route("instruments")}}'
             })
             
         }      
@@ -177,7 +182,7 @@
             $('.valid_instrument_serial_no').html('')
             flag1=true
         }else{
-            $('.valid_instrument_serial_no').html('The serial no. field is required.')
+            $('.valid_instrument_serial_no').html('The serial number field is required.')
             flag1=false
         }
 
@@ -197,7 +202,7 @@
             flag4=false
         }
 
-        if($("select[name=instrument_amount]").val()){
+        if($("input[name=instrument_amount]").val()){
             $('.valid_instrument_amount').html('')
             flag5=true
         }else{
@@ -273,13 +278,21 @@
 
     }
 
-    // $('select[name=instrument_type]').change((e)=>{
+    $('select[name=instrument_type]').change(()=>{
+        $('#instrument_purpose').empty()
+        $('#instrument_purpose').append(`<option value="">Select</option>`)
+        let temp_data=instr_data.instrument_purpose
+        temp_data=temp_data.filter((item)=>{
+            return item.instrument_id == $("select[name=instrument_type]").val()
+        })
+        
+        temp_data.forEach((item)=>{
+            $('#instrument_purpose').append(`<option value="${item.id}">${item.name}</option>`)        
+        })
+    })
 
-    //     $('#instrument_purpose').append(`<option value="${item.name}">${item.name}</option>`)
-    // })
-
-    let instr_data
     $('document').ready(()=>{
+        
         $.ajax({
         type: "GET",
         url: api_url+'master/instrumentdetails',
@@ -288,10 +301,15 @@
             $.each( instr_data, function( key, value ) {
                 value.forEach((item)=>{
                     if(key=='project_name'){
-                    $('#'+key).append(`<option value="${item.id}">${item.project_name}</option>`)
+                        if(id!=undefined && item.id==atob(id)){
+                            $('#'+key).append(`<option value="${item.id}" selected>${item.project_name}</option>`)
+                        }
+                        else{
+                            $('#'+key).append(`<option value="${item.id}">${item.project_name}</option>`)
+                        }
                     }
                     if(key=='instrument_type'){
-                    $('#'+key).append(`<option value="${item.name}">${item.name}</option>`)
+                    $('#'+key).append(`<option value="${item.id}">${item.name}</option>`)
                     }
                 })
             });

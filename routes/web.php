@@ -71,6 +71,7 @@ Route::group(["middleware" => ["islogin"]], function(){
     //Instrument Routes
     Route::get('/instrument', [App\Http\Controllers\HomeController::class, 'instrument'])->name('instruments');
     Route::get('/instrument/add', [App\Http\Controllers\InstrumentController::class, 'addInstrument'])->name('add-instrument');
+    Route::get('/instrument/add/{id}', [App\Http\Controllers\InstrumentController::class, 'addInstrument'])->name('add-ins-by-project');
     Route::get('/instrument/edit/{id}', [App\Http\Controllers\InstrumentController::class, 'editInstrument'])->name('edit-instrument');
 
 
