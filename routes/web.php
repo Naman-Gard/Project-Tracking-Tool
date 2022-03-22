@@ -19,45 +19,45 @@ Route::group(["middleware" => ["islogin"]], function(){
     //User Routes
     Route::get('/user', [App\Http\Controllers\HomeController::class, 'users'])->name('users');
     Route::get('/add/user', [App\Http\Controllers\UserController::class, 'addUser'])->name('add-user');
-    Route::get('/permission/{id}', [App\Http\Controllers\UserController::class, 'permission'])->name('permission');
+    Route::get('/user/permission/{id}', [App\Http\Controllers\UserController::class, 'permission'])->name('permission');
 
-    Route::get('/project-stages', function () {
+    Route::get('/master/project-stages', function () {
         return view('masters.project_stage');
     })->name('projectStages');
 
-    Route::get('/business-group', function () {
+    Route::get('/master/business-group', function () {
         return view('masters.business_group');
     })->name('businessGroup');
 
-    Route::get('/project-type', function () {
+    Route::get('/master/project-type', function () {
         return view('masters.project_type');
     })->name('projectType');
 
-    Route::get('/department', function () {
+    Route::get('/master/department', function () {
         return view('masters.department');
     })->name('department');
 
-    Route::get('/ministry', function () {
+    Route::get('/master/ministry', function () {
         return view('masters.ministry');
     })->name('ministry');
 
-    Route::get('/instrument-type', function () {
+    Route::get('/master/instrument-type', function () {
         return view('masters.instrument_type');
     })->name('instrumentType');
 
-    Route::get('/instrument-purpose', function () {
+    Route::get('/master/instrument-purpose', function () {
         return view('masters.instrument_purpose');
     })->name('instrumentPurpose');
 
-    Route::get('//work-order-type', function () {
-        return view('masters./work_order_type');
+    Route::get('/master/master/work-order-type', function () {
+        return view('masters.work_order_type');
     })->name('work_orderType');
 
-    Route::get('/billing-type', function () {
+    Route::get('/master/billing-type', function () {
         return view('masters.billing_type');
     })->name('billingType');
 
-    Route::get('/employee-list', function () {
+    Route::get('/master/employee-list', function () {
         return view('masters.employee_list');
     })->name('employeeList');
 

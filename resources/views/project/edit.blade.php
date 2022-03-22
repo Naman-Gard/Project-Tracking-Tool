@@ -100,7 +100,7 @@
                     </div>
 
                     <div class="mb-3">
-                    <input type="button" onclick="Submit()" class="btn btn-primary btn-sm" value="Add">
+                    <input type="button" onclick="Submit()" class="btn btn-primary btn-sm" value="Update">
                     </div>
                 </form>
             </div>
@@ -254,13 +254,14 @@
             $('#bid').removeClass('hide-item')
         }
         else{
+            $("input[name=bid_amount]").val('')
             $('#bid').addClass('hide-item')
         }
     })
 
+    let url=window.location.href
+    let id=atob(url.split('project/')[1])
     $('document').ready(()=>{
-        let url=window.location.href
-        let id=atob(url.split('project/')[1])
 
         const filters={
             "id":{

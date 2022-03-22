@@ -26,7 +26,7 @@
           </a>
         </li> -->
         <li class="nav-item">
-          <a class="nav-link text-white" data-bs-toggle="collapse" href="#master" role="button" aria-expanded="false" aria-controls="master">
+          <a class="nav-link text-white {{ Request::is('master/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#master" role="button" aria-expanded="false" aria-controls="master">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
@@ -34,16 +34,16 @@
           </a>
           <div class="collapse" id="master">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="{{url('/project-stages')}}"> Project Stage </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{url('/business-group')}}"> Business Group </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{url('/ministry')}}"> Ministry</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{url('/department')}}"> Department </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{url('/project-type')}}"> Project Type</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{url('/instrument-type')}}"> Intrument Type </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{url('/instrument-purpose')}}"> Instrument Purpose </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{url('/work-order-type')}}"> Work Order Type </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{url('/billing-type')}}"> Billing Type </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{url('/employee-list')}}"> Employees List </a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{url('/master/project-stages')}}"> Project Stage </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/master/business-group')}}"> Business Group </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/master/ministry')}}"> Ministry</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/master/department')}}"> Department </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/master/project-type')}}"> Project Type</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/master/instrument-type')}}"> Intrument Type </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/master/instrument-purpose')}}"> Instrument Purpose </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/master/work-order-type')}}"> Work Order Type </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/master/billing-type')}}"> Billing Type </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/master/employee-list')}}"> Employees List </a></li>
             </ul>
           </div>
         </li>
@@ -95,7 +95,7 @@
           </a>
         </li>
         <li class="nav-item hide-item" id="User">
-          <a class="nav-link text-white {{ Request::is('user') || Request::is('*/user') || Request::is('*/permission/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#user" role="button" aria-expanded="false" aria-controls="master">
+          <a class="nav-link text-white {{ Request::is('user') || Request::is('*/user') || Request::is('permission/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#user" role="button" aria-expanded="false" aria-controls="master">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">people</i>
             </div>
