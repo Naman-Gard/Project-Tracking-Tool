@@ -9,7 +9,7 @@
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-warning d-flex justify-content-between align-items-center shadow-primary border-radius-lg pt-4 pb-3">
                 <h6 class="text-white text-capitalize ps-3">All Instrument Types</h6>
-                <a class="btn btn-dark mx-5 btn-sm" onclick="open_add_model()">Add</a>
+                <a class="btn btn-dark mx-5 btn-sm hide-item Master_add" onclick="open_add_model()">Add</a>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -48,7 +48,7 @@
                       <p>Are you sure you want to delete?</p> 
                       <input type="hidden" id="delete_type_id">
                       <button type="button" class="btn btn-secondary btn-sm Type_delete" data-bs-dismiss="modal">Close</button>
-                      <button onclick="type_delete()" class="btn btn-danger">Delete</button>
+                      <button onclick="type_delete()" class="btn btn-danger btn-sm">Delete</button>
                   </form>
                   </div>
                 </div>
@@ -78,7 +78,7 @@
             <span class="text-danger"></span>
             </div>
             
-            <button onclick="Submit()" class="btn btn-primary btn-sm">Submit</button>
+            <button onclick="Submit()" class="btn btn-success btn-sm">Submit</button>
           </div>
         </div>
     </div>
@@ -204,8 +204,8 @@
                                 <td>${i++}</td>
                                 <td>${element.name}</td>
                                 <td>
-                                  <button class="btn btn-info btn-sm" onclick="open_edit_model(${element.id})">Edit</button>
-                                  <button class="btn btn-danger btn-sm" onclick="delete_model(${element.id})">Delete</button>                                  
+                                  <button class="btn btn-info btn-sm hide-item Master_edit" onclick="open_edit_model(${element.id})">Edit</button>
+                                  <button class="btn btn-danger btn-sm hide-item Master_delete" onclick="delete_model(${element.id})">Delete</button>                                  
                                 </td>
                             </tr>`;
             })
