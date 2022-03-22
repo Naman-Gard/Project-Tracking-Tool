@@ -21,6 +21,8 @@ Route::group(["middleware" => ["islogin"]], function(){
     Route::get('/add/user', [App\Http\Controllers\UserController::class, 'addUser'])->name('add-user');
     Route::get('/user/permission/{id}', [App\Http\Controllers\UserController::class, 'permission'])->name('permission');
 
+
+    //Master Routes
     Route::get('/master/project-stages', function () {
         return view('masters.project_stage');
     })->name('projectStages');
@@ -63,10 +65,16 @@ Route::group(["middleware" => ["islogin"]], function(){
 
     //Project Routes
     Route::get('/project', [App\Http\Controllers\HomeController::class, 'project'])->name('projects');
-    Route::get('/add/project', [App\Http\Controllers\ProjectController::class, 'addProject'])->name('add-project');
-    Route::get('/edit/project/{id}', [App\Http\Controllers\ProjectController::class, 'editProject'])->name('edit-project');
+    Route::get('/project/add', [App\Http\Controllers\ProjectController::class, 'addProject'])->name('add-project');
+    Route::get('/project/edit/{id}', [App\Http\Controllers\ProjectController::class, 'editProject'])->name('edit-project');
 
-    
+    //Instrument Routes
+    Route::get('/instrument', [App\Http\Controllers\HomeController::class, 'instrument'])->name('instruments');
+    Route::get('/instrument/add', [App\Http\Controllers\InstrumentController::class, 'addInstrument'])->name('add-instrument');
+    Route::get('/instrument/edit/{id}', [App\Http\Controllers\InstrumentController::class, 'editInstrument'])->name('edit-instrument');
+
+
+
     Route::get('/logout','App\Http\Controllers\Controller@logout')->name('logout');
     Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 });

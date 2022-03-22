@@ -34,4 +34,8 @@ class HomeController extends Controller
     public function project(){
         return view('project.index');
     }
+
+    public function instrument(){
+        return view('instrument.index');
+    }
 }

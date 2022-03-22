@@ -48,7 +48,7 @@
           </div>
         </li>
         <li class="nav-item hide-item" id="Project">
-          <a class="nav-link text-white {{ Request::is('project') || Request::is('*/project/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#project" role="button" aria-expanded="false" aria-controls="master">
+          <a class="nav-link text-white {{ Request::is('project') || Request::is('project/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#project" role="button" aria-expanded="false" aria-controls="master">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
@@ -62,14 +62,30 @@
             </ul>
           </div>
         </li>
-        <li class="nav-item">
+
+        <li class="nav-item hide-item" id="Instrument">
+          <a class="nav-link text-white {{ Request::is('instrument') || Request::is('instrument/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#instrument" role="button" aria-expanded="false" aria-controls="master">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">view_in_ar</i>
+            </div>
+            <span class="nav-link-text ms-1">Instrument Details</span>
+          </a>
+          <div class="collapse" id="instrument">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link hide-item Project_add" href="{{route('add-instrument')}}"> Add Instrument</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{route('instruments')}}"> Manage Instrument </a></li>
+              
+            </ul>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
           <a class="nav-link text-white " href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">view_in_ar</i>
             </div>
             <span class="nav-link-text ms-1">Instrument Details</span>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link text-white " href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
