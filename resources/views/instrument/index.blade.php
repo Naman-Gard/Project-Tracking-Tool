@@ -7,8 +7,8 @@
         <div class="card my-4">
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <div class="bg-gradient-primary d-flex justify-content-between shadow-primary border-radius-lg pt-4 pb-3">
-            <h6 class="text-white text-capitalize ps-3">All Projects</h6>
-            <a class="btn btn-secondary mx-5 float-right btn-sm hide-item Project_add" href="{{route('add-project')}}">Add</a>
+            <h6 class="text-white text-capitalize ps-3">All Instruments</h6>
+            <a class="btn btn-secondary mx-5 float-right btn-sm hide-item Project_add" href="{{route('add-instrument')}}">Add</a>
             </div>
         </div>
         <div class="card-body px-0 pb-2">
@@ -36,7 +36,7 @@
 
 
 
-<div class="modal fade" id="DeleteProject" >
+<div class="modal fade" id="DeleteInstrument" >
     <div class="modal-dialog">
         <div class="modal-content">
         
@@ -66,7 +66,7 @@
 @push('scripts')
 <script>
   let project_id
-    function deleteProject(id){
+    function deleteInstrument(id){
       project_id=id
     }
 
@@ -98,7 +98,7 @@
             projects.forEach((project)=>{
               var edit = '{{ route("edit-project", ":id") }}'
               edit = edit.replace(':id', btoa(project.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_description+'</td><td class="action hide-item Project_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Project_delete" onclick="deleteProject('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteProject">Delete</button></td></tr>')
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_description+'</td><td class="action hide-item Project_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Project_delete" onclick="deleteInstrument('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteInstrument">Delete</button></td></tr>')
             i=i+1
             })
         }
