@@ -253,6 +253,7 @@
             $('#bid').removeClass('hide-item')
         }
         else{
+            $("input[name=bid_amount]").val('')
             $('#bid').addClass('hide-item')
         }
     })
