@@ -85,7 +85,7 @@
                         'email': $("input[name=email]").val(),
                         'password': btoa($("input[name=password]").val()),
                         'role': $("select[name=role]").val(),
-                        'view': JSON.stringify(['Dashbard','Profile']),
+                        'view': JSON.stringify(['Dashbard','Profile','Logout']),
                         'add': JSON.stringify(['Dashbard','Profile']),
                         'edit': JSON.stringify(['Dashbard','Profile']),
                         'delet': JSON.stringify(['Dashbard','Profile']),

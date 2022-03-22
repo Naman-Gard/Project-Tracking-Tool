@@ -260,7 +260,7 @@
     })
 
     let url=window.location.href
-    let id=atob(url.split('project/')[1])
+    let id=atob(url.split('edit/')[1])
     $('document').ready(()=>{
 
         const filters={
