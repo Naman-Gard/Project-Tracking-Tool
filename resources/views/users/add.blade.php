@@ -98,6 +98,7 @@
                     data:JSON.stringify(data),
                     url: api_url+'master/register',
                     }).done((response)=>{
+                        sessionStorage.setItem("message", "User Added Successfully");
                         window.location='{{route("users")}}'
                     })
                     

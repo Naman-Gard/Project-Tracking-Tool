@@ -157,6 +157,7 @@
             data:JSON.stringify(data),
             url: api_url+'master/update/instrument',
             }).done((response)=>{
+                sessionStorage.setItem("message", "Instrument Edited Successfully");
                 window.location='{{route("instruments")}}'
             })
             
