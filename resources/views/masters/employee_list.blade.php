@@ -26,12 +26,16 @@
                       <th scope="col">SL no.</th>
                       <th scope="col">Employee ID</th>
                       <th scope="col">Name</th>
+<<<<<<< HEAD
                       <th scope="col">Designation</th>
                       <th scope="col">Department</th>
                       <th scope="col">Email Id</th>
                       <th scope="col">Joining Date</th>
                       <th scope="col">Reporting To</th>
                       <th scope="col" class="action Master_action">Actions</th>
+=======
+                      <th scope="col" class="action hide-item Master_action">Actions</th>
+>>>>>>> 6e8709e185fdad4338c9efd5e94c691a90e5b244
                     </tr>
                   </thead>
                   <tbody class="t-content text-center" id="all_row">
@@ -284,6 +288,7 @@
                                 <td>${element.date_of_joining ? element.date_of_joining : 'a'}</td>
                                 <td>${element.reporting_to}</td>
                                 <td class="Master_action">
+                                <td class="Master_action hide-item">
                                   <button class="btn btn-info btn-sm hide-item Master_edit" onclick="open_edit_model(${element.id})">Edit</button>
                                   <button class="btn btn-danger btn-sm hide-item Master_delete" onclick="delete_model(${element.id})">Delete</button>                                  
                                 </td>

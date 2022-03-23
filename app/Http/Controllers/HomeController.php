@@ -38,4 +38,8 @@ class HomeController extends Controller
     public function instrument(){
         return view('instrument.index');
     }
+
+    public function workOrder(){
+        return view('work-order.index');
+    }
 }

@@ -130,7 +130,7 @@
  
     function Submit(){
 
-        const flag=projectValidations() 
+        const flag=instrumentValidations() 
         
         if(flag){
             
@@ -164,7 +164,7 @@
 
     }
 
-    function projectValidations(){
+    function instrumentValidations(){
 
         let flag1=false
         let flag2=false
