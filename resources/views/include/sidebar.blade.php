@@ -87,7 +87,7 @@
           </a>
         </li> -->
         <li class="nav-item hide-item" id="Work">
-          <a class="nav-link text-white {{ Request::is('instrument') || Request::is('instrument/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#work" role="button" aria-expanded="false" aria-controls="master">
+          <a class="nav-link text-white {{ Request::is('work/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#work" role="button" aria-expanded="false" aria-controls="master">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">notifications</i>
             </div>
