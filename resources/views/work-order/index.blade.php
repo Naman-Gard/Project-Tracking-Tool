@@ -26,7 +26,7 @@
                     <th scope="col">Number</th>
                     <th scope="col">Date</th>
                     <th scope="col">Validity Date</th>
-                    <th scope="col" class="action hide-item Instrument_action">Actions</th>
+                    <th scope="col" class="action hide-item Work_action">Actions</th>
                 </tr>
                 </thead>
                 <tbody class="t-content text-center">
