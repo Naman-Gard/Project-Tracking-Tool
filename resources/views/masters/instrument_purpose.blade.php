@@ -270,5 +270,7 @@
       })
     })
 
+    getPermissions()
+
 </script>
 @endpush
