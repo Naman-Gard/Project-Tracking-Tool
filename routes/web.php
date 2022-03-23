@@ -63,6 +63,17 @@ Route::group(["middleware" => ["islogin"]], function(){
         return view('masters.employee_list');
     })->name('employeeList');
 
+    //Upload Excel File
+    Route::get('/upload/employee', function () {
+        return view('upload_file');
+    })->name('upload-employee');
+
+    // Route::get('/employee/list', function () {
+    //     return view('view_employee');
+    // })->name('all-employee');
+
+    Route::post('/upload/employee/csv', [App\Http\Controllers\EmployeeController::class, 'store'])->name('upload-employee-csv');
+
     //Project Routes
     Route::get('/project', [App\Http\Controllers\HomeController::class, 'project'])->name('projects');
     Route::get('/project/add', [App\Http\Controllers\ProjectController::class, 'addProject'])->name('add-project');

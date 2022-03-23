@@ -15,7 +15,13 @@ return new class extends Migration
     {
         Schema::create('employee_list', function (Blueprint $table) {
             $table->id();
+            $table->string('employee_id')->nullable();
             $table->string('name');
+            $table->string('designation')->nullable();
+            $table->string('department')->nullable();
+            $table->string('email_id')->nullable();
+            $table->string('date_of_joining')->nullable();
+            $table->string('reporting_to')->nullable();
             $table->timestamps();
         });
     }

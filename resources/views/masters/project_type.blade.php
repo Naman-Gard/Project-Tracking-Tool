@@ -7,6 +7,12 @@
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="alert alert-success alert-dismissible text-white hide-item" role="alert">
+                  <span class="text-sm success-message"></span>
+                  <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
               <div class="bg-gradient-warning d-flex justify-content-between align-items-center shadow-primary border-radius-lg pt-4 pb-3">
                 <h6 class="text-white text-capitalize ps-3">All Project Types</h6>
                 <a class="btn btn-dark mx-5 btn-sm hide-item Master_add" onclick="open_add_model()">Add</a>
@@ -40,9 +46,9 @@
                 
             
                 <div class="card">
-                  <div class="card-header">Delete Project Type
+                  <!-- <div class="card-header">Delete Project Type
                   <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
+                  </div> -->
                   <div class="card-body">
                   <form>
                       <p>Are you sure you want to delete?</p> 
@@ -142,6 +148,7 @@
       data:JSON.stringify(data),
       url: api_url+'master/project_type',
       }).done((response)=>{
+        sessionStorage.setItem("message", "Project Type Deleted Successfully");
           window.location='{{route("projectType")}}'
       })
     }
@@ -165,6 +172,7 @@
             data:JSON.stringify(data),
             url: api_url+'master/project_type',
             }).done((response)=>{
+              sessionStorage.setItem("message", "Project Type Added Successfully");
                 window.location='{{route("projectType")}}'
             })
           }
@@ -181,6 +189,7 @@
             data:JSON.stringify(data),
             url: api_url+'master/project_type_update',
             }).done((response)=>{
+              sessionStorage.setItem("message", "Project Type Edited Successfully");
                 window.location='{{route("projectType")}}'
             })
           }
@@ -191,6 +200,11 @@
     }
 
   $(document).ready(()=>{
+    if(sessionStorage.getItem("message")){
+            $('.success-message').html(sessionStorage.getItem("message"))
+            $('.alert-success').removeClass('hide-item')
+            setTimeout(()=>{removeMessage("message")},2000)
+        }
         var innerHtml = '';
         $.ajax({
         type: "GET",

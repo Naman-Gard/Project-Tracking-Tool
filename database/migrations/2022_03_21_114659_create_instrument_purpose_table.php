@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('instrument_purpose', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('instrument_id');
+            $table->unsignedBigInteger('instrument_id');
+            $table->foreign('instrument_id')->references('id')->on('instrument_type')->onDelete('cascade');
             $table->string('name');
             $table->timestamps();
         });

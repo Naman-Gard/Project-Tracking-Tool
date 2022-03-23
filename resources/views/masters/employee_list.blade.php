@@ -7,6 +7,12 @@
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="alert alert-success alert-dismissible text-white hide-item" role="alert">
+                  <span class="text-sm success-message"></span>
+                  <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
               <div class="bg-gradient-warning d-flex justify-content-between align-items-center shadow-primary border-radius-lg pt-4 pb-3">
                 <h6 class="text-white text-capitalize ps-3">All Employee List</h6>
                 <a class="btn btn-dark mx-5 btn-sm hide-item Master_add" onclick="open_add_model()">Add</a>
@@ -18,7 +24,13 @@
                   <thead>
                     <tr class="text-center">
                       <th scope="col">SL no.</th>
+                      <th scope="col">Employee ID</th>
                       <th scope="col">Name</th>
+                      <th scope="col">Designation</th>
+                      <th scope="col">Department</th>
+                      <th scope="col">Email Id</th>
+                      <th scope="col">Joining Date</th>
+                      <th scope="col">Reporting To</th>
                       <th scope="col" class="action Master_action">Actions</th>
                     </tr>
                   </thead>
@@ -40,9 +52,9 @@
                 
             
                 <div class="card">
-                  <div class="card-header">Delete Employee List
+                  <!-- <div class="card-header">Delete Employee List
                   <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
+                  </div> -->
                   <div class="card-body">
                   <form>
                       <p>Are you sure you want to delete?</p> 
@@ -72,10 +84,42 @@
         <div class="card">
           <div class="card-body">
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Employee List Name</label>
               <input type="hidden" id="employee_list_id">
-              <input type="text" id="name" name="name" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('name') }}">
-            <span class="text-danger"></span>
+              <div>
+                <label for="employee_id" class="form-label">Employee ID</label>
+                <input type="text" id="employee_id" name="employee_id" class="form-control border" value="{{ old('employee_id') }}">
+                <span class="text-danger employee_id"></span>
+             </div>
+              <div>
+              <label for="name" class="form-label">Name</label>
+              <input type="text" id="name" name="name" class="form-control border" value="{{ old('name') }}">
+              <span class="text-danger name"></span>
+             </div>
+             <div>
+              <label for="designation" class="form-label">Designation</label>
+              <input type="text" id="designation" name="designation" class="form-control border" value="{{ old('designation') }}">
+              <span class="text-danger designation"></span>
+            </div>
+            <div>
+              <label for="department" class="form-label">Department</label>
+              <input type="text" id="department" name="department" class="form-control border" value="{{ old('department') }}">
+              <span class="text-danger department"></span>
+            </div>
+            <div>
+
+              <label for="email_id" class="form-label">Email ID</label>
+              <input type="email" id="email_id" name="email_id" class="form-control border" value="{{ old('email_id') }}">
+              <span class="text-danger email_id"></span>
+            </div>
+            <div>
+              <label for="joining_date" class="form-label">Date of Joining</label>
+              <input type="date" id="joining_date" name="joining_date" class="form-control border" value="{{ old('joining_date') }}">
+              <span class="text-danger joining_date"></span>
+            </div>
+            <div>
+              <label for="reporting_to" class="form-label">Reporting To</label>
+              <input type="text" id="reporting_to" name="reporting_to" class="form-control border" value="{{ old('reporting_to') }}">
+              <span class="text-danger reporting_to"></span>
             </div>
             
             <button onclick="Submit()" class="btn btn-success btn-sm">Submit</button>
@@ -120,7 +164,13 @@
               
               const employee_list = type_data_by_id[0]
               $('#employee_list_id').val(employee_list.id);
+              $('#employee_id').val(employee_list.employee_id);
               $('#name').val(employee_list.name);
+              $('#department').val(employee_list.department);
+              $('#designation').val(employee_list.designation);
+              $('#email_id').val(employee_list.email_id);
+              $('#joining_date').val(employee_list.date_of_joining);
+              $('#reporting_to').val(employee_list.reporting_to);
                 
             })          
     }
@@ -142,6 +192,7 @@
       data:JSON.stringify(data),
       url: api_url+'master/employee_list',
       }).done((response)=>{
+        sessionStorage.setItem("message", "Employee Details Deleted Successfully");
           window.location='{{route("employeeList")}}'
       })
     }
@@ -149,10 +200,20 @@
     function Submit(){
 
       let data={
-            'name': $("#name").val() }
+            'employee_id': $("#employee_id").val(),
+            'name': $("#name").val(),
+            'department': $("#department").val(),
+            'designation': $("#designation").val(),
+            'email_id': $("#email_id").val(),
+            'joining_date': $("#joining_date").val(),
+            'reporting_to': $("#reporting_to").val() }
+
+        if(data.employee_id == ''){
+          $('.employee_id').html('Employee ID field is required.');
+        }
 
         if(data.name == ''){
-          $('.text-danger').html('Name field is required.');
+          $('.name').html('Name field is required.');
         }
 
         else{
@@ -165,6 +226,7 @@
             data:JSON.stringify(data),
             url: api_url+'master/employee_list',
             }).done((response)=>{
+              sessionStorage.setItem("message", "Employee Details Added Successfully");
                 window.location='{{route("employeeList")}}'
             })
           }
@@ -172,7 +234,14 @@
           else{
             let data={
             'employee_list_id': $("#employee_list_id").val(),
-            'name': $("#name").val() }
+            'employee_id': $("#employee_id").val(),
+            'name': $("#name").val(),
+            'department': $("#department").val(),
+            'designation': $("#designation").val(),
+            'email_id': $("#email_id").val(),
+            'joining_date': $("#joining_date").val(),
+            'reporting_to': $("#reporting_to").val() }
+            console.log(data);
 
             $.ajax({
             type: "POST",
@@ -181,16 +250,21 @@
             data:JSON.stringify(data),
             url: api_url+'master/employee_list_update',
             }).done((response)=>{
+              sessionStorage.setItem("message", "Employee Details Edited Successfully");
                 window.location='{{route("employeeList")}}'
             })
           }
-          
-          
         }
 
     }
 
   $(document).ready(()=>{
+    if(sessionStorage.getItem("message")){
+            $('.success-message').html(sessionStorage.getItem("message"))
+            $('.alert-success').removeClass('hide-item')
+            setTimeout(()=>{removeMessage("message")},2000)
+        }
+  
         var innerHtml = '';
         $.ajax({
         type: "GET",
@@ -202,7 +276,13 @@
           types.employee_list.forEach(element =>{
               innerHtml += `<tr>
                                 <td>${i++}</td>
+                                <td>${element.employee_id}</td>
                                 <td>${element.name}</td>
+                                <td>${element.designation}</td>
+                                <td>${element.department}</td>
+                                <td>${element.email_id}</td>
+                                <td>${element.date_of_joining ? element.date_of_joining : 'a'}</td>
+                                <td>${element.reporting_to}</td>
                                 <td class="Master_action">
                                   <button class="btn btn-info btn-sm hide-item Master_edit" onclick="open_edit_model(${element.id})">Edit</button>
                                   <button class="btn btn-danger btn-sm hide-item Master_delete" onclick="delete_model(${element.id})">Delete</button>                                  

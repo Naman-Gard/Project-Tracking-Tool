@@ -78,6 +78,21 @@
             </ul>
           </div>
         </li>
+
+        <li class="nav-item" id="Employee">
+          <a class="nav-link text-white {{ Request::is('upload-employee') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#employee" role="button" aria-expanded="false" aria-controls="master">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">view_in_ar</i>
+            </div>
+            <span class="nav-link-text ms-1">Employee Details</span>
+          </a>
+          <div class="collapse" id="employee">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link " href="{{route('upload-employee')}}"> Upload Employee</a></li>
+              
+            </ul>
+          </div>
+        </li>
         <!-- <li class="nav-item">
           <a class="nav-link text-white " href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -103,7 +118,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="#">
+          <a class="nav-link text-white " href="">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">people_outline</i>
             </div>
