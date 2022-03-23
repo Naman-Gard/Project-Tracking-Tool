@@ -25,6 +25,11 @@
   <script src="{{asset('assets/js/material-dashboard.min.js?v=3.0.1')}}"></script>
  
   <script>
+    
+    function removeMessage(item){
+        $('.alert-success').addClass('hide-item')
+        sessionStorage.removeItem(item)
+    }
 
     function getPermissions(){
       let user_id="{{Session::get('user')['id']}}"

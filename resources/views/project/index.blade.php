@@ -6,6 +6,12 @@
     <div class="col-12">
         <div class="card my-4">
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="alert alert-success alert-dismissible text-white hide-item" role="alert">
+                <span class="text-sm success-message"></span>
+                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="bg-gradient-primary d-flex justify-content-between shadow-primary border-radius-lg pt-4 pb-3">
             <h6 class="text-white text-capitalize ps-3">All Projects</h6>
             <a class="btn btn-secondary mx-5 float-right btn-sm hide-item Project_add" href="{{route('add-project')}}">Add</a>
@@ -82,6 +88,7 @@
             data:JSON.stringify(data),
             url: api_url+'master/project/delete',
         }).done((response)=>{
+          sessionStorage.setItem("message", "Project Deleted Successfully");
           window.location='{{route("projects")}}'
         })
     })
@@ -94,6 +101,11 @@
     
 
     $(document).ready(()=>{
+        if(sessionStorage.getItem("message")){
+            $('.success-message').html(sessionStorage.getItem("message"))
+            $('.alert-success').removeClass('hide-item')
+            setTimeout(()=>{removeMessage("message")},2000)
+        }
         var i=1
         $.ajax({
         type: "GET",
@@ -113,6 +125,7 @@
         }
         })
         getPermissions()
+        
     })
 
 

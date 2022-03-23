@@ -190,7 +190,8 @@
             data:JSON.stringify(mydata),
             url: api_url+'master/permit',
         }).done((response)=>{
-                window.location='{{route("users")}}'
+            sessionStorage.setItem("message", "Permissions Permited Successfully");
+            window.location='{{route("users")}}'
         })
     }
 

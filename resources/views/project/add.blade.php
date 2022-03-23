@@ -139,6 +139,7 @@
             data:JSON.stringify(data),
             url: api_url+'master/add/project',
             }).done((response)=>{
+                sessionStorage.setItem("message", "Project Added Successfully");
                 window.location='{{route("projects")}}'
             })
             
