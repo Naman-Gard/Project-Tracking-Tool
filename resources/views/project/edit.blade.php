@@ -140,7 +140,7 @@
             data:JSON.stringify(data),
             url: api_url+'master/update/project',
             }).done((response)=>{
-                sessionStorage.setItem("message", "Project Edited Successfully");
+                sessionStorage.setItem("message", "Project Updated Successfully");
                 window.location='{{route("projects")}}'
             })
             
