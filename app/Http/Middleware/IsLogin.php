@@ -31,13 +31,37 @@ class IsLogin
             $permission=DB::table('permissions')->where('user_id',$id)->first();
             $view=json_decode($permission->view);
             $view=array_map('strtolower',$view);
+            $add=json_decode($permission->add);
+            $add=array_map('strtolower',$add);
+            $edit=json_decode($permission->edit);
+            $edit=array_map('strtolower',$edit);
             // dd($view);
-            foreach($url as $item){
-                if(in_array($item,$view))
-                {
-                    return $next($request);
+
+            if(in_array('add',$url)){
+                foreach($url as $item){
+                    if(in_array($item,$add))
+                    {
+                        return $next($request);
+                    }
                 }
             }
+            else if(in_array('edit',$url)){
+                foreach($url as $item){
+                    if(in_array($item,$edit))
+                    {
+                        return $next($request);
+                    }
+                }
+            }
+            else{
+                foreach($url as $item){
+                    if(in_array($item,$view))
+                    {
+                        return $next($request);
+                    }
+                }
+            }
+            
             return redirect()->back();
             //  return $next($request);
 

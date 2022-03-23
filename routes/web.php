@@ -19,7 +19,7 @@ Route::group(["middleware" => ["islogin"]], function(){
     //User Routes
     Route::get('/user', [App\Http\Controllers\HomeController::class, 'users'])->name('users');
     Route::get('/add/user', [App\Http\Controllers\UserController::class, 'addUser'])->name('add-user');
-    Route::get('/user/permission/{id}', [App\Http\Controllers\UserController::class, 'permission'])->name('permission');
+    Route::get('/edit/user/permission/{id}', [App\Http\Controllers\UserController::class, 'permission'])->name('permission');
 
 
     //Master Routes
