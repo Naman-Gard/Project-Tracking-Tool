@@ -51,7 +51,7 @@ Route::group(["middleware" => ["islogin"]], function(){
         return view('masters.instrument_purpose');
     })->name('instrumentPurpose');
 
-    Route::get('/master/master/work-order-type', function () {
+    Route::get('/master/work-order-type', function () {
         return view('masters.work_order_type');
     })->name('work_orderType');
 
