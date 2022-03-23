@@ -74,6 +74,12 @@ Route::group(["middleware" => ["islogin"]], function(){
     Route::get('/instrument/add/{id}', [App\Http\Controllers\InstrumentController::class, 'addInstrument'])->name('add-ins-by-project');
     Route::get('/instrument/edit/{id}', [App\Http\Controllers\InstrumentController::class, 'editInstrument'])->name('edit-instrument');
 
+    //Work Order Routes
+    Route::get('/work/order', [App\Http\Controllers\HomeController::class, 'workOrder'])->name('work-orders');
+    Route::get('/work/order/add', [App\Http\Controllers\OrderController::class, 'addWorkOrder'])->name('add-work-order');
+    Route::get('/work/order/add/{id}', [App\Http\Controllers\OrderController::class, 'addWorkOrder'])->name('add-work-by-project');
+    Route::get('/work/order/edit/{id}', [App\Http\Controllers\OrderController::class, 'editWorkOrder'])->name('edit-work-order');
+
 
 
     Route::get('/logout','App\Http\Controllers\Controller@logout')->name('logout');

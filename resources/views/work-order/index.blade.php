@@ -13,8 +13,8 @@
                 </button>
             </div>
             <div class="bg-gradient-primary d-flex justify-content-between shadow-primary border-radius-lg pt-4 pb-3">
-            <h6 class="text-white text-capitalize ps-3">All Projects</h6>
-            <a class="btn btn-secondary mx-5 float-right btn-sm hide-item Project_add" href="{{route('add-project')}}">Add</a>
+            <h6 class="text-white text-capitalize ps-3">All Work Orders</h6>
+            <a class="btn btn-secondary mx-5 float-right btn-sm hide-item Work_add" href="{{route('add-work-order')}}">Add</a>
             </div>
         </div>
         <div class="card-body px-0 pb-2">
@@ -23,10 +23,10 @@
                 <thead>
                 <tr class="text-center">
                     <th scope="col">SL no.</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <!-- <th scope="col">Mobile No.</th> -->
-                    <th scope="col" class="action hide-item Project_action">Actions</th>
+                    <th scope="col">Number</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Validity Date</th>
+                    <th scope="col" class="action hide-item Instrument_action">Actions</th>
                 </tr>
                 </thead>
                 <tbody class="t-content text-center">
@@ -42,7 +42,7 @@
 
 
 
-<div class="modal fade" id="DeleteProject" >
+<div class="modal fade" id="DeleteOrder" >
     <div class="modal-dialog">
         <div class="modal-content">
         
@@ -71,14 +71,14 @@
 @endsection
 @push('scripts')
 <script>
-  let project_id
-    function deleteProject(id){
-      project_id=id
+  let work_id
+    function deleteWork(id){
+      work_id=id
     }
 
     $(".delete-mem-btn").click(()=>{
       let data={
-        project_id:project_id
+        work_id:work_id
       }
 
       $.ajax({
@@ -86,24 +86,12 @@
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/project/delete',
+            url: api_url+'master/work-order/delete',
         }).done((response)=>{
-          sessionStorage.setItem("message", "Project Deleted Successfully");
-          window.location='{{route("projects")}}'
+          sessionStorage.setItem("message", "Work Order Deleted Successfully");
+          window.location='{{route("work-orders")}}'
         })
     })
-
-    function addInstrument(id){
-        var route = '{{ route("add-ins-by-project", ":id") }}'
-        route = route.replace(':id', btoa(id))
-        window.location=route
-    }
-
-    function addWork(id){
-        var route = '{{ route("add-work-by-project", ":id") }}'
-        route = route.replace(':id', btoa(id))
-        window.location=route
-    }
     
 
     $(document).ready(()=>{
@@ -115,14 +103,14 @@
         var i=1
         $.ajax({
         type: "GET",
-        url: api_url+'items/projects?limit=-1',
+        url: api_url+'items/work_orders?limit=-1',
         }).done((response)=>{
-        const projects=response.data
-        if(projects.length!=0){
-            projects.forEach((project)=>{
-              var edit = '{{ route("edit-project", ":id") }}'
-              edit = edit.replace(':id', btoa(project.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_description+'</td><td class="action hide-item Project_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-1">Edit</a><button class="btn btn-danger m-1 btn-sm hide-item Project_delete" onclick="deleteProject('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteProject">Delete</button><button class="btn btn-info btn-sm m-1 Instrument_add" onclick="addInstrument('+project.id+')">Add Instrument</button><button class="btn btn-info m-1 btn-sm Work_add" onclick="addWork('+project.id+')">Add Work Order</button></td></tr>')
+        const orders=response.data
+        if(orders.length!=0){
+            orders.forEach((order)=>{
+              var edit = '{{ route("edit-work-order", ":id") }}'
+              edit = edit.replace(':id', btoa(order.id))
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+order.number+'</td><td>'+order.date+'</td><td>'+order.validity_date+'</td><td class="action hide-item Work_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Work_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Work_delete" onclick="deleteWork('+order.id+')" data-bs-toggle="modal" data-bs-target="#DeleteOrder">Delete</button></td></tr>')
             i=i+1
             })
         }
