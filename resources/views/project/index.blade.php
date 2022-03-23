@@ -104,7 +104,7 @@
             projects.forEach((project)=>{
               var edit = '{{ route("edit-project", ":id") }}'
               edit = edit.replace(':id', btoa(project.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_description+'</td><td class="action hide-item Project_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Project_delete" onclick="deleteProject('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteProject">Delete</button><button class="btn-info btn-sm" onclick="addInstrument('+project.id+')">Add Instrument</button></td></tr>')
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_description+'</td><td class="action hide-item Project_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Project_delete" onclick="deleteProject('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteProject">Delete</button><button class="btn-info btn-sm Instrument_add" onclick="addInstrument('+project.id+')">Add Instrument</button></td></tr>')
             i=i+1
             })
         }
