@@ -42,4 +42,8 @@ class HomeController extends Controller
     public function workOrder(){
         return view('work-order.index');
     }
+
+    public function invoice(){
+        return view('invoice.index');
+    }
 }

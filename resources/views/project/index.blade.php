@@ -24,7 +24,7 @@
                 <tr class="text-center">
                     <th scope="col">SL no.</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Description</th>
+                    <th scope="col">Status</th>
                     <!-- <th scope="col">Mobile No.</th> -->
                     <th scope="col" class="action hide-item Project_action">Actions</th>
                 </tr>
@@ -122,15 +122,16 @@
             projects.forEach((project)=>{
               var edit = '{{ route("edit-project", ":id") }}'
               edit = edit.replace(':id', btoa(project.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_description+'</td><td class="action hide-item Project_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-1">Edit</a><button class="btn btn-danger m-1 btn-sm hide-item Project_delete" onclick="deleteProject('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteProject">Delete</button><button class="btn btn-info btn-sm m-1 Instrument_add" onclick="addInstrument('+project.id+')">Add Instrument</button><button class="btn btn-info m-1 btn-sm Work_add" onclick="addWork('+project.id+')">Add Work Order</button></td></tr>')
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_stage+'</td><td class="action hide-item Project_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-1">Edit</a><button class="btn btn-danger m-1 btn-sm hide-item Project_delete" onclick="deleteProject('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteProject">Delete</button><button class="btn btn-info btn-sm m-1 Instrument_add" onclick="addInstrument('+project.id+')">Add Instrument</button><button class="btn btn-info m-1 btn-sm Work_add" onclick="addWork('+project.id+')">Add Work Order</button></td></tr>')
             i=i+1
             })
         }
         else{
             $('.t-content').append('<tr><td><td><td class="text-start">No Data Found!</td></td></td></tr>')
         }
-        })
         getPermissions()
+        })
+        
         
     })
 

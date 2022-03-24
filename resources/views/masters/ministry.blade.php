@@ -233,7 +233,5 @@ $(document).ready(()=>{
     })
   })
 
-  getPermissions()
-
 </script>
 @endpush

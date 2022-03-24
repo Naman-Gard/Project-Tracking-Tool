@@ -124,14 +124,30 @@
             <span class="nav-link-text ms-1">Work Order Details</span>
           </a>
         </li> -->
-        <li class="nav-item">
+
+        <li class="nav-item hide-item" id="Invoice">
+          <a class="nav-link text-white {{ Request::is('invoice*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#invoice" role="button" aria-expanded="false" aria-controls="master">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">receipt</i>
+            </div>
+            <span class="nav-link-text ms-1">Invoice Details</span>
+          </a>
+          <div class="collapse" id="invoice">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link hide-item Instrument_add" href="{{route('add-invoice')}}"> Add Invoice Details</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{route('invoices')}}"> Manage Invoice Details </a></li>
+              
+            </ul>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
           <a class="nav-link text-white " href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt</i>
             </div>
             <span class="nav-link-text ms-1">Invoice Details</span>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link text-white " href="">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">

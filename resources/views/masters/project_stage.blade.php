@@ -230,6 +230,6 @@
         getPermissions()
       })
     })
-    getPermissions()
+
 </script>
 @endpush

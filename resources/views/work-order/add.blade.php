@@ -98,7 +98,7 @@
                     <div class="row">
                         <div class="col-md-6">
                         <label for="exampleFormControlInput1" class="form-label">Amount</label>
-                        <input class="form-control" name="milestone_amount" type="text" placeholder="Milestone Amount" value="{{old('milestone_amount')}}" autocomplete="off">
+                        <input class="form-control" name="milestone_amount" type="number" placeholder="Milestone Amount" value="{{old('milestone_amount')}}" autocomplete="off">
                         <span class="text-danger valid_milestone_amount"></span>
                         </div>
 
