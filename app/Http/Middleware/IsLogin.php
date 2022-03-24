@@ -61,6 +61,32 @@ class IsLogin
                     }
                 }
             }
+
+
+            // foreach($url as $item){
+            //     if(in_array($item,$view))
+            //     {
+            //         if(in_array('add',$url)){
+            //             foreach($url as $item){
+            //                 if(in_array($item,$add))
+            //                 {
+            //                     return $next($request);
+            //                 }
+            //             }
+            //         }
+            //         else if(in_array('edit',$url)){
+            //             foreach($url as $item){
+            //                 if(in_array($item,$edit))
+            //                 {
+            //                     return $next($request);
+            //                 }
+            //             }
+            //         }
+            //         else{
+            //             return $next($request);
+            //         }
+            //     }
+            // }
             
             return redirect()->back();
             //  return $next($request);
