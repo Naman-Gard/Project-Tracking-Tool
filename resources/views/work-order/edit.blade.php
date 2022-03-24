@@ -95,17 +95,24 @@
                         </div>
                     </div>
 
+                    <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Milestone Description</label>
+                    <!-- <input class="form-control" name="desc" type="text" placeholder="Description" value="{{old('desc')}}" autocomplete="off"> -->
+                    <textarea class="form-control" name="milestone_description" placeholder="Milestone Description" value="{{old('milestone_description')}}"></textarea>
+                    <span class="text-danger valid_milestone_description"></span>
+                    </div>
+
                     <div class="row">
+                        <div class="col-md-6">
+                        <label for="exampleFormControlInput1" class="form-label">Amount(%)</label>
+                        <input class="form-control" name="milestone_percent_amount" type="number" placeholder="Milestone Percentage Amount" value="{{old('milestone_percent_amount')}}" autocomplete="off">
+                        <span class="text-danger valid_milestone_percent_amount"></span>
+                        </div>
+
                         <div class="col-md-6">
                         <label for="exampleFormControlInput1" class="form-label">Amount</label>
                         <input class="form-control" name="milestone_amount" type="number" placeholder="Milestone Amount" value="{{old('milestone_amount')}}" autocomplete="off">
                         <span class="text-danger valid_milestone_amount"></span>
-                        </div>
-
-                        <div class="col-md-6">
-                        <label for="exampleFormControlInput1" class="form-label">Description</label>
-                        <input class="form-control" name="milestone_description" type="text" placeholder="Milestone Description" value="{{old('milestone_description')}}" autocomplete="off">
-                        <span class="text-danger valid_milestone_description"></span>
                         </div>
                     </div>
 
@@ -145,8 +152,9 @@
                 'validity_date':$("input[name=work_order_validity_date]").val(),
                 'no_of_milestones':$("input[name=no_of_milestones]").val(),
                 'milestone_date':$("input[name=milestone_date]").val(),
+                'milestone_percent_amount':$("input[name=milestone_percent_amount]").val(),
                 'milestone_amount':$("input[name=milestone_amount]").val(),
-                'milestone_description':$("input[name=milestone_description]").val()
+                'milestone_description':$("textarea[name=milestone_description]").val()
             }
             console.log(data)
             $.ajax({
@@ -178,6 +186,7 @@
         let flag=false
         let flag10=false
         let flag11=false
+        let flag12=false
 
         if($("input[name=work_order_number]").val()){
             $('.valid_work_order_number').html('')
@@ -243,21 +252,30 @@
             flag3=false
         }
 
-        if($("input[name=milestone_amount]").val()){
-            $('.valid_milestone_amount').html('')
+        if($("input[name=milestone_percent_amount]").val()){
+            $('.valid_milestone_percent_amount').html('')
             flag9=true
         }else{
-            $('.valid_milestone_amount').html('The amount field is required.')
+            $('.valid_milestone_percent_amount').html('The amount(%) field is required.')
             flag9=false
         }
 
-        if($("input[name=milestone_description]").val()){
-            $('.valid_milestone_description').html('')
+        if($("input[name=milestone_amount]").val()){
+            $('.valid_milestone_amount').html('')
             flag=true
         }else{
-            $('.valid_milestone_description').html('The description field is required.')
+            $('.valid_milestone_amount').html('The amount field is required.')
             flag=false
         }
+
+        if($("textarea[name=milestone_description]").val()){
+            $('.valid_milestone_description').html('')
+            flag12=true
+        }else{
+            $('.valid_milestone_description').html('The description field is required.')
+            flag12=false
+        }
+
 
         if($("select[name=work_order_type]").val()){
             $('.valid_work_order_type').html('')
@@ -275,7 +293,7 @@
             flag11=false
         }
         
-        return flag && flag1 && flag2 && flag3 && flag4 && flag5 && flag6 && flag7 && flag8 && flag9 && flag10 && flag11
+        return flag && flag1 && flag2 && flag3 && flag4 && flag5 && flag6 && flag7 && flag8 && flag9 && flag10 && flag11 && flag12
 
     }
 
@@ -306,7 +324,8 @@
                 $("input[name=no_of_milestones]").val(temp_data.milestones)
                 $("input[name=milestone_date]").val(temp_data.milestone_date)
                 $("input[name=milestone_amount]").val(temp_data.milestone_amount)
-                $("input[name=milestone_description]").val(temp_data.milestone_description)
+                $("input[name=milestone_percent_amount]").val(temp_data.milestone_percent_amount)
+                $("textarea[name=milestone_description]").val(temp_data.milestone_description)
 
                 delete Object.assign(data, {['project_id']: data['project_name'] })['project_name'];
                 delete Object.assign(data, {['type']: data['work_order_type'] })['work_order_type'];

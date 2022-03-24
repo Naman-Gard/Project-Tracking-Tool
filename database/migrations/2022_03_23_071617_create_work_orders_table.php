@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('milestones');
             $table->string('milestone_date');
             $table->string('milestone_amount');
+            $table->string('milestone_percent_amount');
             $table->string('milestone_description');
             $table->timestamps();
         });
