@@ -19,19 +19,14 @@
               </div>
             </div>
             <div class="card-body px-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
+              <div class="table-responsive p-4">
+                <table class="table align-items-center mb-0" id="example">
                   <thead>
                     <tr class="text-center">
                       <th scope="col">SL no.</th>
                       <th scope="col">Employee ID</th>
                       <th scope="col">Name</th>
                       <th scope="col">Designation</th>
-                      <th scope="col">Department</th>
-                      <th scope="col">Email Id</th>
-                      <th scope="col">Joining Date</th>
-                      <th scope="col">Reporting To</th>
-                      <th scope="col" class="action Master_action">Actions</th>
                       <th scope="col" class="action hide-item Master_action">Actions</th>
                     </tr>
                   </thead>
@@ -72,7 +67,7 @@
     </div>
 
 
-<!-- Modal -->
+<!-- add/edit Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -84,46 +79,88 @@
       <div class="">
         <div class="card">
           <div class="card-body">
-            <div class="mb-3">
+            <div class="row">
               <input type="hidden" id="employee_list_id">
-              <div>
+              <div class="col-md-6 mb-4">
                 <label for="employee_id" class="form-label">Employee ID</label>
                 <input type="text" id="employee_id" name="employee_id" class="form-control border" value="{{ old('employee_id') }}">
                 <span class="text-danger employee_id"></span>
-             </div>
-              <div>
-              <label for="name" class="form-label">Name</label>
-              <input type="text" id="name" name="name" class="form-control border" value="{{ old('name') }}">
-              <span class="text-danger name"></span>
-             </div>
-             <div>
-              <label for="designation" class="form-label">Designation</label>
-              <input type="text" id="designation" name="designation" class="form-control border" value="{{ old('designation') }}">
-              <span class="text-danger designation"></span>
+              </div>
+              <div class="col-md-6 mb-4">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" id="name" name="name" class="form-control border" value="{{ old('name') }}">
+                <span class="text-danger name"></span>
+              </div>
+              <div class="col-md-6 mb-4">
+                <label for="designation" class="form-label">Designation</label>
+                <input type="text" id="designation" name="designation" class="form-control border" value="{{ old('designation') }}">
+                <span class="text-danger designation"></span>
+              </div>
+              <div class="col-md-6 mb-4">
+                <label for="department" class="form-label">Department</label>
+                <input type="text" id="department" name="department" class="form-control border" value="{{ old('department') }}">
+                <span class="text-danger department"></span>
+              </div>
+              <div class="col-md-6 mb-4">
+                <label for="email_id" class="form-label">Email ID</label>
+                <input type="email" id="email_id" name="email_id" class="form-control border" value="{{ old('email_id') }}">
+                <span class="text-danger email_id"></span>
+              </div>
+              <div class="col-md-6 mb-4">
+                <label for="joining_date" class="form-label">Date of Joining</label>
+                <input type="date" id="joining_date" name="joining_date" class="form-control border" value="{{ old('joining_date') }}">
+                <span class="text-danger joining_date"></span>
+              </div>
+              <div class="col-md-12 mb-4">
+                <label for="reporting_to" class="form-label">Reporting To</label>
+                <input type="text" id="reporting_to" name="reporting_to" class="form-control border" value="{{ old('reporting_to') }}">
+                <span class="text-danger reporting_to"></span>
+              </div>
+              <div class="col-md-12">
+                <button onclick="Submit()" class="btn btn-success btn-sm">Submit</button>
+              </div>
             </div>
-            <div>
-              <label for="department" class="form-label">Department</label>
-              <input type="text" id="department" name="department" class="form-control border" value="{{ old('department') }}">
-              <span class="text-danger department"></span>
-            </div>
-            <div>
+        </div>
+    </div>
 
-              <label for="email_id" class="form-label">Email ID</label>
-              <input type="email" id="email_id" name="email_id" class="form-control border" value="{{ old('email_id') }}">
-              <span class="text-danger email_id"></span>
-            </div>
-            <div>
-              <label for="joining_date" class="form-label">Date of Joining</label>
-              <input type="date" id="joining_date" name="joining_date" class="form-control border" value="{{ old('joining_date') }}">
-              <span class="text-danger joining_date"></span>
-            </div>
-            <div>
-              <label for="reporting_to" class="form-label">Reporting To</label>
-              <input type="text" id="reporting_to" name="reporting_to" class="form-control border" value="{{ old('reporting_to') }}">
-              <span class="text-danger reporting_to"></span>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- View Modal -->
+<div class="modal fade" id="viewModel" aria-labelledby="viewModelLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewModelLabel">Employee Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0">
+      <div class="">
+        <div class="card">
+          <div class="card-body">
+            <div class="mb-3">
+              <div>
+               <table class="table align-items-center mb-0">
+               
+               <tr><th>EmployeeId:</th><td id="view_employee_id"></td></tr>
+               <tr><th>Name:</th><td id="view_name"></td></tr>
+               <tr><th>Designation:</th><td id="view_designation"></td></tr>
+               <tr><th>Department:</th><td id="view_department"></td></tr>
+               <tr><th>Email Id:</th><td id="view_email_id"></td></tr>
+               <tr><th>Joining To:</th><td id="view_joining_date"></td></tr>
+               <tr><th>Reporting To:</th><td id="view_reporting_to"></td></tr>
+               </table>
             </div>
             
-            <button onclick="Submit()" class="btn btn-success btn-sm">Submit</button>
+            
           </div>
         </div>
     </div>
@@ -145,8 +182,44 @@
 
     function open_add_model(){
             $('#staticBackdrop').modal('show');
-            $('#employee_list_id').val('');
-            $('#delete_type_id').val('');
+            $(':input').val('');
+    }
+
+    function open_view_model(e){
+            
+            $('#viewModel').modal('show');
+            $.ajax({
+            type: "GET",
+            url: api_url+'master/employee_list',
+            }).done((response)=>{
+              const types=response.data
+              const type_data = types.employee_list
+
+              const type_data_by_id = type_data.filter((item) => {
+                return item.id == e;
+                });
+              
+              const employee_list = type_data_by_id[0]
+              $('#view_employee_id').html(employee_list.employee_id);
+              $('#view_name').html(employee_list.name);
+              $('#view_department').html(employee_list.department ? employee_list.department : '');
+              $('#view_designation').html(employee_list.designation ? employee_list.designation : '');
+              $('#view_email_id').html(employee_list.email_id ? employee_list.email_id : '');
+              if(employee_list.date_of_joining == '' || employee_list.date_of_joining == null){
+              $('#view_joining_date').html('');
+              }
+              else{
+              $('#view_joining_date').html(convertDate(employee_list.date_of_joining));
+              }
+              $('#view_reporting_to').html(employee_list.reporting_to ? employee_list.reporting_to : '');
+                
+            })          
+    }
+
+    function convertDate(inputFormat) {
+      function pad(s) { return (s < 10) ? '0' + s : s; }
+      var d = new Date(inputFormat)
+      return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/')
     }
 
     function open_edit_model(e){
@@ -167,11 +240,11 @@
               $('#employee_list_id').val(employee_list.id);
               $('#employee_id').val(employee_list.employee_id);
               $('#name').val(employee_list.name);
-              $('#department').val(employee_list.department);
-              $('#designation').val(employee_list.designation);
-              $('#email_id').val(employee_list.email_id);
-              $('#joining_date').val(employee_list.date_of_joining);
-              $('#reporting_to').val(employee_list.reporting_to);
+              $('#department').val(employee_list.department ? employee_list.department : '');
+              $('#designation').val(employee_list.designation ? employee_list.designation : '');
+              $('#email_id').val(employee_list.email_id ? employee_list.email_id : '');
+              $('#joining_date').val(employee_list.date_of_joining ? employee_list.date_of_joining : '');
+              $('#reporting_to').val(employee_list.reporting_to ? employee_list.reporting_to : '');
                 
             })          
     }
@@ -265,7 +338,7 @@
             $('.alert-success').removeClass('hide-item')
             setTimeout(()=>{removeMessage("message")},2000)
         }
-  
+
         var innerHtml = '';
         $.ajax({
         type: "GET",
@@ -279,13 +352,9 @@
                                 <td>${i++}</td>
                                 <td>${element.employee_id}</td>
                                 <td>${element.name}</td>
-                                <td>${element.designation}</td>
-                                <td>${element.department}</td>
-                                <td>${element.email_id}</td>
-                                <td>${element.date_of_joining ? element.date_of_joining : 'a'}</td>
-                                <td>${element.reporting_to}</td>
-                                <td class="Master_action">
+                                <td>${element.designation ? element.designation : ''}</td>
                                 <td class="Master_action hide-item">
+                                  <button class="btn btn-secondary btn-sm" onclick="open_view_model(${element.id})">View</button>
                                   <button class="btn btn-info btn-sm hide-item Master_edit" onclick="open_edit_model(${element.id})">Edit</button>
                                   <button class="btn btn-danger btn-sm hide-item Master_delete" onclick="delete_model(${element.id})">Delete</button>                                  
                                 </td>

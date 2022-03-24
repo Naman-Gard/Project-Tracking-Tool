@@ -115,8 +115,7 @@
 
     function open_add_model(){
             $('#staticBackdrop').modal('show');
-            $('#instrument_purpose_id').val('');
-            $('#delete_type_id').val('');
+            $(':input').val('');
             
             var innerHtml = '';
             $.ajax({

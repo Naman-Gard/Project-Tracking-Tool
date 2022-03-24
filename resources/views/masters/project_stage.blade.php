@@ -106,8 +106,7 @@
 
     function open_add_model(){
             $('#staticBackdrop').modal('show');
-            $('#project_stage_id').val('');
-            $('#delete_stage_id').val('');
+            $(':input').val('');
     }
 
     function open_edit_model(e){

@@ -105,8 +105,7 @@
 
     function open_add_model(){
             $('#staticBackdrop').modal('show');
-            $('#business_group_id').val('');
-            $('#delete_group_id').val('');
+            $(':input').val('');
     }
 
     function open_edit_model(e){

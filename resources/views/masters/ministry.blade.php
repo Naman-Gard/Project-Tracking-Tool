@@ -107,8 +107,7 @@
 
     function open_add_model(){
             $('#staticBackdrop').modal('show');
-            $('#ministry_id').val('');
-            $('#delete_ministry_id').val('');
+            $(':input').val('');
 
     }
 

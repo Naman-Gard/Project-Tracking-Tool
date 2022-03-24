@@ -107,8 +107,7 @@
 
     function open_add_model(){
             $('#staticBackdrop').modal('show');
-            $('#department_id').val('');
-            $('#delete_department_id').val('');
+            $(':input').val('');
 
     }
 

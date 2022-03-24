@@ -106,8 +106,7 @@
 
     function open_add_model(){
             $('#staticBackdrop').modal('show');
-            $('#billing_type_id').val('');
-            $('#delete_type_id').val('');
+            $(':input').val('');
     }
 
     function open_edit_model(e){
