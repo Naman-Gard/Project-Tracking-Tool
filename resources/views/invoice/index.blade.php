@@ -13,8 +13,8 @@
                 </button>
             </div>
             <div class="bg-gradient-primary d-flex justify-content-between shadow-primary border-radius-lg pt-4 pb-3">
-            <h6 class="text-white text-capitalize ps-3">All Work Orders</h6>
-            <a class="btn btn-secondary mx-5 float-right btn-sm hide-item Work_add" href="{{route('add-work-order')}}">Add</a>
+            <h6 class="text-white text-capitalize ps-3">All Invoices</h6>
+            <a class="btn btn-secondary mx-5 float-right btn-sm hide-item Invoice_add" href="{{route('add-invoice')}}">Add</a>
             </div>
         </div>
         <div class="card-body px-0 pb-2">
@@ -23,10 +23,12 @@
                 <thead>
                 <tr class="text-center">
                     <th scope="col">SL no.</th>
-                    <th scope="col">Number</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Validity Date</th>
-                    <th scope="col" class="action hide-item Work_action">Actions</th>
+                    <th scope="col">Work Order Number</th>
+                    <th scope="col">Total Amount</th>
+                    <th scope="col">Recieved Total Amount</th>
+                    <th scope="col">Recieved Date</th>
+                    <!-- <th scope="col">Mobile No.</th> -->
+                    <th scope="col" class="action hide-item Invoice_action">Actions</th>
                 </tr>
                 </thead>
                 <tbody class="t-content text-center">
@@ -42,7 +44,7 @@
 
 
 
-<div class="modal fade" id="DeleteOrder" >
+<div class="modal fade" id="DeleteInvoice" >
     <div class="modal-dialog">
         <div class="modal-content">
         
@@ -71,14 +73,14 @@
 @endsection
 @push('scripts')
 <script>
-  let work_id
-    function deleteWork(id){
-      work_id=id
+  let invoice_id
+    function deleteInvoice(id){
+      invoice_id=id
     }
 
     $(".delete-mem-btn").click(()=>{
       let data={
-        work_id:work_id
+        invoice_id:invoice_id
       }
 
       $.ajax({
@@ -86,10 +88,10 @@
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/work-order/delete',
+            url: api_url+'master/invoice/delete',
         }).done((response)=>{
-          sessionStorage.setItem("message", "Work Order Deleted Successfully");
-          window.location='{{route("work-orders")}}'
+          sessionStorage.setItem("message", "Invoice Deleted Successfully");
+          window.location='{{route("invoices")}}'
         })
     })
     
@@ -103,14 +105,14 @@
         var i=1
         $.ajax({
         type: "GET",
-        url: api_url+'items/work_orders?limit=-1',
+        url: api_url+'items/invoices?limit=-1',
         }).done((response)=>{
-        const orders=response.data
-        if(orders.length!=0){
-            orders.forEach((order)=>{
-              var edit = '{{ route("edit-work-order", ":id") }}'
-              edit = edit.replace(':id', btoa(order.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+order.number+'</td><td>'+order.date+'</td><td>'+order.validity_date+'</td><td class="action hide-item Work_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Work_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Work_delete" onclick="deleteWork('+order.id+')" data-bs-toggle="modal" data-bs-target="#DeleteOrder">Delete</button></td></tr>')
+        const invoices=response.data
+        if(invoices.length!=0){
+            invoices.forEach((invoice)=>{
+              var edit = '{{ route("edit-invoice", ":id") }}'
+              edit = edit.replace(':id', btoa(invoice.id))
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+invoice.work_order_number+'</td><td>'+invoice.invoice_total_amount+'</td><td>'+invoice.recieved_total_amount+'</td><td>'+invoice.payment_recieved_date+'</td><td class="action hide-item Invoice_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Invoice_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Invoice_delete" onclick="deleteInvoice('+invoice.id+')" data-bs-toggle="modal" data-bs-target="#DeleteInvoice">Delete</button></td></tr>')
             i=i+1
             })
         }

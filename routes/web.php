@@ -92,6 +92,13 @@ Route::group(["middleware" => ["islogin"]], function(){
     Route::get('/work/order/edit/{id}', [App\Http\Controllers\OrderController::class, 'editWorkOrder'])->name('edit-work-order');
 
 
+    //Invoice Routes
+    Route::get('/invoice', [App\Http\Controllers\HomeController::class, 'invoice'])->name('invoices');
+    Route::get('/invoice/add', [App\Http\Controllers\InvoiceController::class, 'addInvoice'])->name('add-invoice');
+    Route::get('/invoice/add/{id}', [App\Http\Controllers\InvoiceController::class, 'addInvoice'])->name('add-invoice-by-project');
+    Route::get('/invoice/edit/{id}', [App\Http\Controllers\InvoiceController::class, 'editInvoice'])->name('edit-invoice');
+
+
 
     Route::get('/logout','App\Http\Controllers\Controller@logout')->name('logout');
     Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
