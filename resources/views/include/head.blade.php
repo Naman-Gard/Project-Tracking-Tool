@@ -18,6 +18,7 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="{{asset('assets/css/material-dashboard.css?v=3.0.0')}}" rel="stylesheet" />
   <link  href="{{asset('assets/css/style.css')}}" rel="stylesheet" />
+  <link  href="{{asset('assets/css/jquery.dataTables.min.css')}}" rel="stylesheet" />
 
   <!-- datatables -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/4.0.0/material-components-web.min.css" rel="stylesheet">
