@@ -68,6 +68,10 @@ Route::group(["middleware" => ["islogin"]], function(){
         return view('upload_file');
     })->name('upload-employee');
 
+    Route::get('/master/role-type', function () {
+        return view('masters.role_type');
+    })->name('roleType');
+
     // Route::get('/employee/list', function () {
     //     return view('view_employee');
     // })->name('all-employee');

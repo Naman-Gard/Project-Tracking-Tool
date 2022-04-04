@@ -20,7 +20,7 @@
             </div>
             <div class="card-body px-0 pb-2">
               <div class="table-responsive p-4">
-                <table class="table align-items-center mb-0" id="example">
+              <table id="example" class="table align-items-center mb-0 mdl-data-table">
                   <thead>
                     <tr class="text-center">
                       <th scope="col">SL no.</th>
@@ -364,9 +364,20 @@
         else{
           innerHtml = `<tr> <td colspan="6">No Record Found</td> </tr>`;
         }
-
-        $('#all_row').html(innerHtml);
+        
+        $('#example').DataTable($('#all_row').html(innerHtml));
+        $('#example').on('page.dt', function () {
+          getPermissions()
+        } );
+        $('#example').on('length.dt', function () {
+          getPermissions()
+        } );
+        $('#example').on('search.dt', function () {
+          getPermissions()
+        } );
+        
         getPermissions()
+
       })
     })
 

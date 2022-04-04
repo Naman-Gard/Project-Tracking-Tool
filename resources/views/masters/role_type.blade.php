@@ -14,7 +14,7 @@
                   </button>
               </div>
               <div class="bg-gradient-warning d-flex justify-content-between align-items-center shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">All Business Groups</h6>
+                <h6 class="text-white text-capitalize ps-3">All Role Types</h6>
                 <a class="btn btn-dark mx-5 btn-sm hide-item Master_add" onclick="open_add_model()">Add</a>
               </div>
             </div>
@@ -38,22 +38,23 @@
         </div>
       </div>
 
-    <div class="modal fade" id="Deletegroup" >
+    <div class="modal fade" id="Deletetype" >
       <div class="modal-dialog">
           <div class="modal-content">
           
             <div class="modal-body p-0">
+                
             
                 <div class="card">
-                  <!-- <div class="card-header">Delete Business Group
+                  <!-- <div class="card-header">Delete Role Type
                   <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div> -->
                   <div class="card-body">
                   <form>
                       <p>Are you sure you want to delete?</p> 
-                      <input type="hidden" id="delete_group_id">
-                      <button type="button" class="btn btn-secondary btn-sm Group_delete" data-bs-dismiss="modal">Close</button>
-                      <button onclick="group_delete()" class="btn btn-danger btn-sm">Delete</button>
+                      <input type="hidden" id="delete_type_id">
+                      <button type="button" class="btn btn-secondary btn-sm Type_delete" data-bs-dismiss="modal">Close</button>
+                      <button onclick="type_delete()" class="btn btn-danger btn-sm">Delete</button>
                   </form>
                   </div>
                 </div>
@@ -69,7 +70,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Add Business Group</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Add Role Type</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-0">
@@ -77,8 +78,8 @@
         <div class="card">
           <div class="card-body">
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Business Group Name</label>
-              <input type="hidden" id="business_group_id">
+              <label for="exampleInputEmail1" class="form-label">Role Type Name</label>
+              <input type="hidden" id="role_type_id">
               <input type="text" id="name" name="name" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('name') }}">
             <span class="text-danger"></span>
             </div>
@@ -113,41 +114,41 @@
             $('#staticBackdrop').modal('show');
             $.ajax({
             type: "GET",
-            url: api_url+'master/business_group',
+            url: api_url+'master/role_type',
             }).done((response)=>{
-              const business=response.data
-              const business_data = business.business_group
+              const types=response.data
+              const type_data = types.role_type
 
-              const business_data_by_id = business_data.filter((item) => {
+              const type_data_by_id = type_data.filter((item) => {
                 return item.id == e;
                 });
               
-              const business_group = business_data_by_id[0]
-              $('#business_group_id').val(business_group.id);
-              $('#name').val(business_group.name);
+              const role_type = type_data_by_id[0]
+              $('#role_type_id').val(role_type.id);
+              $('#name').val(role_type.name);
                 
             })          
     }
 
     function delete_model(e){
-            $('#Deletegroup').modal('show');
-            $('#delete_group_id').val(e);     
+            $('#Deletetype').modal('show');
+            $('#delete_type_id').val(e);     
     }
 
-    function group_delete(){
+    function type_delete(){
 
       let data={
-            'business_group_id': $('#delete_group_id').val() }
+            'role_type_id': $('#delete_type_id').val() }
 
       $.ajax({
       type: "DELETE",
       contentType: "application/json",
       dataType: "json",
       data:JSON.stringify(data),
-      url: api_url+'master/business_group',
+      url: api_url+'master/role_type',
       }).done((response)=>{
-          sessionStorage.setItem("message", "Business Group Deleted Successfully");
-          window.location='{{route("businessGroup")}}'
+          sessionStorage.setItem("message", "Role Type Deleted Successfully");
+          window.location='{{route("roleType")}}'
       })
     }
 
@@ -162,22 +163,22 @@
 
         else{
 
-          if($("#business_group_id").val() == ''){
+          if($("#role_type_id").val() == ''){
             $.ajax({
             type: "POST",
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/business_group',
+            url: api_url+'master/role_type',
             }).done((response)=>{
-              sessionStorage.setItem("message", "Business Group Added Successfully");
-                window.location='{{route("businessGroup")}}'
+                sessionStorage.setItem("message", "Role Type Added Successfully");
+                window.location='{{route("roleType")}}'
             })
           }
 
           else{
             let data={
-            'business_group_id': $("#business_group_id").val(),
+            'role_type_id': $("#role_type_id").val(),
             'name': $("#name").val() }
 
             $.ajax({
@@ -185,10 +186,10 @@
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/business_group_update',
+            url: api_url+'master/role_type_update',
             }).done((response)=>{
-              sessionStorage.setItem("message", "Business Group Edited Successfully");
-                window.location='{{route("businessGroup")}}'
+                sessionStorage.setItem("message", "Role Type Edited Successfully");
+                window.location='{{route("roleType")}}'
             })
           }
           
@@ -206,16 +207,16 @@
         var innerHtml = '';
         $.ajax({
         type: "GET",
-        url: api_url+'master/business_group',
+        url: api_url+'master/role_type',
         }).done((response)=>{
-        const business=response.data
-        if(business.business_group.length!=0){
+        const types=response.data
+        if(types.role_type.length!=0){
           var i = 1;
-          business.business_group.forEach(element =>{
+          types.role_type.forEach(element =>{
               innerHtml += `<tr>
                                 <td>${i++}</td>
                                 <td>${element.name}</td>
-                                <td class="hide-item Master_action">
+                                <td class="Master_action hide-item">
                                   <button class="btn btn-info btn-sm hide-item Master_edit" onclick="open_edit_model(${element.id})">Edit</button>
                                   <button class="btn btn-danger btn-sm hide-item Master_delete" onclick="delete_model(${element.id})">Delete</button>                                  
                                 </td>
@@ -236,7 +237,6 @@
         $('#example').on('search.dt', function () {
           getPermissions()
         } );
-
         getPermissions()
       })
     })

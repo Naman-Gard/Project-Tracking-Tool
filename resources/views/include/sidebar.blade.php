@@ -44,6 +44,7 @@
                 <li class="nav-item"> <a class="nav-link" href="{{url('/master/work-order-type')}}"> Work Order Type </a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{url('/master/billing-type')}}"> Billing Type </a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{url('/master/employee-list')}}"> Employees List </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url('/master/role-type')}}"> Role Type </a></li>
             </ul>
           </div>
         </li>

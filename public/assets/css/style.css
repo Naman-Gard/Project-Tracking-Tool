@@ -11,4 +11,12 @@
 .row {
   margin-bottom: 10px;
 }
+
+.pagination {
+  float: right;
+}
+
+#example_wrapper {
+  width: -webkit-fill-available;
+}
 /*# sourceMappingURL=style.css.map */
