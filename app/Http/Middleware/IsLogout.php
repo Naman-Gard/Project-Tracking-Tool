@@ -18,7 +18,7 @@ class IsLogout
     public function handle(Request $request, Closure $next)
     {
         if(Session::has('user')){
-            return redirect()->back();
+            return redirect()->route('home');
         }else{
             return $next($request);
         }
