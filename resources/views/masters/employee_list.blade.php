@@ -364,7 +364,7 @@
         else{
           innerHtml = `<tr> <td colspan="6">No Record Found</td> </tr>`;
         }
-        
+        $('#all_row').html(innerHtml)
         $('#example').DataTable($('#all_row').html(innerHtml));
         $('#example').on('page.dt', function () {
           getPermissions()
@@ -375,7 +375,6 @@
         $('#example').on('search.dt', function () {
           getPermissions()
         } );
-        
         getPermissions()
 
       })

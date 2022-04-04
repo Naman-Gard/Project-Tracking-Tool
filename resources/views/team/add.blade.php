@@ -106,10 +106,36 @@
     function Submit(){
         const flag=EmpValidations()
         if(flag){
+            let emp_list={}
+            employees=$('#employee_name').val()
+            employees.forEach((item)=>{
+                emp_data.filter((emp)=>{
+                    if(emp.employee_id==item){
+                        emp_list[item]={
+                            "id":item,
+                            "name":emp.name,
+                            "role":$("#emp_"+item+"_role").val()
+                        }
+                    }
+                })
+            })
+
             data={
                 "project_id":atob(id),
-                "employee_name"
+                "employee_list":emp_list
             }
+            console.log(data)
+
+            $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data:JSON.stringify(data),
+            url: api_url+'master/add/project/team',
+            }).done((response)=>{
+                sessionStorage.setItem("message", "Team Added Successfully");
+                window.location='{{route("projects")}}'
+            })
         }
     }
 

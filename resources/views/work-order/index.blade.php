@@ -117,6 +117,7 @@
         else{
             $('.t-content').append('<tr><td><td><td class="text-start">No Data Found!</td></td></td></tr>')
         }
+        $('.table').DataTable()
         getPermissions()
         })
         

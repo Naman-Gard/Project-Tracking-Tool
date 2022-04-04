@@ -103,7 +103,7 @@ Route::group(["middleware" => ["islogin"]], function(){
     Route::get('/invoice/edit/{id}', [App\Http\Controllers\InvoiceController::class, 'editInvoice'])->name('edit-invoice');
     
     //Team Routes
-    Route::get('project/team/add/{id}', [App\Http\Controllers\TeamController::class, 'addTeam'])->name('add-team-by-project');
+    Route::get('team/add/{id}', [App\Http\Controllers\TeamController::class, 'addTeam'])->name('add-team-by-project');
 
 
     Route::get('/logout','App\Http\Controllers\Controller@logout')->name('logout');

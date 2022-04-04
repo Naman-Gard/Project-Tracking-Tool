@@ -6,8 +6,8 @@
   <script src="{{asset('assets/js/jquery.min.js')}}"></script>
 
   <!-- datatables -->
-  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.11.5/js/dataTables.material.min.js"></script>
+  <script src="{{asset('assets/js/jquery.dataTables.min.js')}}"></script>
+  <!-- <script src="{{asset('assets/js/dataTables.material.min.js')}}"></script> -->
   
   <script>
     let api_url ='{{env("API_URL")}}'
@@ -82,3 +82,5 @@
   </script>
 
  @stack('scripts')
+
+ @endstack
