@@ -37,56 +37,57 @@ class IsLogin
             $edit=array_map('strtolower',$edit);
             // dd($view);
 
-            if(in_array('add',$url)){
-                foreach($url as $item){
-                    if(in_array($item,$add))
-                    {
-                        return $next($request);
-                    }
-                }
-            }
-            else if(in_array('edit',$url)){
-                foreach($url as $item){
-                    if(in_array($item,$edit))
-                    {
-                        return $next($request);
-                    }
-                }
-            }
-            else{
-                foreach($url as $item){
-                    if(in_array($item,$view))
-                    {
-                        return $next($request);
-                    }
-                }
-            }
-
-
-            // foreach($url as $item){
-            //     if(in_array($item,$view))
-            //     {
-            //         if(in_array('add',$url)){
-            //             foreach($url as $item){
-            //                 if(in_array($item,$add))
-            //                 {
-            //                     return $next($request);
-            //                 }
-            //             }
-            //         }
-            //         else if(in_array('edit',$url)){
-            //             foreach($url as $item){
-            //                 if(in_array($item,$edit))
-            //                 {
-            //                     return $next($request);
-            //                 }
-            //             }
-            //         }
-            //         else{
+            // if(in_array('add',$url)){
+            //     foreach($url as $item){
+            //         if(in_array($item,$add))
+            //         {
             //             return $next($request);
             //         }
             //     }
             // }
+            // else if(in_array('edit',$url)){
+            //     foreach($url as $item){
+            //         if(in_array($item,$edit))
+            //         {
+            //             return $next($request);
+            //         }
+            //     }
+            // }
+            // else{
+            //     foreach($url as $item){
+            //         if(in_array($item,$view))
+            //         {
+            //             return $next($request);
+            //         }
+            //     }
+            // }
+
+
+            foreach($url as $item){
+                if(in_array($item,$view))
+                {
+                    if(in_array('add',$url)){
+                        foreach($url as $item){
+                            if(in_array($item,$add))
+                            {
+                                return $next($request);
+                            }
+                        }
+                    }
+                    else if(in_array('edit',$url)){
+                        foreach($url as $item){
+                            if(in_array($item,$edit))
+                            {
+                                return $next($request);
+                            }
+                        }
+                    }
+                    else{
+                        // dd('Hii');
+                        return $next($request);
+                    }
+                }
+            }
             
             return redirect()->back();
             //  return $next($request);

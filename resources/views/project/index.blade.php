@@ -104,6 +104,12 @@
         route = route.replace(':id', btoa(id))
         window.location=route
     }
+
+    function addTeam(id){
+        var route = '{{ route("add-team-by-project", ":id") }}'
+        route = route.replace(':id', btoa(id))
+        window.location=route
+    }
     
 
     $(document).ready(()=>{
@@ -122,7 +128,7 @@
             projects.forEach((project)=>{
               var edit = '{{ route("edit-project", ":id") }}'
               edit = edit.replace(':id', btoa(project.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_stage+'</td><td class="action hide-item Project_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-1">Edit</a><button class="btn btn-danger m-1 btn-sm hide-item Project_delete" onclick="deleteProject('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteProject">Delete</button><button class="btn btn-info btn-sm m-1 Instrument_add" onclick="addInstrument('+project.id+')">Add Instrument</button><button class="btn btn-info m-1 btn-sm Work_add" onclick="addWork('+project.id+')">Add Work Order</button></td></tr>')
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_stage+'</td><td class="action hide-item Project_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-1">Edit</a><button class="btn btn-danger m-1 btn-sm hide-item Project_delete" onclick="deleteProject('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteProject">Delete</button><button class="btn btn-info btn-sm m-1 Instrument_add" onclick="addInstrument('+project.id+')">Add Instrument</button><button class="btn btn-info m-1 btn-sm Work_add" onclick="addWork('+project.id+')">Add Work Order</button><button class="btn btn-info m-1 btn-sm Team_add" onclick="addTeam('+project.id+')">Manage Team</button></td></tr>')
             i=i+1
             })
         }
