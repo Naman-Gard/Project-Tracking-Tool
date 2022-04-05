@@ -7,7 +7,7 @@
             document.write(new Date().getFullYear())
           </script>,
           Developed by
-          <a href="#" class="font-weight-bold" target="_blank">Netprophets</a>
+          <a href='{{url("https://www.netprophetsglobal.com/")}}' target="_balnk" class="font-weight-bold" target="_blank">Netprophets</a>
         </div>
       </div>
   

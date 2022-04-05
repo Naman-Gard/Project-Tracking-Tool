@@ -112,7 +112,7 @@
             invoices.forEach((invoice)=>{
               var edit = '{{ route("edit-invoice", ":id") }}'
               edit = edit.replace(':id', btoa(invoice.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+invoice.work_order_number+'</td><td>'+invoice.invoice_total_amount+'</td><td>'+invoice.recieved_total_amount+'</td><td>'+invoice.payment_recieved_date+'</td><td class="action hide-item Invoice_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Invoice_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Invoice_delete" onclick="deleteInvoice('+invoice.id+')" data-bs-toggle="modal" data-bs-target="#DeleteInvoice">Delete</button></td></tr>')
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+invoice.work_order_number+'</td><td>'+invoice.invoice_total_amount+'</td><td>'+invoice.recieved_total_amount+'</td><td>'+invoice.payment_recieved_date+'</td><td class="action hide-item Invoice_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Invoice_edit m-1">Edit</a><button class="btn btn-danger m-1 btn-sm hide-item Invoice_delete" onclick="deleteInvoice('+invoice.id+')" data-bs-toggle="modal" data-bs-target="#DeleteInvoice">Delete</button></td></tr>')
             i=i+1
             })
         }

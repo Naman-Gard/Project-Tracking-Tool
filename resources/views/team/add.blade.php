@@ -8,7 +8,7 @@
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                    <h6 class="text-white text-capitalize ps-3">Add Team Members</h6>
+                    <h6 class="text-white text-capitalize ps-3">Manage Team Members</h6>
                 </div>
                 </div>
             <div class="card-body">
@@ -24,7 +24,7 @@
                     <span class="text-danger valid_project"></span>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 hide-item Team_add">
                         <label for="exampleInputEmail1" class="form-label">Employees</label>
                         <select name="employee[]" class="form-control select" id="employee_name" multiple>
                             <!-- <option value="">Select</option> -->
@@ -35,7 +35,7 @@
                     </div>
  
                     <div class="mb-3">
-                    <input type="button" onclick="Select()" class="btn btn-primary btn-sm" value="Select">
+                    <input type="button" onclick="Select()" class="btn btn-primary btn-sm hide-item Team_edit" value="Manage">
                     </div>
 
                     <div class="mb-3" id="team_list">
@@ -53,7 +53,7 @@
                     </div>
                     
                     <div class="mb-3">
-                    <input type="button" onclick="Submit()" class="btn btn-primary btn-sm" value="Add">
+                    <input type="button" onclick="Submit()" class="btn btn-primary btn-sm" value="Update">
                     </div>
                 </form>
             </div>
@@ -91,7 +91,7 @@
 <script>
     let emp_data
     let url=window.location.href
-    let id=url.split('add/')[1]
+    let id=url.split('manage/')[1]
     let team_data={}
 
     function Select(){
@@ -102,7 +102,8 @@
         if(flag){
             $('.form1').addClass('hide-item')
             $('.form2').removeClass('hide-item')
-            employees=$('#employee_name').val()
+            employees=$('#employee_name').val()?$('#employee_name').val():[]
+            // console.log(employees)
             let innerHtml=''
             employees.forEach((item)=>{
                 emp_data.filter((emp)=>{
@@ -120,13 +121,12 @@
                                 <label for="exampleInputEmail1" class="form-label">Role</label>
                                 <select name="role" class="form-control select" id="emp_${item}_role">
                                     <option value="">Select</option>
-                                    <option value="lead">Lead</option>
                                 </select>
                             <span class="text-danger valid_emp_${item}_role"></span>
                             </div>
                             
-                            <div class="col-md-2">
-                                <input type="button" onclick="removeEmployee('${item}')" class="btn btn-danger m-3 btn-sm"  data-bs-toggle="modal" data-bs-target="#RemoveEmployeee" value="Remove">
+                            <div class="col-md-2 teamRemove">
+                                <input type="button" onclick="removeEmployee('${item}')" class="btn btn-danger m-3 btn-sm hide-item Team_delete"  data-bs-toggle="modal" data-bs-target="#RemoveEmployeee" value="Remove">
                             </div>
                             </div>`;
             })
@@ -142,18 +142,18 @@
                                 <label for="exampleInputEmail1" class="form-label">Role</label>
                                 <select name="role" class="form-control select" id="emp_${key}_role">
                                     <option value="">Select</option>
-                                    <option value="lead">Lead</option>
                                 </select>
                             <span class="text-danger valid_emp_${key}_role"></span>
                             </div>
 
-                            <div class="col-md-2">
-                                <input type="button" onclick="removeEmployee('${key}')" class="btn btn-danger m-3 btn-sm"  data-bs-toggle="modal" data-bs-target="#RemoveEmployeee" value="Remove">
+                            <div class="col-md-2 teamRemove">
+                                <input type="button" onclick="removeEmployee('${key}')" class="btn btn-danger m-3 btn-sm hide-item Team_delete"  data-bs-toggle="modal" data-bs-target="#RemoveEmployeee" value="Remove">
                             </div>
                             </div>`;
             })
 
             $('#all_row').html(innerHtml);
+            getPermissions()
             getRoles();
            
         }      
@@ -176,7 +176,7 @@
         if(flag){
             let emp_list={}
             
-            employees=$('#employee_name').val()
+            employees=$('#employee_name').val()?$('#employee_name').val():[]
             employees.forEach((item)=>{
                 if(!removedIDs.includes(item)){
                     emp_data.filter((emp)=>{
@@ -230,7 +230,7 @@
 
     function EmpValidations(){
         let flag=[]
-        employees=$('#employee_name').val()
+        employees=$('#employee_name').val()?$('#employee_name').val():[]
         employees.forEach((id)=>{
             if(!removedIDs.includes(id)){
                 if($("#emp_"+id+"_role").val()){
@@ -293,15 +293,15 @@
             flag1=false
         }
 
-        if($('#employee_name').val()){
-            $('.valid_employee').html('')
-            flag2=true
-        }else{
-            $('.valid_employee').html('The employees field is required.')
-            flag2=false
-        }
+        // if($('#employee_name').val()){
+        //     $('.valid_employee').html('')
+        //     flag2=true
+        // }else{
+        //     $('.valid_employee').html('The employees field is required.')
+        //     flag2=false
+        // }
 
-        return flag1 && flag2
+        return flag1
 
         
     }

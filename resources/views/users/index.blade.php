@@ -117,7 +117,7 @@
           users.forEach((user)=>{
             var permission = '{{ route("permission", ":id") }}'
             permission = permission.replace(':id', btoa(user.id))
-          $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+user.name+'</td><td>'+user.email+'</td><td class="action User_action"><a href="'+permission+'" class="btn btn-primary btn-sm hide-item User_edit m-2">Permissions</a><button class="btn btn-danger m-3 btn-sm hide-item User_delete" onclick="deleteUser('+user.id+')" data-bs-toggle="modal" data-bs-target="#Deleteuser">Delete</button></td></tr>')
+          $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+user.name+'</td><td>'+user.email+'</td><td class="action User_action"><a href="'+permission+'" class="btn btn-primary btn-sm hide-item User_edit m-1">Permissions</a><button class="btn btn-danger m-1 btn-sm hide-item User_delete" onclick="deleteUser('+user.id+')" data-bs-toggle="modal" data-bs-target="#Deleteuser">Delete</button></td></tr>')
           i=i+1
           })
       }
