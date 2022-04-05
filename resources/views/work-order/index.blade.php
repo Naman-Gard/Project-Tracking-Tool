@@ -110,7 +110,7 @@
             orders.forEach((order)=>{
               var edit = '{{ route("edit-work-order", ":id") }}'
               edit = edit.replace(':id', btoa(order.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+order.number+'</td><td>'+order.date+'</td><td>'+order.validity_date+'</td><td class="action hide-item Work_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Work_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Work_delete" onclick="deleteWork('+order.id+')" data-bs-toggle="modal" data-bs-target="#DeleteOrder">Delete</button></td></tr>')
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+order.number+'</td><td>'+order.date+'</td><td>'+order.validity_date+'</td><td class="action hide-item Work_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Work_edit m-1">Edit</a><button class="btn btn-danger m-1 btn-sm hide-item Work_delete" onclick="deleteWork('+order.id+')" data-bs-toggle="modal" data-bs-target="#DeleteOrder">Delete</button></td></tr>')
             i=i+1
             })
         }

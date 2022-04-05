@@ -83,4 +83,3 @@
 
  @stack('scripts')
 
- @endstack

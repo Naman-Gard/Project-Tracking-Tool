@@ -354,9 +354,9 @@
                                 <td>${element.name}</td>
                                 <td>${element.designation ? element.designation : ''}</td>
                                 <td class="Master_action hide-item">
-                                  <button class="btn btn-secondary btn-sm" onclick="open_view_model(${element.id})">View</button>
-                                  <button class="btn btn-info btn-sm hide-item Master_edit" onclick="open_edit_model(${element.id})">Edit</button>
-                                  <button class="btn btn-danger btn-sm hide-item Master_delete" onclick="delete_model(${element.id})">Delete</button>                                  
+                                  <button class="btn m-1 btn-secondary btn-sm" onclick="open_view_model(${element.id})">View</button>
+                                  <button class="btn m-1 btn-info btn-sm hide-item Master_edit" onclick="open_edit_model(${element.id})">Edit</button>
+                                  <button class="btn m-1 btn-danger btn-sm hide-item Master_delete" onclick="delete_model(${element.id})">Delete</button>                                  
                                 </td>
                             </tr>`;
             })

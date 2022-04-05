@@ -112,7 +112,7 @@
             instruments.forEach((instrument)=>{
               var edit = '{{ route("edit-instrument", ":id") }}'
               edit = edit.replace(':id', btoa(instrument.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+instrument.serial_no+'</td><td>'+instrument.amount+'</td><td>'+instrument.date+'</td><td>'+instrument.expiry_date+'</td><td class="action hide-item Instrument_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Instrument_edit m-2">Edit</a><button class="btn btn-danger m-3 btn-sm hide-item Instrument_delete" onclick="deleteInstrument('+instrument.id+')" data-bs-toggle="modal" data-bs-target="#DeleteInstrument">Delete</button></td></tr>')
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+instrument.serial_no+'</td><td>'+instrument.amount+'</td><td>'+instrument.date+'</td><td>'+instrument.expiry_date+'</td><td class="action hide-item Instrument_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Instrument_edit m-1">Edit</a><button class="btn btn-danger m-1 btn-sm hide-item Instrument_delete" onclick="deleteInstrument('+instrument.id+')" data-bs-toggle="modal" data-bs-target="#DeleteInstrument">Delete</button></td></tr>')
             i=i+1
             })
         }

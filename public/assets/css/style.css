@@ -12,11 +12,11 @@
   margin-bottom: 10px;
 }
 
-.pagination {
-  float: right;
+.dataTables_wrapper {
+  padding: 20px;
 }
 
-#example_wrapper {
-  width: -webkit-fill-available;
+.teamRemove {
+  padding-top: 25px;
 }
 /*# sourceMappingURL=style.css.map */
