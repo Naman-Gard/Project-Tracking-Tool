@@ -361,7 +361,8 @@
 
                 $('#employee_name').multiselect({
                     columns: 1,
-                    placeholder: 'Select Employees'
+                    placeholder: 'Select Employees',
+                    search: true
                 })
 
             })
