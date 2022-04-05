@@ -88,8 +88,6 @@
 </div>
 @endsection
 @push('scripts')
-<script src="https://phpcoder.tech/multiselect/js/jquery.multiselect.js"></script>
-<link rel="stylesheet" href="https://phpcoder.tech/multiselect/css/jquery.multiselect.css">
 <script>
     let emp_data
     let url=window.location.href
@@ -361,8 +359,9 @@
 
                 $('#employee_name').multiselect({
                     columns: 1,
-                    placeholder: 'Select Employees',
-                    search: true
+                    placeholder: 'Select',
+                    search: true,
+                    showCheckbox:false,
                 })
 
             })
