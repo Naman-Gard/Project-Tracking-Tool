@@ -23,6 +23,7 @@
   <!-- datatables -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/4.0.0/material-components-web.min.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.11.5/css/dataTables.material.min.css" rel="stylesheet">
-  
+  <link rel="stylesheet" href="{{asset('assets/css/jquery.multiselect.css')}}">
+
 </head>
 
