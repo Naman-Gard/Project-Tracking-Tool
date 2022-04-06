@@ -56,8 +56,10 @@
       // add=modules.filter(e=>!add.includes(e));
       // edit=modules.filter(e=>!edit.includes(e));
       // delet=modules.filter(e=>!delet.includes(e));
+      
       view.forEach((item)=>{
         $('#'+item).removeClass('hide-item');
+        $('.'+item).removeClass('hide-item');
       });
       add.forEach((item)=>{
         // $('.'+item+'_add').attr("disabled",true);

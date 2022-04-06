@@ -196,7 +196,11 @@
             Object.keys(temp_team_data)
                 .filter(key => removedIDs.includes(key))
                 .forEach(key => delete temp_team_data[key]);
+            
 
+            $.each(temp_team_data,(key,value)=>{
+                temp_team_data[key].role=$("#emp_"+key+"_role").val()
+            })
             if(Object.keys(temp_team_data).length!=0){
                 $.extend(emp_list, temp_team_data);
             }
@@ -267,11 +271,11 @@
     function getRoles(){
         $.ajax({
         type: "GET",
-        url: api_url+'items/roles?limit=-1',
+        url: api_url+'items/role_type?limit=-1',
         }).done((response)=>{
             roles=response.data
             roles.forEach((item)=>{
-                $('select[name=role]').append(`<option value="${item.role}">${item.role}</option>`)
+                $('select[name=role]').append(`<option value="${item.name}">${item.name}</option>`)
             })
 
             $.each(team_data,(key,value)=>{
@@ -283,7 +287,7 @@
     function Validations(){
 
         let flag1=false
-        let flag2=false
+        let flag2=true
         
         if($("select[name=project]").val()){
             $('.valid_project').html('')
@@ -293,15 +297,18 @@
             flag1=false
         }
 
-        // if($('#employee_name').val()){
-        //     $('.valid_employee').html('')
-        //     flag2=true
-        // }else{
-        //     $('.valid_employee').html('The employees field is required.')
-        //     flag2=false
-        // }
+        if(Object.keys(team_data).length==0){
+            if($('#employee_name').val()){
+                $('.valid_employee').html('')
+                flag2=true
+            }else{
+                $('.valid_employee').html('The employees field is required.')
+                flag2=false
+            }
+        }
+        
 
-        return flag1
+        return flag1 && flag2
 
         
     }
@@ -328,6 +335,11 @@
                 team_data=response.data
                 if(team_data.length!=0){
                     team_data=JSON.parse(team_data[0].employees)
+                }
+                else{
+                    team_data={}
+                }
+                if(Object.keys(team_data).length!=0){
                     team_ids=Object.keys(team_data)
                     $.each(team_data,(key,value)=>{
                     $('#team_members').append(value.name + "<br>")

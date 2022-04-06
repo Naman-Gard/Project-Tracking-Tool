@@ -125,6 +125,15 @@
           $('.t-content').append('<tr><td><td><td class="text-start">No Data Found!</td></td></td></tr>')
       }
       $('.table').DataTable()
+      $('.table').on('page.dt', function () {
+          getPermissions()
+        } );
+        $('.table').on('length.dt', function () {
+          getPermissions()
+        } );
+        $('.table').on('search.dt', function () {
+          getPermissions()
+        } );
       getPermissions()
       })
 
