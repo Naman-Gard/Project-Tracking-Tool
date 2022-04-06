@@ -21,7 +21,7 @@
             <div class="table-responsive p-0">
             <table class="table align-items-center mb-0">
                 <thead>
-                <tr class="text-center">
+                <tr class="">
                     <th scope="col">SL no.</th>
                     <th scope="col">Name</th>
                     <th scope="col">Status</th>
@@ -29,7 +29,7 @@
                     <th scope="col" class="action hide-item Project_action">Actions</th>
                 </tr>
                 </thead>
-                <tbody class="t-content text-center">
+                <tbody class="t-content ">
                 
                 </tbody>
             </table>

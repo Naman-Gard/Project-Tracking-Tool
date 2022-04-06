@@ -22,14 +22,14 @@
               <div class="table-responsive p-0">
               <table id="example" class="table align-items-center mb-0 mdl-data-table">
                   <thead>
-                    <tr class="text-center">
+                    <tr class="">
                       <th scope="col">SL no.</th>
                       <th scope="col">Type</th>
                       <th scope="col">Purpose</th>
                       <th scope="col" class="action hide-item Master_action">Actions</th>
                     </tr>
                   </thead>
-                  <tbody class="t-content text-center" id="all_row">
+                  <tbody class="t-content " id="all_row">
                     
                   </tbody>
                 </table>
