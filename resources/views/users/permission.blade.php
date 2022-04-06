@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-body  px-0 pb-2">
                 
-                        <div class="row text-center">
+                        <div class="row text-center permission_module">
                             <div class="col-3 p-0">
                             <strong>Module</strong>
                             </div>
@@ -36,7 +36,7 @@
 
                         <?php $modules=['Master','Project','Instrument','Invoice','Work','User','Team'];?>
                         @foreach($modules as $module)
-                        <div class="row text-center">
+                        <div class="row text-center permission_module">
                     
                         <div class="col-3 p-0">
                         <strong>{{$module}}</strong>

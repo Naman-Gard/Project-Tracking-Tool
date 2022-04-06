@@ -22,6 +22,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">
+                                        {{ __('MailBox') }}
+                                    </a>
+                                    <hr class="m-0">
                                     <a class="dropdown-item" href="{{route('logout')}}">
                                         {{ __('Logout') }}
                                     </a>

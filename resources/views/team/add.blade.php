@@ -18,7 +18,7 @@
 
                     <div class="col-md-6">
                         <label for="exampleInputEmail1" class="form-label">Project</label>
-                        <select name="project" class="form-control" id="project_name">
+                        <select name="project" class="form-control" id="project_name" disabled>
                             <option value="">Select</option>
                         </select>
                     <span class="text-danger valid_project"></span>
@@ -93,6 +93,8 @@
     let url=window.location.href
     let id=url.split('manage/')[1]
     let team_data={}
+    let temp_removedIDs=''
+    let removedIDs=[]
 
     function Select(){
 
@@ -159,8 +161,7 @@
         }      
 
     }
-    let temp_removedIDs=''
-    let removedIDs=[]
+    
     function removeEmployee(id){
       temp_removedIDs=id
     }
@@ -216,7 +217,7 @@
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify(data),
-            url: api_url+'master/add/project/team',
+            url: api_url+'master/manage/project/team',
             }).done((response)=>{
                 message=response.data
                 if(message.message=="ADD"){
@@ -314,73 +315,77 @@
     }
 
     $('document').ready(()=>{
-        
-        const filters={
-            "project_id":{
-                '_eq': atob(id)
-            },
-        }
-        
+       
         $.ajax({
         type: "GET",
         url: api_url+'master/employeeDetails',
         }).done((response)=>{
             employee_data=response.data
             emp_data=employee_data.employee_name
-
-            $.ajax({
-            type: "GET",
-            url: api_url+'items/teams?filter='+JSON.stringify(filters),
-            }).done((response)=>{
-                team_data=response.data
-                if(team_data.length!=0){
-                    team_data=JSON.parse(team_data[0].employees)
-                }
-                else{
-                    team_data={}
-                }
-                if(Object.keys(team_data).length!=0){
-                    team_ids=Object.keys(team_data)
-                    $.each(team_data,(key,value)=>{
-                    $('#team_members').append(value.name + "<br>")
-                })
-                }else{
-                    team_ids=[]
-                    // $('#team_list').addClass('hide-item')
-                    $('#team_members').html("Team Not Assinged Yet!")
-                }
-                
-                
-                $.each( employee_data, function( key, value ) {
-                    value.forEach((item)=>{
-                        if(key=='project_name'){
-                            if(id!=undefined && item.id==atob(id)){
-                                $('#'+key).append(`<option value="${item.id}" selected>${item.project_name}</option>`)
-                            }
-                            else{
-                                $('#'+key).append(`<option value="${item.id}">${item.project_name}</option>`)
-                            }
-                        }
-                        if(key=='employee_name'){
-                            if(!team_ids.includes(item.employee_id) || team_ids.length==0){
-                                $('#'+key).append(`<option value="${item.employee_id}">${item.name}</option>`)
-                            }
-                        }
-                    })
-                });
-
-                $('#employee_name').multiselect({
-                    columns: 1,
-                    placeholder: 'Select',
-                    search: true,
-                    showCheckbox:false,
-                })
-
-            })
-
-            
+            getTeams(employee_data)
+           
         })
     })
+
+
+    function getTeams(employee_data){
+
+        const filters={
+            "project_id":{
+                '_eq': atob(id)
+            },
+        }
+
+        $.ajax({
+        type: "GET",
+        url: api_url+'items/teams?filter='+JSON.stringify(filters),
+        }).done((response)=>{
+            team_data=response.data
+            if(team_data.length!=0){
+                team_data=JSON.parse(team_data[0].employees)
+            }
+            else{
+                team_data={}
+            }
+            if(Object.keys(team_data).length!=0){
+                team_ids=Object.keys(team_data)
+                $.each(team_data,(key,value)=>{
+                $('#team_members').append(value.name + "<br>")
+            })
+            }else{
+                team_ids=[]
+                // $('#team_list').addClass('hide-item')
+                $('#team_members').html("Team Not Assinged Yet!")
+            }
+            
+            
+            $.each( employee_data, function( key, value ) {
+                value.forEach((item)=>{
+                    if(key=='project_name'){
+                        if(id!=undefined && item.id==atob(id)){
+                            $('#'+key).append(`<option value="${item.id}" selected>${item.project_name}</option>`)
+                        }
+                        else{
+                            $('#'+key).append(`<option value="${item.id}">${item.project_name}</option>`)
+                        }
+                    }
+                    if(key=='employee_name'){
+                        if(!team_ids.includes(item.employee_id) || team_ids.length==0){
+                            $('#'+key).append(`<option value="${item.employee_id}">${item.name}</option>`)
+                        }
+                    }
+                })
+            });
+
+            $('#employee_name').multiselect({
+                columns: 1,
+                placeholder: 'Select',
+                search: true,
+                showCheckbox:false,
+            })
+
+        })
+    }
 
 </script>
 @endpush
