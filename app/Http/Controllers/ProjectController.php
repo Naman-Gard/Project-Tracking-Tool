@@ -13,4 +13,8 @@ class ProjectController extends Controller
     public function editProject(){
         return view('project.edit');
     }
+
+    public function manageDocs(){
+        return view('project-docs.index');
+    }
 }

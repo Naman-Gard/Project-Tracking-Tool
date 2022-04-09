@@ -149,8 +149,8 @@
             <span class="nav-link-text ms-1">Invoice Details</span>
           </a>
         </li> -->
-        <li class="nav-item">
-          <a class="nav-link text-white " href="">
+        <li class="nav-item hide-item" id="Team">
+          <a class="nav-link text-white {{ Request::is('team/*') ? 'bg-gradient-primary' : '' }}" href="{{route('team')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">people_outline</i>
             </div>
