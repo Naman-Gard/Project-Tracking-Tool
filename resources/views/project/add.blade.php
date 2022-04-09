@@ -149,103 +149,100 @@
 
     function projectValidations(){
 
-        let flag1=false
-        let flag2=false
-        let flag3=false
-        let flag4=false
-        let flag5=false
-        let flag6=false
-        let flag7=false
-        let flag8=false
-        let flag9=false
+        let flag=[]
 
         if($("input[name=p_name]").val()){
             $('.valid_p_name').html('')
-            flag1=true
+            flag.push(true)
         }else{
             $('.valid_p_name').html('The project name field is required.')
-            flag1=false
+            flag.push(false)
         }
 
         if($("select[name=b_group]").val()){
             $('.valid_b_group').html('')
-            flag2=true
+            flag.push(true)
         }else{
             $('.valid_b_group').html('The bussiness group field is required.')
-            flag2=false
+            flag.push(false)
         }
 
         if($("textarea[name=desc]").val()){
             $('.valid_desc').html('')
-            flag3=true
+            flag.push(true)
         }else{
             $('.valid_desc').html('The project description field is required.')
-            flag3=false
+            flag.push(false)
         }
 
         if($("input[name=client_name]").val()){
             $('.valid_client_name').html('')
-            flag4=true
+            flag.push(true)
         }else{
             $('.valid_client_name').html('The client name field is required.')
-            flag4=false
+            flag.push(false)
         }
 
         if($("select[name=client_dep]").val()){
             $('.valid_client_dep').html('')
-            flag5=true
+            flag.push(true)
         }else{
             $('.valid_client_dep').html('The client department field is required.')
-            flag5=false
+            flag.push(false)
         }
 
         if($("input[name=b_acc_manager]").val()){
             $('.valid_b_acc_manager').html('')
-            flag6=true
+            flag.push(true)
         }else{
             $('.valid_b_acc_manager').html('The bussiness manager field is required.')
-            flag6=false
+            flag.push(false)
         }
 
         if($("input[name=t_acc_manager]").val()){
             $('.valid_t_acc_manager').html('')
-            flag7=true
+            flag.push(true)
         }else{
             $('.valid_t_acc_manager').html('The technical manager field is required.')
-            flag7=false
+            flag.push(false)
         }
 
         if($("select[name=p_type]").val()){
             $('.valid_p_type').html('')
-            flag8=true
+            flag.push(true)
         }else{
             $('.valid_p_type').html('The project type field is required.')
-            flag8=false
+            flag.push(false)
         }
 
         if($("select[name=p_stage]").val()){
             $('.valid_p_stage').html('')
-            flag9=true
+            flag.push(true)
         }else{
             $('.valid_p_stage').html('The project stage field is required.')
-            flag9=false
+            flag.push(false)
         }
 
         if($('#bid').hasClass('hide-item')){
             $("input[name=bid_amount]").val('')
-            flag=true
+            flag.push(true)
         }
         else{
             if($("input[name=bid_amount]").val()){
                 $('.valid_bid_amount').html('')
-                flag=true
+                flag.push(true)
             }else{
                 $('.valid_bid_amount').html('The bid amount field is required.')
-                flag=false
+                flag.push(false)
             }
         }
         
-        return flag1 && flag2 && flag3 && flag4 && flag5 && flag6 && flag7 && flag8 && flag9 && flag
+        if(flag.includes(false)){
+            return false
+        }
+        else{
+            return true
+        }
 
     }
 

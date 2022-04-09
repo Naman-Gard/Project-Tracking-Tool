@@ -46,4 +46,8 @@ class HomeController extends Controller
     public function invoice(){
         return view('invoice.index');
     }
+
+    public function team(){
+        return view('team.index');
+    }
 }
