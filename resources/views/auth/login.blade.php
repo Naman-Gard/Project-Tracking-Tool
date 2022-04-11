@@ -72,7 +72,7 @@
                                   src="{{asset('assets/images/Google__G__Logo.svg.webp')}}" />
                           </div>
                           Login with Google
-                      </a>
+                      </a> 
                   </div>
               
                   <!-- <p class="mt-4 text-sm text-center">
