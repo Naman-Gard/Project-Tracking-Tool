@@ -158,99 +158,94 @@
 
     function invoiceValidations(){
 
-        let flag1=false
-        let flag2=false
-        let flag3=false
-        let flag4=false
-        let flag5=false
-        let flag6=false
-        let flag7=false
-        let flag8=false
-        let flag9=false
-        let flag=false
+        let flag=[]
 
         if($("select[name=work_order_number]").val()){
             $('.valid_work_order_number').html('')
-            flag1=true
+            flag.push(true)
         }else{
             $('.valid_work_order_number').html('The work order number field is required.')
-            flag1=false
+            flag.push(false)
         }
 
         if($("select[name=project]").val()){
             $('.valid_project').html('')
-            flag2=true
+            flag.push(true)
         }else{
             $('.valid_project').html('The project field is required.')
-            flag2=false
+            flag.push(false)
         }
 
         if($("input[name=reference_milestone_no]").val()){
             $('.valid_reference_milestone_no').html('')
-            flag4=true
+            flag.push(true)
         }else{
             $('.valid_reference_milestone_no').html('The reference milestone no field is required.')
-            flag4=false
+            flag.push(false)
         }
 
         if($("input[name=invoice_price]").val()){
             $('.valid_invoice_price').html('')
-            flag5=true
+            flag.push(true)
         }else{
             $('.valid_invoice_price').html('The invoice price field is required.')
-            flag5=false
+            flag.push(false)
         }
 
         if($("input[name=invoice_date]").val()){
             $('.valid_invoice_date').html('')
-            flag6=true
+            flag.push(true)
         }else{
             $('.valid_invoice_date').html('The date field is required.')
-            flag6=false
+            flag.push(false)
         }
 
         if($("input[name=amount_tax]").val()){
             $('.valid_amount_tax').html('')
-            flag7=true
+            flag.push(true)
         }else{
             $('.valid_amount_tax').html('The tax field is required.')
-            flag7=false
+            flag.push(false)
         }
 
         if($("input[name=payment_recieved_date]").val()){
             $('.valid_payment_recieved_date').html('')
-            flag8=true
+            flag.push(true)
         }else{
             $('.valid_payment_recieved_date').html('The payment recieved date is required.')
-            flag8=false
+            flag.push(false)
         }
 
         if($("input[name=payment_due_date]").val()){
             $('.valid_payment_due_date').html('')
-            flag3=true
+            flag.push(true)
         }else{
             $('.valid_payment_due_date').html('The payment due date field is required.')
-            flag3=false
+            flag.push(false)
         }
 
         if($("input[name=recieved_price]").val()){
             $('.valid_recieved_price').html('')
-            flag9=true
+            flag.push(true)
         }else{
             $('.valid_recieved_price').html('The recieved price field is required.')
-            flag9=false
+            flag.push(false)
         }
 
         if($("input[name=payment_tax]").val()){
             $('.valid_payment_tax').html('')
-            flag=true
+            flag.push(true)
         }else{
             $('.valid_payment_tax').html('The tax field is required.')
-            flag=false
+            flag.push(false)
         }
         
-        return flag && flag1 && flag2 && flag3 && flag4 && flag5 && flag6 && flag7 && flag8 && flag9
-
+        if(flag.includes(false)){
+            return false
+        }
+        else{
+            return true
+        }
     }
 
     $('input[name=amount_tax]').keyup(()=>{

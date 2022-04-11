@@ -77,9 +77,8 @@
                 $('.valid_email').html('The email is already registered.')
             }
             else{
-                $('.valid_email').html('')
                 if(flag){
-
+                    $('.valid_email').html('')
                     let data={
                         'name': $("input[name=name]").val(),
                         'email': $("input[name=email]").val(),
@@ -112,44 +111,47 @@
 
     function doValidations(){
 
-        let flag1=false
-        let flag2=false
-        let flag3=false
-        let flag4=false
+        let flag=[]
 
         if($("input[name=name]").val()){
             $('.valid_name').html('')
-            flag1=true
+            flag.push(true)
         }else{
             $('.valid_name').html('The name field is required.')
-            flag1=false
+            flag.push(false)
         }
 
         if($("input[name=email]").val()){
-            flag2= emailValidation($("input[name=email]").val())
+            const temp=emailValidation($("input[name=email]").val())
+            flag.push(temp)
         }else{
             $('.valid_email').html('The email field is required.')
-            flag2=false
+            flag.push(false)
         }
 
         if($("input[name=password]").val()){
             $('.valid_pass').html('')
-            flag3=true
+            flag.push(true)
         }else{
             $('.valid_pass').html('The password field is required.')
-            flag3=false
+            flag.push(false)
         }
 
         if($("select[name=role]").val()){
             $('.valid_role').html('')
-            flag4=true
+            flag.push(true)
         }else{
             $('.valid_role').html('The Role field is required.')
-            flag4=false
+            flag.push(false)
         }
         
-        return flag1 && flag2 && flag3 && flag4
-
+        if(flag.includes(false)){
+            return false
+        }
+        else{
+            return true
+        }
+        
     }
 
     function emailValidation(email){
@@ -160,8 +162,8 @@
             return true
         }
         else{
-        $('.valid_email').html('Invalid Email')
-        return false
+            $('.valid_email').html('Invalid Email')
+            return false
         }
     }
 </script>
