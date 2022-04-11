@@ -14,7 +14,6 @@
             </div>
             <div class="bg-gradient-primary d-flex justify-content-between shadow-primary border-radius-lg pt-4 pb-3">
             <h6 class="text-white text-capitalize ps-3">All Projects</h6>
-            <a class="btn btn-secondary mx-5 float-right btn-sm hide-item Project_add" href="{{route('add-project')}}">Add</a>
             </div>
         </div>
         <div class="card-body px-0 pb-2">
@@ -71,42 +70,9 @@
 @endsection
 @push('scripts')
 <script>
-  let project_id
-    function deleteProject(id){
-      project_id=id
-    }
 
-    $(".delete-mem-btn").click(()=>{
-      let data={
-        project_id:project_id
-      }
-
-      $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            dataType: "json",
-            data:JSON.stringify(data),
-            url: api_url+'master/project/delete',
-        }).done((response)=>{
-          sessionStorage.setItem("message", "Project Deleted Successfully");
-          window.location='{{route("projects")}}'
-        })
-    })
-
-    function addInstrument(id){
-        var route = '{{ route("add-ins-by-project", ":id") }}'
-        route = route.replace(':id', btoa(id))
-        window.location=route
-    }
-
-    function addWork(id){
-        var route = '{{ route("add-work-by-project", ":id") }}'
-        route = route.replace(':id', btoa(id))
-        window.location=route
-    }
-
-    function manageDocs(id){
-        var route = '{{ route("docs-by-project", ":id") }}'
+    function addTeam(id){
+        var route = '{{ route("add-team-by-project", ":id") }}'
         route = route.replace(':id', btoa(id))
         window.location=route
     }
@@ -128,12 +94,12 @@
             projects.forEach((project)=>{
               var edit = '{{ route("edit-project", ":id") }}'
               edit = edit.replace(':id', btoa(project.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_stage+'</td><td class="action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-1">Edit</a><button class="btn btn-danger m-1 btn-sm hide-item Project_delete" onclick="deleteProject('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteProject">Delete</button><button class="btn btn-info btn-sm m-1 hide-item Instrument_add" onclick="addInstrument('+project.id+')">Add Instrument</button><button class="btn btn-info m-1 hide-item btn-sm Work_add" onclick="addWork('+project.id+')">Add Work Order</button><button class="btn btn-info m-1 btn-sm" onclick="manageDocs('+project.id+')">Manage Docs</button></td></tr>')
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_stage+'</td><td class="action"><button class="btn btn-primary m-1 btn-sm" onclick="addTeam('+project.id+')">Manage Team</button></td></tr>')
             i=i+1
             })
         }
         else{
-            $('.t-content').append('<tr><td></td><td class="text-start">No Data Found!</td></td></td></tr>')
+            $('.t-content').append('<tr><td><td><td class="text-start">No Data Found!</td></td></td></tr>')
         }
         $('.table').DataTable()
         $('.table').on('page.dt', function () {

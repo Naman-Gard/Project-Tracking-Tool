@@ -173,126 +173,118 @@
 
     function orderValidations(){
 
-        let flag1=false
-        let flag2=false
-        let flag3=false
-        let flag4=false
-        let flag5=false
-        let flag6=false
-        let flag7=false
-        let flag8=false
-        let flag9=false
-        let flag=false
-        let flag10=false
-        let flag11=false
-        let flag12=false
+        let flag=[]
 
         if($("input[name=work_order_number]").val()){
             $('.valid_work_order_number').html('')
-            flag1=true
+            flag.push(true)
         }else{
             $('.valid_work_order_number').html('The work order number field is required.')
-            flag1=false
+            flag.push(false)
         }
 
         if($("select[name=project]").val()){
             $('.valid_project').html('')
-            flag2=true
+            flag.push(true)
         }else{
             $('.valid_project').html('The project field is required.')
-            flag2=false
+            flag.push(false)
         }
 
         if($("input[name=empanelment]").val()){
             $('.valid_empanelment').html('')
-            flag4=true
+            flag.push(true)
         }else{
             $('.valid_empanelment').html('The empanelment field is required.')
-            flag4=false
+            flag.push(false)
         }
 
         if($("input[name=work_order_value]").val()){
             $('.valid_work_order_value').html('')
-            flag5=true
+            flag.push(true)
         }else{
             $('.valid_work_order_value').html('The value field is required.')
-            flag5=false
+            flag.push(false)
         }
 
         if($("input[name=work_order_date]").val()){
             $('.valid_work_order_date').html('')
-            flag6=true
+            flag.push(true)
         }else{
             $('.valid_work_order_date').html('The date field is required.')
-            flag6=false
+            flag.push(false)
         }
 
         if($("input[name=work_order_validity_date]").val()){
             $('.valid_work_order_validity_date').html('')
-            flag7=true
+            flag.push(true)
         }else{
             $('.valid_work_order_validity_date').html('The validity date field is required.')
-            flag7=false
+            flag.push(false)
         }
 
         if($("input[name=no_of_milestones]").val()){
             $('.valid_no_of_milestones').html('')
-            flag8=true
+            flag.push(true)
         }else{
             $('.valid_no_of_milestones').html('The milestones field is required.')
-            flag8=false
+            flag.push(false)
         }
 
         if($("input[name=milestone_date]").val()){
             $('.valid_milestone_date').html('')
-            flag3=true
+            flag.push(true)
         }else{
             $('.valid_milestone_date').html('The milestone date field is required.')
-            flag3=false
+            flag.push(false)
         }
 
         if($("input[name=milestone_percent_amount]").val()){
             $('.valid_milestone_percent_amount').html('')
-            flag9=true
+            flag.push(true)
         }else{
             $('.valid_milestone_percent_amount').html('The amount(%) field is required.')
-            flag9=false
+            flag.push(false)
         }
 
         if($("input[name=milestone_amount]").val()){
             $('.valid_milestone_amount').html('')
-            flag=true
+            flag.push(true)
         }else{
             $('.valid_milestone_amount').html('The amount field is required.')
-            flag=false
+            flag.push(false)
         }
 
         if($("textarea[name=milestone_description]").val()){
             $('.valid_milestone_description').html('')
-            flag12=true
+            flag.push(true)
         }else{
             $('.valid_milestone_description').html('The description field is required.')
-            flag12=false
+            flag.push(false)
         }
 
         if($("select[name=work_order_type]").val()){
             $('.valid_work_order_type').html('')
-            flag10=true
+            flag.push(true)
         }else{
             $('.valid_work_order_type').html('The work order type field is required.')
-            flag10=false
+            flag.push(false)
         }
 
         if($("select[name=billing_type]").val()){
             $('.valid_billing_type').html('')
-            flag11=true
+            flag.push(true)
         }else{
             $('.valid_billing_type').html('The billing type field is required.')
-            flag11=false
+            flag.push(false)
         }
         
-        return flag && flag1 && flag2 && flag3 && flag4 && flag5 && flag6 && flag7 && flag8 && flag9 && flag10 && flag11 && flag12
-
+        if(flag.includes(false)){
+            return false
+        }
+        else{
+            return true
+        }
     }
 
     $('document').ready(()=>{
