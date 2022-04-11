@@ -132,14 +132,14 @@
 
     function delete_model(e){
             $('#Deletestage').modal('show');
-            $('#delete_stage_id').val(e);
+            $('#delete_stage_id').val(btoa(e));
             
     }
 
     function stage_delete(){
 
       let data={
-            'project_stage_id': $('#delete_stage_id').val() }
+            'project_stage_id': atob($('#delete_stage_id').val()) }
 
       $.ajax({
       type: "DELETE",

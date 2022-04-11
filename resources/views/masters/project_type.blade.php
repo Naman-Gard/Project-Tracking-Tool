@@ -132,13 +132,13 @@
 
     function delete_model(e){
             $('#Deletetype').modal('show');
-            $('#delete_type_id').val(e);     
+            $('#delete_type_id').val(btoa(e));     
     }
 
     function type_delete(){
 
       let data={
-            'project_type_id': $('#delete_type_id').val() }
+            'project_type_id': atob($('#delete_type_id').val()) }
 
       $.ajax({
       type: "DELETE",

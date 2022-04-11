@@ -133,13 +133,13 @@
 
     function delete_model(e){
             $('#Deletedepartment').modal('show');
-            $('#delete_department_id').val(e);
+            $('#delete_department_id').val(btoa(e));
     }
 
     function type_delete(){
 
     let data={
-          'department_id': $('#delete_department_id').val() }
+          'department_id': atob($('#delete_department_id').val()) }
 
     $.ajax({
     type: "DELETE",

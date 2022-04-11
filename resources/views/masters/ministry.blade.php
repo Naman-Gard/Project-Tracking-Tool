@@ -133,13 +133,13 @@
 
     function delete_model(e){
             $('#Deleteministry').modal('show');
-            $('#delete_ministry_id').val(e);
+            $('#delete_ministry_id').val(btoa(e));
     }
 
     function type_delete(){
 
     let data={
-          'ministry_id': $('#delete_ministry_id').val() }
+          'ministry_id': atob($('#delete_ministry_id').val()) }
 
     $.ajax({
     type: "DELETE",

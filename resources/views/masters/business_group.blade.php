@@ -131,13 +131,13 @@
 
     function delete_model(e){
             $('#Deletegroup').modal('show');
-            $('#delete_group_id').val(e);     
+            $('#delete_group_id').val(btoa(e));     
     }
 
     function group_delete(){
 
       let data={
-            'business_group_id': $('#delete_group_id').val() }
+            'business_group_id': atob($('#delete_group_id').val()) }
 
       $.ajax({
       type: "DELETE",
