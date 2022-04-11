@@ -22,7 +22,7 @@
               <div class="table-responsive p-4">
               <table id="example" class="table align-items-center mb-0 mdl-data-table">
                   <thead>
-                    <tr class="">
+                    <tr class="text-center">
                       <th scope="col">SL no.</th>
                       <th scope="col">Employee ID</th>
                       <th scope="col">Name</th>
@@ -30,7 +30,7 @@
                       <th scope="col" class="action hide-item Master_action">Actions</th>
                     </tr>
                   </thead>
-                  <tbody class="t-content " id="all_row">
+                  <tbody class="t-content text-center" id="all_row">
                     
                   </tbody>
                 </table>
@@ -56,7 +56,7 @@
                       <p>Are you sure you want to delete?</p> 
                       <input type="hidden" id="delete_type_id">
                       <button type="button" class="btn btn-secondary btn-sm Type_delete" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-danger btn-sm delete-mem-btn">Delete</button>
+                      <button onclick="type_delete()" class="btn btn-danger btn-sm">Delete</button>
                   </form>
                   </div>
                 </div>
@@ -117,7 +117,7 @@
                 <span class="text-danger reporting_to"></span>
               </div>
               <div class="col-md-12">
-                <button type="submit" class="btn btn-success btn-sm submit-button">Submit</button>
+                <button onclick="Submit()" class="btn btn-success btn-sm">Submit</button>
               </div>
             </div>
         </div>
@@ -183,38 +183,6 @@
     function open_add_model(){
             $('#staticBackdrop').modal('show');
             $(':input').val('');
-            
-            $(".submit-button").click(()=>{
-              let data={
-                    'employee_id': $("#employee_id").val(),
-                    'name': $("#name").val(),
-                    'department': $("#department").val(),
-                    'designation': $("#designation").val(),
-                    'email_id': $("#email_id").val(),
-                    'joining_date': $("#joining_date").val(),
-                    'reporting_to': $("#reporting_to").val() }
-
-                if(data.employee_id == ''){
-                  $('.employee_id').html('Employee ID field is required.');
-                }
-
-                if(data.name == ''){
-                  $('.name').html('Name field is required.');
-                }
-
-                else{
-                    $.ajax({
-                    type: "POST",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data:JSON.stringify(data),
-                    url: api_url+'master/employee_list',
-                    }).done((response)=>{
-                      sessionStorage.setItem("message", "Employee Details Added Successfully");
-                        window.location='{{route("employeeList")}}'
-                    })
-                }
-              })
     }
 
     function open_view_model(e){
@@ -278,52 +246,12 @@
               $('#joining_date').val(employee_list.date_of_joining ? employee_list.date_of_joining : '');
               $('#reporting_to').val(employee_list.reporting_to ? employee_list.reporting_to : '');
                 
-            })
-            
-            $(".submit-button").click(()=>{
-
-              let data={
-              'employee_list_id': e,
-              'employee_id': $("#employee_id").val(),
-              'name': $("#name").val(),
-              'department': $("#department").val(),
-              'designation': $("#designation").val(),
-              'email_id': $("#email_id").val(),
-              'joining_date': $("#joining_date").val(),
-              'reporting_to': $("#reporting_to").val() }
-
-              $.ajax({
-              type: "POST",
-              contentType: "application/json",
-              dataType: "json",
-              data:JSON.stringify(data),
-              url: api_url+'master/employee_list_update',
-              }).done((response)=>{
-                sessionStorage.setItem("message", "Employee Details Edited Successfully");
-                  window.location='{{route("employeeList")}}'
-              })
-
-            });
+            })          
     }
 
     function delete_model(e){
             $('#Deletetype').modal('show');
-
-            $(".delete-mem-btn").click(()=>{
-              let data={
-            'employee_list_id': e }
-
-              $.ajax({
-              type: "DELETE",
-              contentType: "application/json",
-              dataType: "json",
-              data:JSON.stringify(data),
-              url: api_url+'master/employee_list',
-              }).done((response)=>{
-                sessionStorage.setItem("message", "Employee Details Deleted Successfully");
-                  window.location='{{route("employeeList")}}'
-              })
-            });
+            $('#delete_type_id').val(e);     
     }
 
     function type_delete(){
@@ -341,6 +269,66 @@
         sessionStorage.setItem("message", "Employee Details Deleted Successfully");
           window.location='{{route("employeeList")}}'
       })
+    }
+
+    function Submit(){
+
+      let data={
+            'employee_id': $("#employee_id").val(),
+            'name': $("#name").val(),
+            'department': $("#department").val(),
+            'designation': $("#designation").val(),
+            'email_id': $("#email_id").val(),
+            'joining_date': $("#joining_date").val(),
+            'reporting_to': $("#reporting_to").val() }
+
+        if(data.employee_id == ''){
+          $('.employee_id').html('Employee ID field is required.');
+        }
+
+        if(data.name == ''){
+          $('.name').html('Name field is required.');
+        }
+
+        else{
+
+          if($("#employee_list_id").val() == ''){
+            $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data:JSON.stringify(data),
+            url: api_url+'master/employee_list',
+            }).done((response)=>{
+              sessionStorage.setItem("message", "Employee Details Added Successfully");
+                window.location='{{route("employeeList")}}'
+            })
+          }
+
+          else{
+            let data={
+            'employee_list_id': $("#employee_list_id").val(),
+            'employee_id': $("#employee_id").val(),
+            'name': $("#name").val(),
+            'department': $("#department").val(),
+            'designation': $("#designation").val(),
+            'email_id': $("#email_id").val(),
+            'joining_date': $("#joining_date").val(),
+            'reporting_to': $("#reporting_to").val() }
+
+            $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data:JSON.stringify(data),
+            url: api_url+'master/employee_list_update',
+            }).done((response)=>{
+              sessionStorage.setItem("message", "Employee Details Edited Successfully");
+                window.location='{{route("employeeList")}}'
+            })
+          }
+        }
+
     }
 
   $(document).ready(()=>{

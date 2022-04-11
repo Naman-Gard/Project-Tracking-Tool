@@ -8,6 +8,14 @@
           <div class="col-lg-4 col-md-8 col-12 mx-auto">
             <div class="card z-index-0 fadeIn3 fadeInBottom">
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              @if(session('not-exist'))
+                <div class="alert alert-danger alert-dismissible text-white" role="alert">
+                <span class="text-sm success-message">{{session('not-exist')}}</span>
+                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                @endif
                 <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
                   <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Sign in</h4>
                   <div class="row mt-3">
@@ -55,6 +63,16 @@
                   <div class="text-center">
                     
                        <button type="button" onclick="Login()" class="btn bg-gradient-primary w-100 my-4 mb-2"> Sign in </button>
+                       <!-- <a  href="{{ url('auth/google') }}" class="btn bg-gradient-primary w-100 my-4 mb-2"><i class="fa fa-envelope"></i>
+                          <strong>Google Login</strong>
+                       </a> -->
+                       <a class="oauth-container btn darken-4 white black-text bg-gradient-primary" href="{{ url('auth/google') }}" style="text-transform:none;">
+                          <div class="left">
+                              <img width="20px" style="margin-top:7px; margin-right:8px" alt="Google sign-in" 
+                                  src="{{asset('assets/images/Google__G__Logo.svg.webp')}}" />
+                          </div>
+                          Login with Google
+                      </a>
                   </div>
               
                   <!-- <p class="mt-4 text-sm text-center">

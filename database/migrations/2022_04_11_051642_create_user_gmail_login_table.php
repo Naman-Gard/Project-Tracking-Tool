@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('user_gmail_login', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('social_id')->nullable();
-            $table->string('social_type')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('email_id');
+            $table->string('role');
+            $table->text('view')->nullable();
+            $table->text('add')->nullable();
+            $table->text('edit')->nullable();
+            $table->text('delete')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user_gmail_login');
     }
 };
