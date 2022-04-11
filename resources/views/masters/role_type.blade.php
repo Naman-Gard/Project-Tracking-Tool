@@ -78,9 +78,9 @@
         <div class="card">
           <div class="card-body">
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Role Type Name</label>
+              <label for="name" class="form-label">Role Type Name</label>
               <input type="hidden" id="role_type_id">
-              <input type="text" id="name" name="name" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('name') }}">
+              <input type="text" id="name" name="name" class="form-control border" autocomplete="off" aria-describedby="nameHelp" value="{{ old('name') }}">
             <span class="text-danger"></span>
             </div>
             
@@ -124,7 +124,7 @@
                 });
               
               const role_type = type_data_by_id[0]
-              $('#role_type_id').val(role_type.id);
+              $('#role_type_id').val(btoa(role_type.id));
               $('#name').val(role_type.name);
                 
             })          
@@ -132,13 +132,13 @@
 
     function delete_model(e){
             $('#Deletetype').modal('show');
-            $('#delete_type_id').val(e);     
+            $('#delete_type_id').val(btoa(e));     
     }
 
     function type_delete(){
 
       let data={
-            'role_type_id': $('#delete_type_id').val() }
+            'role_type_id': atob($('#delete_type_id').val()) }
 
       $.ajax({
       type: "DELETE",
@@ -178,7 +178,7 @@
 
           else{
             let data={
-            'role_type_id': $("#role_type_id").val(),
+            'role_type_id': atob($("#role_type_id").val()),
             'name': $("#name").val() }
 
             $.ajax({

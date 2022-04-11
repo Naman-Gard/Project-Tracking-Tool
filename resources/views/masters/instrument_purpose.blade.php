@@ -89,7 +89,7 @@
             </div>
 
               <label for="purpose" class="form-label">Instrument Purpose</label>
-              <input type="text" id="purpose" name="purpose" class="form-control border" value="{{ old('purpose') }}">
+              <input type="text" id="purpose" name="purpose" autocomplete="off" class="form-control border" value="{{ old('purpose') }}">
             <span class="text-danger purpose"></span>
             </div>
             
@@ -148,7 +148,7 @@
                 });
               
               const instrument_purpose = type_data_by_id[0]
-              $('#instrument_purpose_id').val(instrument_purpose.id);
+              $('#instrument_purpose_id').val(btoa(instrument_purpose.id));
               $('#purpose').val(instrument_purpose.name);
 
               $.ajax({
@@ -175,13 +175,13 @@
 
     function delete_model(e){
             $('#Deletetype').modal('show');
-            $('#delete_type_id').val(e);     
+            $('#delete_type_id').val(btoa(e));     
     }
 
     function type_delete(){
 
       let data={
-            'instrument_purpose_id': $('#delete_type_id').val() }
+            'instrument_purpose_id': atob($('#delete_type_id').val()) }
 
       $.ajax({
       type: "DELETE",
@@ -227,7 +227,7 @@
 
           else{
             let data={
-            'instrument_purpose_id': $("#instrument_purpose_id").val(),
+            'instrument_purpose_id': atob($("#instrument_purpose_id").val()),
             'instrument_id': $("#instrument_type").val(),
             'name': $("#purpose").val() }
 

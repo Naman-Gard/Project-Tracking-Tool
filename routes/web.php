@@ -121,6 +121,9 @@ Route::group(["middleware" => ["islogout"]], function(){
 Route::get('/login','App\Http\Controllers\Controller@index')->name('login');
 Route::get('/register','App\Http\Controllers\Controller@register')->name('register');
 Route::get('/set-session','App\Http\Controllers\Controller@setSession')->name('setSession');
+Route::get('auth/google', [App\Http\Controllers\UserController::class, 'redirectToGoogle']);
+Route::get('callback/google', [App\Http\Controllers\UserController::class, 'handleCallback']);
+
 
 });
 

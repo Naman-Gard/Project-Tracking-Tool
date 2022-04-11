@@ -78,9 +78,9 @@
         <div class="card">
           <div class="card-body">
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Stage Name</label>
+              <label for="name" class="form-label">Stage Name</label>
               <input type="hidden" id="project_stage_id">
-              <input type="text" id="name" name="name" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('name') }}">
+              <input type="text" id="name" name="name" class="form-control border" autocomplete="off" aria-describedby="nameHelp" value="{{ old('name') }}">
             <span class="text-danger"></span>
             </div>
             
@@ -124,7 +124,7 @@
                 });
               
               const project_stage = stage_data_by_id[0]
-              $('#project_stage_id').val(project_stage.id);
+              $('#project_stage_id').val(btoa(project_stage.id));
               $('#name').val(project_stage.name);
                 
             })          
@@ -132,14 +132,14 @@
 
     function delete_model(e){
             $('#Deletestage').modal('show');
-            $('#delete_stage_id').val(e);
+            $('#delete_stage_id').val(btoa(e));
             
     }
 
     function stage_delete(){
 
       let data={
-            'project_stage_id': $('#delete_stage_id').val() }
+            'project_stage_id': atob($('#delete_stage_id').val()) }
 
       $.ajax({
       type: "DELETE",
@@ -179,7 +179,7 @@
 
           else{
             let data={
-            'project_stage_id': $("#project_stage_id").val(),
+            'project_stage_id': atob($("#project_stage_id").val()),
             'name': $("#name").val() }
 
             $.ajax({
