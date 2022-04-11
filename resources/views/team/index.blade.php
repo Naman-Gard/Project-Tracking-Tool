@@ -99,7 +99,7 @@
             })
         }
         else{
-            $('.t-content').append('<tr><td><td><td class="text-start">No Data Found!</td></td></td></tr>')
+            $('.t-content').append('<tr><td></td><td></td><td class="text-start">No Data Found!</td><td></td></tr>')
         }
         $('.table').DataTable()
         $('.table').on('page.dt', function () {

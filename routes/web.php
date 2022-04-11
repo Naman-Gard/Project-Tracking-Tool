@@ -110,6 +110,9 @@ Route::group(["middleware" => ["islogin"]], function(){
 
     Route::get('/logout','App\Http\Controllers\Controller@logout')->name('logout');
     Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
+
+    //MailBox Routes
+    Route::get('/user/mailbox','App\Http\Controllers\MailboxController@index')->name('mailbox'); 
 });
 
 
