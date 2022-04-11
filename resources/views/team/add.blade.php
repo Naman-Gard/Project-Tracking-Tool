@@ -7,8 +7,9 @@
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                <div class="bg-gradient-primary d-flex justify-content-between shadow-primary border-radius-lg pt-4 pb-3">
                     <h6 class="text-white text-capitalize ps-3">Manage Team Members</h6>
+                    <button class="btn btn-secondary mx-5 float-right btn-sm hide-item Team_add" data-bs-toggle="modal" data-bs-target="#AddEmployee">Add More Members</a>
                 </div>
                 </div>
             <div class="card-body">
@@ -24,37 +25,30 @@
                     <span class="text-danger valid_project"></span>
                     </div>
 
-                    <div class="col-md-6 hide-item Team_add">
-                        <label for="exampleInputEmail1" class="form-label">Employees</label>
-                        <select name="employee[]" class="form-control select" id="employee_name" multiple>
-                            <!-- <option value="">Select</option> -->
-                        </select>
-                    <span class="text-danger valid_employee"></span>
                     </div>
 
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                        <thead>
+                            <tr class="">
+                            <!-- <th scope="col">SL no.</th> -->
+                            <th scope="col">Name</th>
+                            <th scope="col">Role</th>
+                            <!-- <th scope="col">Mobile No.</th> -->
+                            <th scope="col" class="action hide-item Team_action">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="t-content">
+                            
+                        </tbody>
+                        </table>
                     </div>
- 
+
+
                     <div class="mb-3">
-                    <input type="button" onclick="Select()" class="btn btn-primary btn-sm hide-item Team_edit" value="Manage">
+                    <input type="button" id="Update_Team" onclick="Submit()" class="btn btn-primary btn-sm hide-item Team_edit" value="Update">
                     </div>
 
-                    <div class="mb-3" id="team_list">
-                    <label for="exampleInputEmail1" class="form-label">Existing Team Members</label>
-                    <p id="team_members"></p>
-                    </div>
-
-
-                </form>
-
-
-                <form class="hide-item form2">
-                    <div id="all_row">
-            
-                    </div>
-                    
-                    <div class="mb-3">
-                    <input type="button" onclick="Submit()" class="btn btn-primary btn-sm" value="Update">
-                    </div>
                 </form>
             </div>
             </div>
@@ -74,9 +68,39 @@
                 <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div> -->
                 <div class="card-body">
-                    <p>Are you sure you want to remove?</p> 
+                    <p id="removed_warning">Are you sure you want to remove?</p> 
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-danger delete-mem-btn btn-sm" data-bs-dismiss="modal">Remove</button>
+                </div>
+            </div>
+
+
+        
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AddEmployee" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+        
+        <div class="modal-body p-0">
+            
+        
+            <div class="card">
+                <!-- <div class="card-header">Delete user
+                <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> -->
+                <div class="card-body">
+                    <div class="mb-4">
+                        <label for="exampleInputEmail1" class="form-label">Employees</label>
+                        <select name="employee[]" class="form-control select" id="employee_name" multiple>
+                        </select>
+                    <span class="text-danger valid_employee"></span>
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary add-mem-btn btn-sm">Add</button>
                 </div>
             </div>
 
@@ -95,80 +119,123 @@
     let team_data={}
     let temp_removedIDs=''
     let removedIDs=[]
+    let employees=[]
+    let innerHtml=''
 
-    function Select(){
+    function makeTeamRows(){
+        $.each(team_data,(key,value)=>{
+                innerHtml += `<tr id="${key}_row">
+                            <td>
+                                <span name="emp_name" id="emp_${key}">${value.name}</span>
+                            </td>
 
-        const flag=Validations() 
-        var innerHtml = '';
-        var name='';
-        if(flag){
-            $('.form1').addClass('hide-item')
-            $('.form2').removeClass('hide-item')
-            employees=$('#employee_name').val()?$('#employee_name').val():[]
-            // console.log(employees)
-            let innerHtml=''
-            employees.forEach((item)=>{
+                            <td>
+                                <select name="role" class="form-control select" id="emp_${key}_role">
+                                    <option value="">Select</option>
+                                </select>
+                            <span class="text-danger valid_emp_${key}_role"></span>
+                            </td>
+                            
+                            <td class="teamRemove hide-item Team_action">
+                                <input type="button" onclick="removeEmployee('${key}')" class="btn btn-danger m-3 btn-sm hide-item Team_delete"  data-bs-toggle="modal" data-bs-target="#RemoveEmployeee" value="Remove">
+                            </td>
+                            </tr>`;
+            })
+    }
+
+    function makeEmpRows(){
+        employees.forEach((item)=>{
                 emp_data.filter((emp)=>{
                     if(emp.employee_id==item){
                         name= emp.name;
                     }
                 })
-                innerHtml += `<div class="row" id="${item}_row">
-                            <div class="col-md-5">
-                                <label for="exampleFormControlInput1" class="form-label">Employee Name</label>
-                                <input class="form-control" name="emp_name" id="emp_${item}" type="text" placeholder="Employee Name" value="${name}" readonly>
-                            </div>
+                innerHtml += `<tr id="${item}_row">
+                            <td>
+                                <span name="emp_name" id="emp_${item}">${name}</span>
+                            </td>
 
-                            <div class="col-md-5">
-                                <label for="exampleInputEmail1" class="form-label">Role</label>
+                            <td>
                                 <select name="role" class="form-control select" id="emp_${item}_role">
                                     <option value="">Select</option>
                                 </select>
                             <span class="text-danger valid_emp_${item}_role"></span>
-                            </div>
+                            </td>
                             
-                            <div class="col-md-2 teamRemove">
+                            <td class="teamRemove hide-item Team_action">
                                 <input type="button" onclick="removeEmployee('${item}')" class="btn btn-danger m-3 btn-sm hide-item Team_delete"  data-bs-toggle="modal" data-bs-target="#RemoveEmployeee" value="Remove">
-                            </div>
-                            </div>`;
+                            </td>
+                            </tr>`;
             })
+    }
 
-            $.each(team_data,(key,value)=>{
-                innerHtml += `<div class="row" id="${key}_row">
-                            <div class="col-md-5">
-                                <label for="exampleFormControlInput1" class="form-label">Employee Name</label>
-                                <input class="form-control" name="emp_name" id="emp_${key}" type="text" placeholder="Employee Name" value="${value.name}" readonly>
-                            </div>
+    function makeTableRows(){ 
+        var name='';
+        
 
-                            <div class="col-md-5">
-                                <label for="exampleInputEmail1" class="form-label">Role</label>
-                                <select name="role" class="form-control select" id="emp_${key}_role">
-                                    <option value="">Select</option>
-                                </select>
-                            <span class="text-danger valid_emp_${key}_role"></span>
-                            </div>
+        if(Object.keys(team_data).length!=0 || employees.length!=0){
+            innerHtml=''
+            makeTeamRows()
+            makeEmpRows()
+            $('#Update_Team').prop('disabled',false)
 
-                            <div class="col-md-2 teamRemove">
-                                <input type="button" onclick="removeEmployee('${key}')" class="btn btn-danger m-3 btn-sm hide-item Team_delete"  data-bs-toggle="modal" data-bs-target="#RemoveEmployeee" value="Remove">
-                            </div>
-                            </div>`;
-            })
+        }
+        else{
+            innerHtml=''
+            innerHtml +=`<tr>
+            <td colspan=3 class="text-center">No Team Added Yet!</td>
+            </tr>`
+            $('#Update_Team').prop('disabled',true)
+        }
+        
+        
 
-            $('#all_row').html(innerHtml);
-            getPermissions()
-            getRoles();
+        $('.t-content').html(innerHtml);
+        getPermissions()
+        getRoles();
            
-        }      
-
     }
     
     function removeEmployee(id){
-      temp_removedIDs=id
+        temp_removedIDs=id
+        if((employees.length+Object.keys(team_data).length)>1){
+            $('#removed_warning').html('Are you sure you want to remove?')
+        }else{
+            $('#removed_warning').html('Are you sure you want to remove last member?')
+        }
     }
 
     $(".delete-mem-btn").click(()=>{
         removedIDs.push(temp_removedIDs)
+        Object.keys(team_data)
+            .filter(key => removedIDs.includes(key))
+            .forEach(key => delete team_data[key]);
+        employees=employees.filter((emp)=>{
+            return emp!=temp_removedIDs
+        })
         $('#'+temp_removedIDs+'_row').remove()
+        $('input[value='+temp_removedIDs+']').prop('checked',false)
+        $('input[value='+temp_removedIDs+']').parent().parent().removeClass('hide-item')
+        if((employees.length+Object.keys(team_data).length)==0){
+            innerHtml =`<tr>
+            <td colspan=3 class="text-center">All members are removed!</td>
+            </tr>`
+            $('.t-content').html(innerHtml);
+            removedIDs=[]
+        }       
+    })
+
+    $(".add-mem-btn").click(()=>{
+        let flag=Validations()
+        if(flag){
+            employees=$('#employee_name').val()
+            makeTableRows()
+            $('.selected').addClass('hide-item')
+            $('.selected').removeClass('selected')
+            $('.ms-options-wrap button').html('Select')
+            $('#employee_name').val('')
+            $('#AddEmployee').modal('hide')
+        }        
     })
 
     function Submit(){
@@ -176,8 +243,7 @@
         // console.log(removedIDs)
         if(flag){
             let emp_list={}
-            
-            employees=$('#employee_name').val()?$('#employee_name').val():[]
+
             employees.forEach((item)=>{
                 if(!removedIDs.includes(item)){
                     emp_data.filter((emp)=>{
@@ -191,19 +257,13 @@
                     })
                 }
                 
-            })
+            })           
 
-            temp_team_data=team_data;
-            Object.keys(temp_team_data)
-                .filter(key => removedIDs.includes(key))
-                .forEach(key => delete temp_team_data[key]);
-            
-
-            $.each(temp_team_data,(key,value)=>{
-                temp_team_data[key].role=$("#emp_"+key+"_role").val()
+            $.each(team_data,(key,value)=>{
+                team_data[key].role=$("#emp_"+key+"_role").val()
             })
-            if(Object.keys(temp_team_data).length!=0){
-                $.extend(emp_list, temp_team_data);
+            if(Object.keys(team_data).length!=0){
+                $.extend(emp_list, team_data);
             }
             // console.log(emp_list)
             data={
@@ -235,7 +295,6 @@
 
     function EmpValidations(){
         let flag=[]
-        employees=$('#employee_name').val()?$('#employee_name').val():[]
         employees.forEach((id)=>{
             if(!removedIDs.includes(id)){
                 if($("#emp_"+id+"_role").val()){
@@ -287,29 +346,26 @@
 
     function Validations(){
 
-        let flag1=false
-        let flag2=true
+        let flag2=false
         
-        if($("select[name=project]").val()){
-            $('.valid_project').html('')
-            flag1=true
+        // if($("select[name=project]").val()){
+        //     $('.valid_project').html('')
+        //     flag1=true
+        // }else{
+        //     $('.valid_project').html('The project field is required.')
+        //     flag1=false
+        // }
+
+        if($('#employee_name').val()){
+            $('.valid_employee').html('')
+            flag2=true
         }else{
-            $('.valid_project').html('The project field is required.')
-            flag1=false
-        }
-
-        if(Object.keys(team_data).length==0){
-            if($('#employee_name').val()){
-                $('.valid_employee').html('')
-                flag2=true
-            }else{
-                $('.valid_employee').html('The employees field is required.')
-                flag2=false
-            }
+            $('.valid_employee').html('The employees field is required.')
+            flag2=false
         }
         
 
-        return flag1 && flag2
+        return flag2
 
         
     }
@@ -381,8 +437,9 @@
                 columns: 1,
                 placeholder: 'Select',
                 search: true,
-                showCheckbox:false,
             })
+
+            makeTableRows()
 
         })
     }
