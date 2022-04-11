@@ -27,4 +27,8 @@
 .permission_module {
   text-align: center;
 }
+
+.btn-close {
+  background: transparent url("../images/cancel.svg") center/1em auto no-repeat;
+}
 /*# sourceMappingURL=style.css.map */
