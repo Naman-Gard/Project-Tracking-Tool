@@ -79,9 +79,9 @@
           
           <div class="card-body">
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Ministry Name</label>
+              <label for="name" class="form-label">Ministry Name</label>
               <input type="hidden" id="ministry_id">
-              <input type="text" id="name" name="name" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('name') }}">
+              <input type="text" id="name" name="name" class="form-control border" autocomplete="off" aria-describedby="nameHelp" value="{{ old('name') }}">
               <span class="text-danger"></span>
             </div>
             
@@ -125,7 +125,7 @@
                 });
               
               const ministry_type = ministry_data_by_id[0]
-              $('#ministry_id').val(ministry_type.id);
+              $('#ministry_id').val(btoa(ministry_type.id));
               $('#name').val(ministry_type.name);
                 
             })                
@@ -179,7 +179,7 @@
 
           else{
             let data={
-            'ministry_id': $("#ministry_id").val(),
+            'ministry_id': atob($("#ministry_id").val()),
             'name': $("#name").val() }
 
             $.ajax({

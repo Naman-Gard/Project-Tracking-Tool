@@ -77,9 +77,9 @@
         <div class="card">
           <div class="card-body">
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Business Group Name</label>
+              <label for="name" class="form-label">Business Group Name</label>
               <input type="hidden" id="business_group_id">
-              <input type="text" id="name" name="name" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('name') }}">
+              <input type="text" id="name" name="name" autocomplete="off" class="form-control border" aria-describedby="nameHelp" value="{{ old('name') }}">
             <span class="text-danger"></span>
             </div>
             
@@ -123,7 +123,7 @@
                 });
               
               const business_group = business_data_by_id[0]
-              $('#business_group_id').val(business_group.id);
+              $('#business_group_id').val(btoa(business_group.id));
               $('#name').val(business_group.name);
                 
             })          
@@ -177,7 +177,7 @@
 
           else{
             let data={
-            'business_group_id': $("#business_group_id").val(),
+            'business_group_id': atob($("#business_group_id").val()),
             'name': $("#name").val() }
 
             $.ajax({

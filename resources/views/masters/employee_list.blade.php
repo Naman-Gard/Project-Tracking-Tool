@@ -83,37 +83,37 @@
               <input type="hidden" id="employee_list_id">
               <div class="col-md-6 mb-4">
                 <label for="employee_id" class="form-label">Employee ID</label>
-                <input type="text" id="employee_id" name="employee_id" class="form-control border" value="{{ old('employee_id') }}">
+                <input type="text" autocomplete="off" id="employee_id" name="employee_id" class="form-control border" value="{{ old('employee_id') }}">
                 <span class="text-danger employee_id"></span>
               </div>
               <div class="col-md-6 mb-4">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" id="name" name="name" class="form-control border" value="{{ old('name') }}">
+                <input type="text" autocomplete="off" id="name" name="name" class="form-control border" value="{{ old('name') }}">
                 <span class="text-danger name"></span>
               </div>
               <div class="col-md-6 mb-4">
                 <label for="designation" class="form-label">Designation</label>
-                <input type="text" id="designation" name="designation" class="form-control border" value="{{ old('designation') }}">
+                <input type="text" autocomplete="off" id="designation" name="designation" class="form-control border" value="{{ old('designation') }}">
                 <span class="text-danger designation"></span>
               </div>
               <div class="col-md-6 mb-4">
                 <label for="department" class="form-label">Department</label>
-                <input type="text" id="department" name="department" class="form-control border" value="{{ old('department') }}">
+                <input type="text" autocomplete="off" id="department" name="department" class="form-control border" value="{{ old('department') }}">
                 <span class="text-danger department"></span>
               </div>
               <div class="col-md-6 mb-4">
                 <label for="email_id" class="form-label">Email ID</label>
-                <input type="email" id="email_id" name="email_id" class="form-control border" value="{{ old('email_id') }}">
+                <input type="email" autocomplete="off" id="email_id" name="email_id" class="form-control border" value="{{ old('email_id') }}">
                 <span class="text-danger email_id"></span>
               </div>
               <div class="col-md-6 mb-4">
                 <label for="joining_date" class="form-label">Date of Joining</label>
-                <input type="date" id="joining_date" name="joining_date" class="form-control border" value="{{ old('joining_date') }}">
+                <input type="date" autocomplete="off" id="joining_date" name="joining_date" class="form-control border" value="{{ old('joining_date') }}">
                 <span class="text-danger joining_date"></span>
               </div>
               <div class="col-md-12 mb-4">
                 <label for="reporting_to" class="form-label">Reporting To</label>
-                <input type="text" id="reporting_to" name="reporting_to" class="form-control border" value="{{ old('reporting_to') }}">
+                <input type="text" autocomplete="off" id="reporting_to" name="reporting_to" class="form-control border" value="{{ old('reporting_to') }}">
                 <span class="text-danger reporting_to"></span>
               </div>
               <div class="col-md-12">
@@ -237,7 +237,7 @@
                 });
               
               const employee_list = type_data_by_id[0]
-              $('#employee_list_id').val(employee_list.id);
+              $('#employee_list_id').val(btoa(employee_list.id));
               $('#employee_id').val(employee_list.employee_id);
               $('#name').val(employee_list.name);
               $('#department').val(employee_list.department ? employee_list.department : '');
@@ -307,7 +307,7 @@
 
           else{
             let data={
-            'employee_list_id': $("#employee_list_id").val(),
+            'employee_list_id': atob($("#employee_list_id").val()),
             'employee_id': $("#employee_id").val(),
             'name': $("#name").val(),
             'department': $("#department").val(),

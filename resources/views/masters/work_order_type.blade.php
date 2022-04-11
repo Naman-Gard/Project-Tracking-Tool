@@ -78,9 +78,9 @@
         <div class="card">
           <div class="card-body">
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Work Order Type Name</label>
+              <label for="name" class="form-label">Work Order Type Name</label>
               <input type="hidden" id="work_order_type_id">
-              <input type="text" id="name" name="name" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('name') }}">
+              <input type="text" id="name" name="name" class="form-control border" autocomplete="off" aria-describedby="nameHelp" value="{{ old('name') }}">
             <span class="text-danger"></span>
             </div>
             
@@ -124,7 +124,7 @@
                 });
               
               const work_order_type = type_data_by_id[0]
-              $('#work_order_type_id').val(work_order_type.id);
+              $('#work_order_type_id').val(btoa(work_order_type.id));
               $('#name').val(work_order_type.name);
                 
             })          
@@ -178,7 +178,7 @@
 
           else{
             let data={
-            'work_order_type_id': $("#work_order_type_id").val(),
+            'work_order_type_id': atob($("#work_order_type_id").val()),
             'name': $("#name").val() }
 
             $.ajax({
