@@ -6,12 +6,22 @@
     <div class="col-12">
         <div class="card my-4">
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-            <div class="alert alert-success alert-dismissible text-white hide-item" role="alert">
-                <span class="text-sm success-message"></span>
+            @if(session('success'))
+            <div class="alert alert-success alert-dismissible text-white" role="alert">
+                <span class="text-sm success-message">{{session('success')}}</span>
                 <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            @endif
+
+            <div class="alert alert-success alert-dismissible hide-item text-white" role="alert">
+                <span class="text-sm success-message">{{session('success')}}</span>
+                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
             <div class="bg-gradient-primary d-flex justify-content-between shadow-primary border-radius-lg pt-4 pb-3">
             <h6 class="text-white text-capitalize ps-3">All Documents</h6>
             <a class="btn btn-secondary mx-5 float-right btn-sm hide-item Project_add" data-bs-toggle="modal" data-bs-target="#AddDoc">Add</a>
@@ -77,14 +87,17 @@
                 <div class="modal-header">
                     Add Document
                 </div>
+                <form method="POST" action="{{route('add-doc')}}" enctype="multipart/form-data">
+                    @csrf
                 <div class="modal-body">
-                    <form>
-
+                    
                     <div class="form-group mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Title</label>
                     <input class="form-control" name="title" type="text" placeholder="Document Title" value="{{old('title')}}" autocomplete="off">
                     <span class="text-danger valid_title"></span>
                     </div>
+
+                    <input type="hidden" name="project_id">
 
                     <div class="form-group">
                     <label for="exampleFormControlInput1" class="form-label">Choose Doc</label>
@@ -92,14 +105,15 @@
                     <span class="text-danger valid_file"></span>
                     </div>
                     
-                    </form> 
+                    
                     
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm m-1" data-bs-dismiss="modal">Close</button>
+                    <a  class="btn btn-secondary btn-sm m-1" data-bs-dismiss="modal">Close</a>
                     <button type="submit" class="btn btn-primary add-mem-btn btn-sm m-1">Add</button>
                 </div>
+                </form> 
             </div>
 
 
@@ -120,6 +134,7 @@
     function deleteDoc(id){
         p_doc_id=id
     }
+
     $(".delete-mem-btn").click(()=>{
         let data={
             doc_id:p_doc_id
@@ -139,35 +154,6 @@
             window.location=route
             })
     })
-    
-    $(".add-mem-btn").click(()=>{
-
-        let flag=Validation()
-
-        if(flag){
-            let data={
-                "project_id":id,
-                "title":$("input[name=title]").val(),
-                "file":$("input[name=file]").val()
-            }
-
-            var route = '{{ route("docs-by-project", ":id") }}'
-            route = route.replace(':id', btoa(id))
-
-            $.ajax({
-                    type: "POST",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data:JSON.stringify(data),
-                    url: api_url+'master/project/doc/add',
-                }).done((response)=>{
-                sessionStorage.setItem("message", "Document Added Successfully");
-                window.location=route
-                })
-            }
-
-        
-    })
 
     function Validation(){
 
@@ -182,8 +168,17 @@
         }
 
         if($("input[name=file]").val()){
-            $('.valid_file').html('')
-            flag.push(true)
+            value=$("input[name=file]").val().split('.')
+            ext=['jpg']
+            if(ext.includes(value[1])){
+                $('.valid_file').html('')
+                flag.push(true)
+            }
+            else{
+                $('.valid_file').html('File type not allowed')
+                flag.push(false)
+            }
+            
         }else{
             $('.valid_file').html('The file field is required.')
             flag.push(false)
@@ -213,7 +208,10 @@
         if(project_docs.length!=0){
             project_docs.forEach((doc)=>{
             var doc_id=doc.id
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+doc.title+'</td><td class="action"><a href="" class="btn btn-primary btn-sm m-1">View</a><button class="btn btn-danger m-1 btn-sm hide-item Project_delete" onclick="deleteDoc('+doc_id+')" data-bs-toggle="modal" data-bs-target="#DeleteDoc">Delete</button></td></tr>')
+            var asset="{{asset('path')}}"
+            var path ='assets/uploads/project-docs/'+doc.name
+            asset = asset.replace('path', path)
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+doc.title+'</td><td class="action"><a href="'+asset+'" target="_blank" class="btn btn-primary btn-sm m-1">View</a><button class="btn btn-danger m-1 btn-sm hide-item Project_delete" onclick="deleteDoc('+doc_id+')" data-bs-toggle="modal" data-bs-target="#DeleteDoc">Delete</button></td></tr>')
             i=i+1
             })
         }
@@ -236,7 +234,23 @@
         
     })
 
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        let flag=Validation()
 
+        if(flag){
+            $.each(this, function (i, element) {
+                if(element.name=="project_id"){
+                element.value = btoa(id);
+                }
+            })
+            e.currentTarget.submit();
+        }
+        else{
+            e.preventDefault();
+        }
+        
+    })
 
 </script>
 @endpush

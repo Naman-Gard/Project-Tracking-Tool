@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('content');
             $table->string('file');
             $table->string('status');
+            $table->string('draft');
             $table->timestamps();
         });
     }

@@ -83,6 +83,7 @@ Route::group(["middleware" => ["islogin"]], function(){
     Route::get('/project/add', [App\Http\Controllers\ProjectController::class, 'addProject'])->name('add-project');
     Route::get('/project/edit/{id}', [App\Http\Controllers\ProjectController::class, 'editProject'])->name('edit-project');
     Route::get('/project/manage/docs/{id}', [App\Http\Controllers\ProjectController::class, 'manageDocs'])->name('docs-by-project');
+    Route::post('/project/add/doc', [App\Http\Controllers\ProjectController::class, 'addDoc'])->name('add-doc');
 
     //Instrument Routes
     Route::get('/instrument', [App\Http\Controllers\HomeController::class, 'instrument'])->name('instruments');
