@@ -114,6 +114,8 @@ Route::group(["middleware" => ["islogin"]], function(){
 
     //MailBox Routes
     Route::get('/user/mailbox','App\Http\Controllers\MailboxController@index')->name('mailbox'); 
+    Route::get('/user/mailbox/draft','App\Http\Controllers\MailboxController@draft')->name('draft'); 
+    Route::get('/user/mailbox/sent','App\Http\Controllers\MailboxController@sent')->name('sent'); 
 });
 
 
