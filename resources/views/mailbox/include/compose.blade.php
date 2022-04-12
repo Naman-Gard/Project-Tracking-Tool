@@ -64,12 +64,20 @@
         if(type=='mail'){
             flag=Validation()
             data={}
-            generateData(0)
+            if(flag){
+                generateData(0)
+                resetCompose()
+            }
+            else{
+                data={}
+            }
+            
         }
         else{
             if(draft){
                 data={}
                 generateData(draft)
+                resetCompose()
             }
             else{
                 data={}
@@ -78,10 +86,16 @@
         
         if(Object.keys(data).length){
             console.log(data)
+            $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data:JSON.stringify(data),
+            url: api_url+'master/send/mail',
+            }).done((response)=>{
+                $('#AddMail').modal('hide')
+            })
         }
-
-        resetCompose()
-
         
     }
 
@@ -94,9 +108,10 @@
             'content':$('textarea[name=content]').val(),
             'from':'{{ Session::get("user")["email"] }}',
             'file':0,
-            'status':0,
+            'status':draft?0:1,
             'draft':draft
         }
+        return data
     }
 
     function Validation(){
@@ -128,6 +143,7 @@
 
     function resetCompose(){
         $('form').trigger('reset')
+        $('input[name=to]').prop('placeholder','')
         if(!$('.cc').hasClass('hide-item')){
             $('.cc').addClass('hide-item')
         }

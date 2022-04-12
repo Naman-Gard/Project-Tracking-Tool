@@ -2,7 +2,7 @@
 
 @section('mailbox-content')
 <div class="card h-100">
-    <div id="inbox-content">
+    <div id="draft-content">
 
     </div>
 </div>
@@ -14,15 +14,9 @@
     $(document).ready(()=>{
 
         const filters={
-            "to":{
-                "_eq":'{{ Session::get("user")["email"] }}'
-            },
             'draft':{
-                "_eq":0
-            },
-            'status':{
                 "_eq":1
-            }
+            },
         }
 
         $.ajax({
@@ -32,9 +26,13 @@
         const mails=response.data
         if(mails.length!=0){
             mails.forEach((mail)=>{
-              $('#inbox-content').append(mail.subject+`<br>`)
+              $('#draft-content').append(mail.from+`<br>`)
             })
-        }       
+        }
+        else{
+            
+        }
+        
         getPermissions()
         })       
     })
