@@ -122,7 +122,7 @@ function Login(){
       if(user.length!=0){
 
         $.ajax({
-         url: "/set-session",
+         url: "set-session",
          data: { user }
         }).done(()=>{
           window.location='{{route("home")}}'
