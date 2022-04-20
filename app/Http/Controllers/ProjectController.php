@@ -19,6 +19,10 @@ class ProjectController extends Controller
         return view('project-docs.index');
     }
 
+    public function manageMiles(){
+        return view('milestones.index');
+    }
+
     public function addDoc(Request $request){
         $project_id=base64_decode($request->project_id);
         $doc=new ProjectDoc;

@@ -100,6 +100,24 @@
     }
 
     function addWork(id){
+        const filters={
+            'project_id':{
+                '_eq':id
+            }
+        }
+        
+        $.ajax({
+        type: "GET",
+        url: api_url+'items/work_orders?limit=-1&&filter='+JSON.stringify(filters),
+        }).done((response)=>{
+            const work_orders=response.data
+            if(work_orders.length!=0){
+                var route = '{{ route("edit-work-order", ":id") }}'
+                route = route.replace(':id', btoa(work_orders[0].id))
+                window.location=route
+            }
+        })
+
         var route = '{{ route("add-work-by-project", ":id") }}'
         route = route.replace(':id', btoa(id))
         window.location=route
@@ -107,6 +125,29 @@
 
     function manageDocs(id){
         var route = '{{ route("docs-by-project", ":id") }}'
+        route = route.replace(':id', btoa(id))
+        window.location=route
+    }
+
+    function manageMiles(id){
+        const filters={
+            'project_id':{
+                '_eq':id
+            }
+        }
+        
+        $.ajax({
+        type: "GET",
+        url: api_url+'items/work_orders?limit=-1&&filter='+JSON.stringify(filters),
+        }).done((response)=>{
+            const work_orders=response.data
+            if(work_orders.length==0){
+                sessionStorage.setItem("message", "First add work order for this project");
+                window.location="{{route('projects')}}"
+            }
+        })
+        
+        var route = '{{ route("miles-by-project", ":id") }}'
         route = route.replace(':id', btoa(id))
         window.location=route
     }
@@ -128,7 +169,7 @@
             projects.forEach((project)=>{
               var edit = '{{ route("edit-project", ":id") }}'
               edit = edit.replace(':id', btoa(project.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_stage+'</td><td class="action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-1">Edit</a><button class="btn btn-danger m-1 btn-sm hide-item Project_delete" onclick="deleteProject('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteProject">Delete</button><button class="btn btn-info btn-sm m-1 hide-item Instrument_add" onclick="addInstrument('+project.id+')">Add Instrument</button><button class="btn btn-info m-1 hide-item btn-sm Work_add" onclick="addWork('+project.id+')">Add Work Order</button><button class="btn btn-info m-1 btn-sm" onclick="manageDocs('+project.id+')">Manage Docs</button></td></tr>')
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+project.project_name+'</td><td>'+project.project_stage+'</td><td class="action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Project_edit m-1">Edit</a><button class="btn btn-danger m-1 btn-sm hide-item Project_delete" onclick="deleteProject('+project.id+')" data-bs-toggle="modal" data-bs-target="#DeleteProject">Delete</button><button class="btn btn-info btn-sm m-1 hide-item Instrument_add" onclick="addInstrument('+project.id+')">Add Instrument</button><button class="btn btn-info m-1 hide-item btn-sm Work_add" onclick="addWork('+project.id+')">Manage Work Order</button><button class="btn btn-info m-1 btn-sm" onclick="manageDocs('+project.id+')">Manage Docs</button><button class="btn btn-info m-1 btn-sm" onclick="manageMiles('+project.id+')">Manage Milestones</button></td></tr>')
             i=i+1
             })
         }

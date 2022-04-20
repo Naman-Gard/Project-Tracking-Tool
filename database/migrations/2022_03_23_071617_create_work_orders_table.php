@@ -24,10 +24,10 @@ return new class extends Migration
             $table->string('date');
             $table->string('validity_date');
             $table->string('milestones');
-            $table->string('milestone_date');
-            $table->string('milestone_amount');
-            $table->string('milestone_percent_amount');
-            $table->string('milestone_description');
+            // $table->string('milestone_date');
+            // $table->string('milestone_amount');
+            // $table->string('milestone_percent_amount');
+            // $table->string('milestone_description');
             $table->timestamps();
         });
     }
