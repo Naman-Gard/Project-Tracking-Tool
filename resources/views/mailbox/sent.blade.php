@@ -28,12 +28,23 @@
         }).done((response)=>{
         const mails=response.data
         if(mails.length!=0){
+            innerhtml=`<table class="table align-items-center mb-0">
+            <thead/>
+            <tbody class="t-content">`
+            
             mails.forEach((mail)=>{
-              $('#sent-content').append(mail.to+`<br>`)
+                innerhtml+='<tr><td>To: '+mail.to+'</td><td>'+mail.subject+' - '+mail.content+'</td></tr>'
+            //   $('#sent-content').append(mail.to+`<br>`)
             })
+
+            innerhtml+=`
+            </tbody>
+            </table>`
+
+            $('#sent-content').append(innerhtml)
         }
         else{
-            
+            $('#sent-content').append('No Data Found')
         }
         
         getPermissions()
