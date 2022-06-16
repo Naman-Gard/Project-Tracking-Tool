@@ -31,9 +31,16 @@
         }).done((response)=>{
         const mails=response.data
         if(mails.length!=0){
+            innerhtml=`<table class="table align-items-center mb-0">
+            <thead/>
+            <tbody class="t-content">`
             mails.forEach((mail)=>{
-              $('#inbox-content').append(mail.subject+`<br>`)
+                innerhtml+='<tr><td>From: '+mail.from+'</td><td>'+mail.subject+' - '+mail.content+'</td></tr>'
             })
+            innerhtml+=`
+            </tbody>
+            </table>`
+            $('#inbox-content').append(innerhtml)
         }       
         getPermissions()
         })       

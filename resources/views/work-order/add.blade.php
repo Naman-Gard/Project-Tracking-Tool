@@ -155,7 +155,7 @@
                 // 'milestone_amount':$("input[name=milestone_amount]").val(),
                 // 'milestone_description':$("textarea[name=milestone_description]").val()
             }
-            console.log(data)
+            // console.log(data)
             $.ajax({
             type: "POST",
             contentType: "application/json",
