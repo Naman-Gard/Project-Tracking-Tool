@@ -41,19 +41,24 @@
                     </div>
                     
                     <div class="row">
-                    <div class="col-md-6">
-                    <label for="exampleFormControlInput1" class="form-label">Client Name</label>
-                    <input class="form-control" name="client_name" type="text" placeholder="Client Name" value="{{old('client_name')}}" autocomplete="off">
-                    <span class="text-danger valid_client_name"></span>
-                    </div>
 
                     <div class="col-md-6">
                         <label for="exampleInputEmail1" class="form-label">Client Department</label>
                         <select name="client_dep" class="form-control" id="client_department">
                             <option value="">Select</option>
                         </select>
-                    <span class="text-danger valid_client_dep"></span>
+                        <span class="text-danger valid_client_dep"></span>
                     </div>
+
+                    <div class="col-md-6">
+                        <label for="exampleFormControlInput1" class="form-label">Client Name</label>
+                        <select name="client_name" class="form-control" id="client_name">
+                            <option value="">Select</option>
+                        </select>
+                        <span class="text-danger valid_client_name"></span>
+                    </div>
+
+                    
                     </div>
 
                     <div class="row">
@@ -112,6 +117,7 @@
 @endsection
 @push('scripts')
 <script>
+    let departments=[];
 
     function Submit(){
 
@@ -126,7 +132,7 @@
                 'project_description':$("textarea[name=desc]").val(),
                 'business_account_manager': $("input[name=b_acc_manager]").val(),
                 'technical_account_manager': $("input[name=t_acc_manager]").val(),
-                'client_name': $("input[name=client_name]").val(),
+                'client_name': $("select[name=client_name]").val(),
                 'client_department': $("select[name=client_dep]").val(),
                 'project_type':  $("select[name=p_type]").val(),
                 'bid_amount': $("input[name=bid_amount]").val(),
@@ -175,7 +181,7 @@
             flag.push(false)
         }
 
-        if($("input[name=client_name]").val()){
+        if($("select[name=client_name]").val()){
             $('.valid_client_name').html('')
             flag.push(true)
         }else{
@@ -256,6 +262,17 @@
         }
     })
 
+    $('select[name=client_dep]').change((e)=>{
+        $('#client_name').empty()
+        $('#client_name').append(`<option value="Select">Select</option>`)
+        if(e.target.value!==''){
+            const spokePersons=JSON.parse(departments.find((department)=> department.name===e.target.value).spoke_persons)
+            spokePersons.forEach((person)=>{
+                $('#client_name').append(`<option value="${person.name}">${person.name}</option>`)
+            })
+        }
+    })
+
     $('document').ready(()=>{
         $.ajax({
         type: "GET",
@@ -263,6 +280,9 @@
         }).done((response)=>{
             data=response.data
             $.each( data, function( key, value ) {
+                if(key==='client_department'){
+                    departments=value
+                }
                 value.forEach((item)=>{
                     $('#'+key).append(`<option value="${item.name}">${item.name}</option>`)
                 })

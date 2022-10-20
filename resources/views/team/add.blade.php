@@ -152,7 +152,7 @@
                 })
                 innerHtml += `<tr id="${item}_row">
                             <td>
-                                <span name="emp_name" id="emp_${item}">${name}</span>
+                                <span name="emp_name" id="emp_${item}">${name!==''?name:'N/A'}</span>
                             </td>
 
                             <td>
@@ -414,7 +414,7 @@
                 $('#team_members').html("Team Not Assinged Yet!")
             }
             
-            
+            $('#employee_name').append(`<option value="N/A">N/A</option>`)
             $.each( employee_data, function( key, value ) {
                 value.forEach((item)=>{
                     if(key=='project_name'){

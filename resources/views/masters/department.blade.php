@@ -64,6 +64,41 @@
       </div>
     </div>
 
+    <div class="modal fade" id="spokePerson" >
+      <div class="modal-dialog" style="max-width:750px">
+          <div class="modal-content">
+          
+            <div class="modal-body p-0">
+                
+            
+                <div class="card">
+                  <!-- <div class="card-header">Delete Department
+                  <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div> -->
+                  <div class="card-body">
+                  <form>
+                    <input type="hidden" name="persons_department_id" id="persons_department_id">
+                      <table class="table-responsive table">
+                        <thead>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Mobile</th>
+                          <th onClick="addSpokeRow()">+</th>
+                        </thead>
+                        <tbody id="spokeBody">
+                          
+                        </tbody>
+                      </table>
+                      <button type="button" onClick="updateSpokePersons()" class="btn m-1 btn-primary btn-sm">Update</button>
+                  </form>
+                  </div>
+                </div>
+            
+            </div>
+          </div>
+      </div>
+    </div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -104,11 +139,113 @@
 @endsection
 @push('scripts')
 <script>
-
+    let row=0,createdRow=[],departments=[];
     function open_add_model(){
             $('#staticBackdrop').modal('show');
             $(':input').val('');
 
+    }
+
+    function addSpokeRow(){
+      row=row+1
+      let innerHtml=createHtml(row)
+      createdRow.push(row)
+      $('#spokeBody').append(innerHtml)
+      commonValidation()
+    }
+
+    function removeRow(id){
+      $('#row_'+id).remove()
+      const index = createdRow.indexOf(id);
+      if (index !== -1) {
+        createdRow.splice(index, 1);
+      }
+    }
+
+    function updateSpokePersons(){
+      const tempData=[]
+      const flag=[]
+      createdRow.forEach((rowId,index)=>{
+        flag.push(spokePersonValidation(rowId))
+        tempData.push({
+          'name':$(`#name_${rowId}`).val(),
+          'email':$(`#email_${rowId}`).val(),
+          'mobile':$(`#mobile_${rowId}`).val()
+        })
+      })
+      // console.log($('#persons_department_id').val())
+      if(!flag.includes(false)){
+        $.ajax({
+          type: "POST",
+          contentType: "application/json",
+          dataType: "json",
+          data:JSON.stringify({id:$('#persons_department_id').val(),data:JSON.stringify(tempData)}),
+          url: api_url+'master/spokePerson/update',
+          }).done((response)=>{
+            sessionStorage.setItem("message", "Spoke Persons Updated Successfully");
+            window.location='{{route("department")}}'
+        })
+      }
+      
+    }
+
+    function spokePersonValidation(rowId){
+      const flag=[]
+      if($(`#name_${rowId}`).val()===''){
+        $(`#valid_name_${rowId}`).html('Name is required')
+        flag.push(false)
+      }
+      else{
+        $(`#valid_name_${rowId}`).html('')
+      }
+      if($(`#email_${rowId}`).val()===''){
+        $(`#valid_email_${rowId}`).html('Email is required')
+        flag.push(false)
+      }
+      else{
+        let email=$(`#email_${rowId}`).val()
+        let valid =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (email.toLowerCase().match(valid)) {
+          $(`#valid_email_${rowId}`).html('')
+        }
+        else{
+          flag.push(false)
+          $(`#valid_email_${rowId}`).html('Please enter valid email')       
+        }
+      }
+      if($(`#mobile_${rowId}`).val()===''){
+        $(`#valid_mobile_${rowId}`).html('Mobile is required')
+        flag.push(false)
+      }
+      else{
+        $(`#valid_mobile_${rowId}`).html('')
+      }
+      return flag.includes(false)?false:true
+    }
+
+    function createHtml(row){
+      return `<tr id="row_${row}">
+                <td>
+                  <div class="d-grid">
+                    <input class="personName" id="name_${row}" name="name" type="text">
+                    <span class="text-danger" id="valid_name_${row}"></span>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-grid">
+                    <input id="email_${row}" type="email">
+                    <span class="text-danger" id="valid_email_${row}"></span>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-grid">
+                    <input class="personMobile" id="mobile_${row}" type="text">
+                    <span class="text-danger" id="valid_mobile_${row}"></span>
+                  </div>
+                </td>
+                <td onClick="removeRow(${row})">-</td>
+              </tr>`
     }
 
     function open_edit_model(e){
@@ -129,6 +266,51 @@
               $('#name').val(department_type.name);
                 
             })                
+    }
+
+    function open_person_model(id){
+      row=0;
+      createdRow=[];
+      $('#spokeBody').html('')
+      const spokePersons=JSON.parse(departments.find((department)=> department.id===id).spoke_persons)
+      spokePersons.forEach((person)=>{
+        row=row+1
+        let innerHtml=createHtml(row)
+        createdRow.push(row)
+        $('#spokeBody').append(innerHtml)
+        $(`#name_${row}`).val(person.name)
+        $(`#email_${row}`).val(person.email)
+        $(`#mobile_${row}`).val(person.mobile)
+      })
+
+      $('#spokePerson').modal('show');
+      $('#persons_department_id').val(id)
+      commonValidation()
+    }
+
+    function commonValidation(){
+      $('.personName').keydown((e) => {
+          var keyCode = (e.keyCode ? e.keyCode : e.which);
+          if (!(keyCode >= 65 && keyCode <= 123)
+            && (keyCode != 32 && keyCode != 0)
+            && (keyCode != 48 && keyCode != 8)
+            && (keyCode != 9)) {
+              e.preventDefault();
+          }
+      })
+
+      $('.personMobile').keydown((e) => {
+        var keyCode = (e.keyCode ? e.keyCode : e.which);
+        if (e.currentTarget.value.length == 10 && keyCode!==8)
+            return false;
+        
+        return e.ctrlKey || e.altKey 
+                    || (47<e.keyCode && e.keyCode<58 && e.shiftKey==false) 
+                    || (95<e.keyCode && e.keyCode<106)
+                    || (e.keyCode==8) || (e.keyCode==9) 
+                    || (e.keyCode>34 && e.keyCode<40) 
+                    || (e.keyCode==46)
+      })
     }
 
     function delete_model(e){
@@ -198,6 +380,7 @@
     }
 
 $(document).ready(()=>{
+
   if(sessionStorage.getItem("message")){
             $('.success-message').html(sessionStorage.getItem("message"))
             $('.alert-success').removeClass('hide-item')
@@ -210,6 +393,7 @@ $(document).ready(()=>{
         type: "GET",
         url: api_url+'master/department',
         }).done((response)=>{
+        departments=response.data.department
         const department=response.data
         if(department.department.length!=0){
           var i = 1;
@@ -219,6 +403,7 @@ $(document).ready(()=>{
                                 <td>${element.name}</td>
                                 <td class="Master_action hide-item">
                                   <button class="btn m-1 btn-info btn-sm hide-item Master_edit" onclick="open_edit_model(${element.id})">Edit</button>
+                                  <button class="btn m-1 btn-primary btn-sm" onclick="open_person_model(${element.id})">Spoken Person</button>
                                   <button class="btn m-1 btn-danger btn-sm hide-item Master_delete" onclick="delete_model(${element.id})">Delete</button>                                  
                                 </td>
                             </tr>`;

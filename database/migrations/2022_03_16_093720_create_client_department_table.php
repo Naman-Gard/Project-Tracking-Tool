@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('client_department', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('spoke_persons')->nullable();
             $table->timestamps();
         });
     }
