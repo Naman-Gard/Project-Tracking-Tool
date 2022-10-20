@@ -25,6 +25,21 @@
             <span class="nav-link-text ms-1">Tables</span>
           </a>
         </li> -->
+        <li class="nav-item hide-item" id="User">
+          <a class="nav-link text-white {{ Request::is('user') || Request::is('*/user') || Request::is('*/permission/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#user" role="button" aria-expanded="false" aria-controls="master">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">people</i>
+            </div>
+            <span class="nav-link-text ms-1">User Management</span>
+          </a>
+          <div class="collapse" id="user">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link hide-item User_add" href="{{route('add-user')}}"> Add User</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{route('users')}}"> Manage User </a></li>
+              
+            </ul>
+          </div>
+        </li>
         <li class="nav-item hide-item" id="Master">
           <a class="nav-link text-white {{ Request::is('master/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#master" role="button" aria-expanded="false" aria-controls="master">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -157,21 +172,7 @@
             <span class="nav-link-text ms-1">Project Team Management</span>
           </a>
         </li>
-        <li class="nav-item hide-item" id="User">
-          <a class="nav-link text-white {{ Request::is('user') || Request::is('*/user') || Request::is('*/permission/*') ? 'bg-gradient-primary' : '' }}" data-bs-toggle="collapse" href="#user" role="button" aria-expanded="false" aria-controls="master">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">people</i>
-            </div>
-            <span class="nav-link-text ms-1">User Management</span>
-          </a>
-          <div class="collapse" id="user">
-            <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link hide-item User_add" href="{{route('add-user')}}"> Add User</a></li>
-              <li class="nav-item"> <a class="nav-link" href="{{route('users')}}"> Manage User </a></li>
-              
-            </ul>
-          </div>
-        </li>
+        
         <!-- <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
         </li>

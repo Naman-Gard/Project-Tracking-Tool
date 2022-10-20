@@ -23,6 +23,7 @@
                 <thead>
                 <tr class="">
                     <th scope="col">SL no.</th>
+                    <th scope="col">Project</th>
                     <th scope="col">Number</th>
                     <th scope="col">Date</th>
                     <th scope="col">Validity Date</th>
@@ -103,14 +104,16 @@
         var i=1
         $.ajax({
         type: "GET",
-        url: api_url+'items/work_orders?limit=-1',
+        url: api_url+'master/allworkorders',
         }).done((response)=>{
-        const orders=response.data
+        const orders=response.data.work_orders
+        const projects=response.data.project_name
         if(orders.length!=0){
+            console.log(orders)
             orders.forEach((order)=>{
               var edit = '{{ route("edit-work-order", ":id") }}'
               edit = edit.replace(':id', btoa(order.id))
-            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+order.number+'</td><td>'+order.date+'</td><td>'+order.validity_date+'</td><td class="action hide-item Work_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Work_edit m-1">Edit</a><button class="btn btn-danger m-1 btn-sm hide-item Work_delete" onclick="deleteWork('+order.id+')" data-bs-toggle="modal" data-bs-target="#DeleteOrder">Delete</button></td></tr>')
+            $('.t-content').append('<tr><th scope="col">'+i+'</th><td>'+projects[order.project_id]+'</td><td>'+order.number+'</td><td>'+order.date+'</td><td>'+order.validity_date+'</td><td class="action hide-item Work_action"><a href="'+edit+'" class="btn btn-primary btn-sm hide-item Work_edit m-1">Edit</a><button class="btn btn-danger m-1 btn-sm hide-item Work_delete" onclick="deleteWork('+order.id+')" data-bs-toggle="modal" data-bs-target="#DeleteOrder">Delete</button></td></tr>')
             i=i+1
             })
         }

@@ -12,7 +12,7 @@
   <link href="{{asset('assets/css/nucleo-icons.css')}}" rel="stylesheet" />
   <link href="{{asset('assets/css/nucleo-svg.css')}}" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- <script src="{{asset('assets/js/kitawesome.js')}}" crossorigin="anonymous"></script> -->
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
@@ -21,8 +21,8 @@
   <link  href="{{asset('assets/css/jquery.dataTables.min.css')}}" rel="stylesheet" />
 
   <!-- datatables -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/4.0.0/material-components-web.min.css" rel="stylesheet">
-  <link href="https://cdn.datatables.net/1.11.5/css/dataTables.material.min.css" rel="stylesheet">
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/4.0.0/material-components-web.min.css" rel="stylesheet"> -->
+  <link href="{{asset('assets/css/dataTables.material.min.css')}}" rel="stylesheet">
   <link rel="stylesheet" href="{{asset('assets/css/jquery.multiselect.css')}}">
 
 </head>
